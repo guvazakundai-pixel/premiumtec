@@ -12,11 +12,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "PremiumTec — Zimbabwe's Premium Digital Hardware Showroom",
+  title: "PREMIUM TEC — Zimbabwe's Premium Digital Hardware Showroom",
   description: "Curated elite technology for creators, professionals, gamers, and power users. Located in Harare, Zimbabwe.",
   keywords: "laptops, gaming, hardware, Zimbabwe, Harare, tech, premium",
   openGraph: {
-    title: "PremiumTec — Zimbabwe's Premium Digital Hardware Showroom",
+    title: "PREMIUM TEC — Zimbabwe's Premium Digital Hardware Showroom",
     description: "Curated elite technology for creators, professionals, gamers, and power users.",
     type: "website",
   },
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-zinc-900 overflow-x-hidden">
+      <body className="min-h-full flex flex-col bg-[#121316] text-white overflow-x-hidden">
         {children}
       </body>
     </html>
