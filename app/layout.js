@@ -1,38 +1,34 @@
-import { Inter } from "next/font/google";
+import "@fontsource/inter/100.css";
+import "@fontsource/inter/200.css";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "@fontsource/inter/900.css";
 import "./globals.css";
 
-/*
- * Typography: Inter — Geometric sans-serif
- * The stark, highly-legible nature of Inter at both ultra-thin (weight 100)
- * and heavy (weight 900) weights creates the brutalist contrast that defines
- * the nothing.tech design language.
- */
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
 export const metadata = {
-  title: "TechStore — Flagship Phones & Premium Laptops",
+  title: "PremiumTec — Curated Premium Technology",
   description:
-    "Curated collection of flagship mobile devices and premium laptops. Minimalist tech retail for the discerning user.",
-  keywords: "TechStore, flagship phones, premium laptops, technology, retail",
+    "Discover the finest collection of flagship smartphones, premium laptops, and cutting-edge technology. Curated for those who demand excellence.",
+  keywords: "PremiumTec, flagship phones, premium laptops, technology, premium electronics, curated tech",
   openGraph: {
-    title: "TechStore — Flagship Phones & Premium Laptops",
+    title: "PremiumTec — Curated Premium Technology",
     description:
-      "Curated collection of flagship mobile devices and premium laptops. Minimalist tech retail for the discerning user.",
+      "Discover the finest collection of flagship smartphones, premium laptops, and cutting-edge technology. Curated for those who demand excellence.",
     type: "website",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-[#000000] text-white overflow-x-hidden">
+    <html lang="en" className="h-full antialiased">
+      <head>
+        <meta name="theme-color" content="#0B0F14" />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#0B0F14] text-[#F5F7FA] overflow-x-hidden font-sans">
         {children}
       </body>
     </html>
