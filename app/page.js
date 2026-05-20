@@ -1,305 +1,703 @@
 'use client';
 
-import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
-import {
-  Search, X, MapPin, Clock, Truck, MessageCircle,
-  ChevronDown, SlidersHorizontal, ArrowRight, Shield, Zap, Star
-} from 'lucide-react';
-import RainEffect from '../components/RainEffect';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { Search, X, ArrowRight, ChevronDown, SlidersHorizontal } from 'lucide-react';
 
-const products = [
-  {
-    id: 1,
-    name: 'HP EliteBook 840 G3',
-    category: 'Laptops',
-    processor: 'Intel Core i7',
-    ram: '16GB RAM',
-    storage: '512GB SSD',
-    condition: 'Brand New Boxed',
-    originalPrice: 240.00,
-    price: 200.00,
-    image: '\uD83D\uDCBB',
-    specs: 'Core i7 \u2022 16GB RAM \u2022 512GB SSD',
-    badge: 'SALE'
-  },
-  {
-    id: 2,
-    name: 'HP ZBook FireFly G9',
-    category: 'Laptops',
-    processor: 'Intel Core i7',
-    ram: '32GB RAM',
-    storage: '1TB SSD',
-    condition: 'Brand New Boxed',
-    originalPrice: 1050.00,
-    price: 1050.00,
-    image: '\uD83D\uDDA5\uFE0F',
-    specs: 'Core i7 \u2022 32GB RAM \u2022 1TB SSD',
-    badge: null
-  },
-  {
-    id: 3,
-    name: 'HP EliteBook 840 G5',
-    category: 'Laptops',
-    processor: 'Intel Core i7',
-    ram: '16GB RAM',
-    storage: '512GB SSD',
-    condition: 'Brand New Boxed',
-    originalPrice: 280.00,
-    price: 240.00,
-    image: '\uD83D\uDCBB',
-    specs: 'Core i7 \u2022 16GB RAM \u2022 512GB SSD',
-    badge: 'SALE'
-  },
-  {
-    id: 4,
-    name: 'PlayStation 5 Slim',
-    category: 'Gaming Consoles',
-    processor: 'Next-Gen Console',
-    ram: '16GB RAM',
-    storage: '1TB SSD',
-    condition: 'Brand New Boxed',
-    originalPrice: 550.00,
-    price: 550.00,
-    image: '\uD83C\uDFAE',
-    specs: 'Next-Gen \u2022 1TB Storage \u2022 4K Gaming',
-    badge: null
-  },
-  {
-    id: 5,
-    name: 'Xbox Series X',
-    category: 'Gaming Consoles',
-    processor: 'Next-Gen Console',
-    ram: '16GB RAM',
-    storage: '1TB SSD',
-    condition: 'Brand New Boxed',
-    originalPrice: 650.00,
-    price: 650.00,
-    image: '\uD83C\uDFAF',
-    specs: 'Next-Gen \u2022 1TB Storage \u2022 4K Gaming',
-    badge: null
-  },
-  {
-    id: 6,
-    name: 'Laptop Chargers & Power Packs',
-    category: 'Laptop Accessories',
-    processor: 'Universal',
-    ram: '\u2014',
-    storage: '\u2014',
-    condition: 'New',
-    originalPrice: 20.00,
-    price: 15.00,
-    image: '\uD83D\uDD0C',
-    specs: 'Universal Compatibility \u2022 Fast Charging',
-    badge: 'SALE'
-  },
-  {
-    id: 7,
-    name: 'RAM, SSD & Harddrives Bundle',
-    category: 'Internal Components',
-    processor: 'Various',
-    ram: '8\u201364GB',
-    storage: '256GB\u20134TB',
-    condition: 'New',
-    originalPrice: 150.00,
-    price: 120.00,
-    image: '\u2699\uFE0F',
-    specs: 'DDR4/DDR5 \u2022 NVMe \u2022 Storage Solutions',
-    badge: 'SALE'
-  },
-  {
-    id: 8,
-    name: 'Laptop Keyboard Replacements',
-    category: 'Laptop Accessories',
-    processor: 'Universal',
-    ram: '\u2014',
-    storage: '\u2014',
-    condition: 'New',
-    originalPrice: 50.00,
-    price: 20.00,
-    image: '\u2328\uFE0F',
-    specs: 'Mechanical \u2022 RGB Optional \u2022 Multi-Device',
-    badge: 'SALE'
-  },
-  {
-    id: 9,
-    name: 'MacBook Pro M3',
-    category: 'Laptops',
-    processor: 'Apple Silicon',
-    ram: '8\u201316GB',
-    storage: '512GB SSD',
-    condition: 'Brand New Boxed',
-    originalPrice: 1999.00,
-    price: 1799.00,
-    image: '\uD83C\uDF4E',
-    specs: 'M3 \u2022 8\u201316GB \u2022 512GB SSD',
-    badge: 'SALE'
-  },
-  {
-    id: 10,
-    name: 'Premium Gaming Headphones',
-    category: 'Audio Gear',
-    processor: 'Wireless',
-    ram: '\u2014',
-    storage: '\u2014',
-    condition: 'New',
-    originalPrice: 120.00,
-    price: 85.00,
-    image: '\uD83C\uDFA7',
-    specs: '7.1 Surround \u2022 RGB \u2022 Wireless',
-    badge: 'SALE'
-  }
-];
-
-const filterOptions = {
-  'Product Categories': [
-    'Laptops',
-    'Gaming Consoles',
-    'Smartphones',
-    'Laptop Accessories',
-    'Internal Components',
-    'Audio Gear',
-    'Gaming Equipment'
-  ],
-  'Processor Family': [
-    'Intel Core i5',
-    'Intel Core i7',
-    'Ryzen 5',
-    'Ryzen 7',
-    'Apple Silicon',
-    'Next-Gen Console'
-  ],
-  'RAM': ['8GB RAM', '16GB RAM', '32GB RAM', '64GB RAM'],
-  'Storage': ['256GB SSD', '512GB SSD', '1TB SSD', 'NVMe SSD'],
-  'Product Status': ['Brand New Boxed', 'Certified Pre-Owned', 'Refurbished', 'Sealed Stock']
-};
-
-const introVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.3 }
-  }
-};
-
-const childVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.95, filter: 'blur(8px)' },
-  visible: {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  }
-};
-
-const wipeReveal = {
-  hidden: { clipPath: 'inset(0 100% 0 0)' },
-  visible: {
-    clipPath: 'inset(0 0% 0 0)',
-    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
-  }
-};
+/*
+ * =============================================================================
+ * CUSTOM EASING — The "Premium Curve"
+ * =============================================================================
+ * cubic-bezier(0.16, 1, 0.3, 1) is the single easing function used for ALL
+ * motion in this system. It creates a physics-based feel:
+ *   - 0.16: Quick start (minimal hesitation)
+ *   - 1:    Amplified mid-phase (the "snap" — feels responsive)
+ *   - 0.3:  Gradual deceleration (weighty, premium settling)
+ *   - 1:    Full stop (no bounce)
+ *
+ * This replaces all bouncy, elastic easings. The result is motion that feels
+ * deliberate, expensive, and physically-grounded — like a precision-engineered
+ * product opening its hinge.
+ */
+const easePremium = [0.16, 1, 0.3, 1];
 
 const scrollReveal = {
-  hidden: { opacity: 0, y: 60, scale: 0.92, filter: 'blur(12px)' },
+  hidden: { opacity: 0, y: 40 },
   visible: {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+    opacity: 1, y: 0,
+    transition: { duration: 0.9, ease: easePremium }
   }
 };
 
 const staggerContainer = {
-  visible: { transition: { staggerChildren: 0.05 } }
+  visible: { transition: { staggerChildren: 0.06 } }
 };
 
 const staggerItem = {
-  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+    opacity: 1, y: 0,
+    transition: { duration: 0.7, ease: easePremium }
   }
 };
 
-function GlowCursor({ containerRef }) {
-  const [pos, setPos] = useState({ x: -200, y: -200 });
+/*
+ * =============================================================================
+ * PRODUCT DATA — Flagship Phones & Premium Laptops
+ * =============================================================================
+ * Curated selection of elite mobile and laptop hardware.
+ * Images use minimal SVG line-art silhouettes that evoke the clean,
+ * hardware-focused aesthetic — no emojis, no cartoonish elements.
+ */
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const handle = (e) => {
-      const rect = el.getBoundingClientRect();
-      setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    };
-    el.addEventListener('mousemove', handle);
-    return () => el.removeEventListener('mousemove', handle);
-  }, [containerRef]);
+const products = [
+  {
+    id: 1, name: 'iPhone 16 Pro Max', category: 'Phones',
+    processor: 'A18 Pro', storage: '256GB / 512GB / 1TB',
+    display: '6.9" OLED 120Hz', price: 1599, originalPrice: null,
+    badge: 'FLAGSHIP',
+    Image: () => (
+      <svg viewBox="0 0 120 200" className="w-16 h-28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1">
+        <rect x="8" y="2" width="104" height="196" rx="16" stroke="rgba(255,255,255,0.25)" />
+        <rect x="12" y="8" width="96" height="170" rx="10" stroke="rgba(255,255,255,0.08)" />
+        <circle cx="60" cy="182" r="4" stroke="rgba(255,255,255,0.15)" />
+        <rect x="48" y="4" width="24" height="6" rx="3" stroke="rgba(255,255,255,0.1)" />
+      </svg>
+    )
+  },
+  {
+    id: 2, name: 'Samsung Galaxy S25 Ultra', category: 'Phones',
+    processor: 'Snapdragon 8 Gen 4', storage: '256GB / 512GB / 1TB',
+    display: '6.9" Dynamic AMOLED 120Hz', price: 1499, originalPrice: null,
+    badge: 'FLAGSHIP',
+    Image: () => (
+      <svg viewBox="0 0 110 200" className="w-14 h-28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1">
+        <rect x="2" y="2" width="106" height="196" rx="8" stroke="rgba(255,255,255,0.25)" />
+        <rect x="6" y="8" width="98" height="170" rx="4" stroke="rgba(255,255,255,0.08)" />
+        <circle cx="55" cy="182" r="3" stroke="rgba(255,255,255,0.15)" />
+        <rect x="42" y="186" width="26" height="8" rx="2" stroke="rgba(255,255,255,0.1)" />
+      </svg>
+    )
+  },
+  {
+    id: 3, name: 'Nothing Phone (3)', category: 'Phones',
+    processor: 'Snapdragon 8s Gen 3', storage: '256GB / 512GB',
+    display: '6.7" OLED 120Hz', price: 799, originalPrice: null,
+    badge: 'ICONIC',
+    Image: () => (
+      <svg viewBox="0 0 100 200" className="w-14 h-28" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1">
+        <rect x="4" y="2" width="92" height="196" rx="12" stroke="rgba(255,255,255,0.25)" />
+        <rect x="8" y="8" width="84" height="170" rx="8" stroke="rgba(255,255,255,0.08)" />
+        <circle cx="50" cy="182" r="3.5" stroke="rgba(255,255,255,0.15)" />
+        <line x1="20" y1="30" x2="80" y2="30" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+      </svg>
+    )
+  },
+  {
+    id: 4, name: 'MacBook Pro 16" M4 Max', category: 'Laptops',
+    processor: 'Apple M4 Max', storage: '1TB / 2TB / 4TB SSD',
+    display: '16.2" Liquid Retina XDR', price: 3499, originalPrice: 3999,
+    badge: 'NEW',
+    Image: () => (
+      <svg viewBox="0 0 200 130" className="w-28 h-18" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1">
+        <rect x="4" y="4" width="192" height="110" rx="6" stroke="rgba(255,255,255,0.25)" />
+        <rect x="10" y="10" width="180" height="98" rx="3" stroke="rgba(255,255,255,0.06)" />
+        <rect x="70" y="114" width="60" height="12" rx="1" stroke="rgba(255,255,255,0.15)" />
+        <rect x="80" y="116" width="40" height="8" rx="1" stroke="rgba(255,255,255,0.06)" />
+      </svg>
+    )
+  },
+  {
+    id: 5, name: 'Dell XPS 16', category: 'Laptops',
+    processor: 'Intel Core Ultra 9', storage: '1TB / 2TB SSD',
+    display: '16.3" OLED 4K+', price: 2499, originalPrice: null,
+    badge: null,
+    Image: () => (
+      <svg viewBox="0 0 200 130" className="w-28 h-18" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1">
+        <rect x="2" y="2" width="196" height="112" rx="4" stroke="rgba(255,255,255,0.25)" />
+        <rect x="8" y="8" width="184" height="100" rx="2" stroke="rgba(255,255,255,0.06)" />
+        <rect x="65" y="114" width="70" height="14" rx="1" stroke="rgba(255,255,255,0.15)" />
+        <line x1="40" y1="20" x2="60" y2="20" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+      </svg>
+    )
+  },
+  {
+    id: 6, name: 'ASUS ROG Zephyrus G16', category: 'Laptops',
+    processor: 'AMD Ryzen AI 9', storage: '1TB / 2TB SSD',
+    display: '16" OLED 240Hz', price: 2199, originalPrice: null,
+    badge: null,
+    Image: () => (
+      <svg viewBox="0 0 200 130" className="w-28 h-18" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1">
+        <rect x="2" y="2" width="196" height="112" rx="4" stroke="rgba(255,255,255,0.25)" />
+        <rect x="8" y="8" width="184" height="100" rx="2" stroke="rgba(255,255,255,0.06)" />
+        <rect x="60" y="114" width="80" height="14" rx="1" stroke="rgba(255,255,255,0.15)" />
+        <rect x="160" y="18" width="26" height="8" rx="2" stroke="rgba(255,255,255,0.08)" />
+      </svg>
+    )
+  },
+];
 
+const filterOptions = {
+  Category: ['Phones', 'Laptops'],
+  Processor: ['A18 Pro', 'Snapdragon 8 Gen 4', 'Snapdragon 8s Gen 3', 'Apple M4 Max', 'Intel Core Ultra 9', 'AMD Ryzen AI 9'],
+  Storage: ['256GB', '512GB', '1TB', '2TB', '4TB'],
+};
+
+/*
+ * =============================================================================
+ * AMBIENT BACKGROUND
+ * =============================================================================
+ *
+ * Three independently animated radial gradient orbs that slowly morph through
+ * a purple → cyan → slate grey color cycle. Each orb runs at a different
+ * speed (35s / 45s / 55s) with staggered start times so the combined
+ * light field never repeats.
+ *
+ * The .ambient-noise pseudo-element applies an SVG feTurbulence grain overlay
+ * that gives the light a tactile, atmospheric quality.
+ */
+function AmbientBackground() {
   return (
-    <div
-      className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
-      style={{
-        background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(0, 210, 255, 0.04), transparent 40%)`,
-      }}
-    />
-  );
-}
-
-function LiquidGlassCard({ children, className = '' }) {
-  const cardRef = useRef(null);
-  const [glow, setGlow] = useState({ x: '50%', y: '50%', opacity: 0 });
-
-  const handleMove = useCallback((e) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setGlow({
-      x: `${((e.clientX - rect.left) / rect.width) * 100}%`,
-      y: `${((e.clientY - rect.top) / rect.height) * 100}%`,
-      opacity: 1
-    });
-  }, []);
-
-  const handleLeave = useCallback(() => {
-    setGlow(prev => ({ ...prev, opacity: 0 }));
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      className={`relative overflow-hidden ${className}`}
-    >
-      <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
-        style={{
-          opacity: glow.opacity,
-          background: `radial-gradient(400px circle at ${glow.x} ${glow.y}, rgba(0, 210, 255, 0.08), transparent 50%)`,
-        }}
-      />
-      {children}
+    <div className="ambient-container" aria-hidden="true">
+      <div className="ambient-orb ambient-orb--purple" />
+      <div className="ambient-orb ambient-orb--cyan" />
+      <div className="ambient-orb ambient-orb--slate" />
+      <div className="ambient-noise" />
     </div>
   );
 }
 
-export default function PremiumTecStore() {
+/*
+ * =============================================================================
+ * NAVIGATION
+ * =============================================================================
+ * Transparent sticky nav with glassmorphism. Pure black background with
+ * 60px backdrop-blur. Sharp edges, minimal, high contrast.
+ */
+function Navigation({ onShopNow }) {
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.8, ease: easePremium }}
+      className="fixed top-0 left-0 right-0 z-50 glass-nav h-16"
+    >
+      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+        <span className="text-lg font-bold tracking-tighter text-white select-none">
+          TECHSTORE
+        </span>
+
+        <div className="hidden md:flex items-center gap-8">
+          <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/40">
+            Phones
+          </span>
+          <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/40">
+            Laptops
+          </span>
+          <button
+            onClick={onShopNow}
+            className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white border border-white/20 px-5 py-2 hover:bg-white hover:text-black transition-all duration-500"
+            style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+          >
+            Shop Now
+          </button>
+        </div>
+      </div>
+    </motion.nav>
+  );
+}
+
+/*
+ * =============================================================================
+ * HERO SECTION
+ * =============================================================================
+ * High-impact hero with the ambient background bleeding through the glass
+ * UI. Features a flagship device silhouette and stark typography.
+ */
+function Hero({ onShopNow }) {
+  return (
+    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-16">
+      <div className="max-w-6xl mx-auto w-full text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 1, ease: easePremium }}
+        >
+          <span className="inline-block text-[10px] font-medium tracking-[0.25em] uppercase text-white/30 mb-8 border border-white/10 px-4 py-2">
+            Flagship Phones &amp; Premium Laptops
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 1, ease: easePremium }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-6"
+        >
+          <span className="text-white">Technology.</span>
+          <br />
+          <span className="text-white/40 font-light">Redefined.</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.8, ease: easePremium }}
+          className="text-sm md:text-base text-white/40 max-w-xl mx-auto leading-relaxed mb-10 font-light"
+        >
+          The most advanced flagship phones and premium laptops, curated for those
+          who demand the absolute best in design and performance.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6, duration: 0.8, ease: easePremium }}
+          className="flex items-center justify-center gap-4"
+        >
+          <button
+            onClick={onShopNow}
+            className="px-8 py-3 bg-white text-black text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white/90 transition-all duration-500"
+            style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+          >
+            Explore Collection
+          </button>
+          <span className="text-[11px] text-white/30 tracking-[0.15em] uppercase">
+            Free shipping on orders over $999
+          </span>
+        </motion.div>
+
+        {/* Device Silhouette — Hero visual anchor */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.8, duration: 1.2, ease: easePremium }}
+          className="mt-16 md:mt-20 flex items-center justify-center"
+        >
+          <div className="device-frame inline-flex items-center justify-center p-8 md:p-12">
+            <svg viewBox="0 0 240 390" className="w-32 md:w-40 h-auto" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1">
+              <rect x="8" y="2" width="224" height="386" rx="24" stroke="rgba(255,255,255,0.3)" />
+              <rect x="16" y="12" width="208" height="340" rx="12" stroke="rgba(255,255,255,0.06)" />
+              <circle cx="120" cy="362" r="6" stroke="rgba(255,255,255,0.15)" />
+              <rect x="96" y="6" width="48" height="10" rx="5" stroke="rgba(255,255,255,0.1)" />
+              <line x1="60" y1="80" x2="180" y2="80" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+              <line x1="60" y1="100" x2="150" y2="100" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+              <line x1="60" y1="120" x2="170" y2="120" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+              <line x1="60" y1="140" x2="130" y2="140" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+              <rect x="80" y="260" width="80" height="80" rx="8" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+              <circle cx="120" cy="298" r="20" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+            </svg>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/*
+ * =============================================================================
+ * PRODUCT SHOWCASE
+ * =============================================================================
+ * Structured dark-mode product grid. Sharp 1px borders, no rounded corners
+ * on structural elements. Each card reveals on scroll with a subtle upward
+ * fade-in animation using the premium easing curve.
+ */
+function ProductShowcase({ searchQuery, setSearchQuery, filteredProducts, handleWhatsApp, filterOptions, selectedFilters, toggleFilter, activeFilterCount, clearAllFilters }) {
+  const [expandedFilter, setExpandedFilter] = useState('Category');
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-32">
+      <div className="max-w-7xl mx-auto">
+        {/* Section header */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          variants={scrollReveal}
+          className="mb-14"
+        >
+          <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-white/20 block mb-4">
+            The Collection
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-white">
+            Flagship Devices
+          </h2>
+          <div className="w-8 h-px bg-white/20 mt-4" />
+        </motion.div>
+
+        {/* Search */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={scrollReveal}
+          className="mb-10"
+        >
+          <div className="glass-input max-w-md">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+              <input
+                type="text"
+                placeholder="Search by device, processor, storage..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-10 py-3.5 bg-transparent text-white text-sm placeholder:text-white/20 focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white/30 hover:text-white/60 transition-colors"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Filter Sidebar */}
+          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-black/90 p-6 pt-20' : 'hidden lg:block'}`}>
+            <div className="sticky top-24">
+              <div className="glass-panel--sharp p-6">
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+                  <div className="flex items-center gap-2">
+                    <SlidersHorizontal size={13} className="text-white/30" />
+                    <h3 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/50">Filters</h3>
+                  </div>
+                  {activeFilterCount > 0 && (
+                    <span className="text-[10px] font-bold text-white/60">{activeFilterCount}</span>
+                  )}
+                </div>
+
+                <div className="space-y-1">
+                  {Object.entries(filterOptions).map(([filterName, values]) => {
+                    const isOpen = expandedFilter === filterName;
+                    const selectedInCategory = selectedFilters[filterName]?.length || 0;
+                    return (
+                      <div key={filterName} className="border-b border-white/5 last:border-b-0">
+                        <button
+                          onClick={() => setExpandedFilter(isOpen ? null : filterName)}
+                          className="w-full flex items-center justify-between py-3 text-[10px] font-semibold tracking-[0.15em] uppercase text-white/30 hover:text-white/60 transition-colors duration-150"
+                        >
+                          <span>{filterName}</span>
+                          <div className="flex items-center gap-2">
+                            {selectedInCategory > 0 && (
+                              <span className="text-[10px] font-bold text-white/50">{selectedInCategory}</span>
+                            )}
+                            <ChevronDown
+                              size={12}
+                              className={`text-white/20 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                            />
+                          </div>
+                        </button>
+
+                        {isOpen && (
+                          <div className="pb-4 space-y-2.5">
+                            {values.map((value) => {
+                              const isChecked = selectedFilters[filterName]?.includes(value) || false;
+                              return (
+                                <label key={value} className="flex items-center gap-3 cursor-pointer group py-0.5">
+                                  <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={() => toggleFilter(filterName, value)}
+                                    className="appearance-none w-3.5 h-3.5 border border-white/20 bg-transparent checked:bg-white checked:border-white transition-all duration-300"
+                                    style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                                  />
+                                  <span className={`text-xs transition-colors duration-150 ${isChecked ? 'text-white' : 'text-white/30 group-hover:text-white/50'}`}>
+                                    {value}
+                                  </span>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {mobileFiltersOpen && (
+                <button
+                  onClick={() => setMobileFiltersOpen(false)}
+                  className="w-full mt-4 py-3 bg-white/10 text-white text-[10px] font-semibold tracking-[0.15em] uppercase border border-white/10 hover:bg-white/20 transition-all duration-500"
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                >
+                  Close Filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile filter toggle */}
+          {!mobileFiltersOpen && (
+            <button
+              onClick={() => setMobileFiltersOpen(true)}
+              className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-5 py-3 glass-pill text-white text-[10px] font-semibold tracking-[0.15em] uppercase"
+            >
+              <SlidersHorizontal size={13} />
+              Filters
+              {activeFilterCount > 0 && <span className="text-white/60">({activeFilterCount})</span>}
+            </button>
+          )}
+
+          {/* Product Grid */}
+          <div className="lg:col-span-4">
+            {/* Active filter indicator */}
+            {activeFilterCount > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: easePremium }}
+                className="mb-6 overflow-hidden"
+              >
+                <div className="flex items-center justify-between border border-white/10 px-4 py-3 bg-[#0A0A0A]">
+                  <span className="text-xs text-white/40">
+                    <span className="text-white font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
+                  </span>
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-[10px] font-semibold tracking-[0.15em] uppercase text-white/40 hover:text-white transition-all duration-300"
+                    style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                  >
+                    Clear All
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-50px' }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            >
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <motion.div
+                    key={product.id}
+                    variants={staggerItem}
+                  >
+                    <div className="product-card h-full flex flex-col group">
+                      {/* Image area */}
+                      <div className="h-48 flex items-center justify-center bg-white/[0.01] border-b border-white/[0.03] relative">
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.7, ease: easePremium }}
+                          className="transition-all duration-700 group-hover:scale-105"
+                          style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        >
+                          <product.Image />
+                        </motion.div>
+
+                        {product.badge && (
+                          <span className="absolute top-3 left-3 text-[9px] font-medium tracking-[0.15em] uppercase border border-white/20 text-white/60 px-2.5 py-1">
+                            {product.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Info area */}
+                      <div className="flex-1 flex flex-col p-6 space-y-3">
+                        <div>
+                          <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/20">
+                            {product.category}
+                          </span>
+                          <h3 className="text-sm font-medium text-white/80 mt-1.5 leading-snug group-hover:text-white transition-colors duration-500"
+                            style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}>
+                            {product.name}
+                          </h3>
+                        </div>
+
+                        <div className="text-[11px] text-white/25 font-light leading-relaxed border-t border-white/5 pt-3 space-y-1">
+                          <p>{product.processor}</p>
+                          <p>{product.storage}</p>
+                          <p>{product.display}</p>
+                        </div>
+
+                        <div className="flex items-baseline gap-3 mt-auto pt-3 border-t border-white/5">
+                          <span className="text-lg font-medium text-white tracking-tight">
+                            ${product.price.toLocaleString()}
+                          </span>
+                          {product.originalPrice && (
+                            <span className="text-xs text-white/20 line-through">
+                              ${product.originalPrice.toLocaleString()}
+                            </span>
+                          )}
+                        </div>
+
+                        <button
+                          onClick={() => handleWhatsApp(product)}
+                          className="w-full py-3 mt-1 text-[10px] font-semibold tracking-[0.15em] uppercase text-white border border-white/10 hover:bg-white hover:text-black transition-all duration-500"
+                          style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        >
+                          Inquire
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="col-span-full"
+                >
+                  <div className="text-center py-20 border border-white/5 bg-[#0A0A0A]">
+                    <p className="text-white/40 text-sm mb-1">No products match your filters.</p>
+                    <p className="text-white/20 text-xs mb-4">Try adjusting your search or filter criteria.</p>
+                    <button
+                      onClick={clearAllFilters}
+                      className="text-[10px] font-semibold tracking-[0.15em] uppercase text-white/40 hover:text-white border border-white/10 px-4 py-2 transition-all duration-500"
+                      style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                    >
+                      Clear all filters
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="mt-10 pt-6 border-t border-white/5 text-center"
+            >
+              <p className="text-xs text-white/20 tracking-wider">
+                Showing <span className="text-white font-medium">{filteredProducts.length}</span> of{' '}
+                <span className="text-white font-medium">{products.length}</span> devices
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/*
+ * =============================================================================
+ * INFO SECTION — Store details
+ * =============================================================================
+ */
+function InfoSection() {
+  const infoItems = [
+    {
+      title: 'Location', accent: 'Harare, Zimbabwe',
+      lines: ['Corner Speke & Mbuya Nehanda', 'Sirus Mall, 1st Floor']
+    },
+    {
+      title: 'Hours', accent: 'Same-Day Delivery',
+      lines: ['Monday — Saturday', '08:30 — 17:00']
+    },
+    {
+      title: 'Shipping', accent: 'Fast & Reliable',
+      lines: ['Same-day within Harare', 'Nationwide across Zimbabwe']
+    },
+  ];
+
+  return (
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      className="relative z-10 px-6 py-24 border-t border-white/5"
+    >
+      <div className="max-w-6xl mx-auto">
+        <motion.div variants={scrollReveal} className="mb-14">
+          <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-white/20 block mb-4">
+            Showroom
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-white">
+            Visit Us
+          </h2>
+          <div className="w-8 h-px bg-white/20 mt-4" />
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {infoItems.map((item, i) => (
+            <motion.div
+              key={item.title}
+              variants={scrollReveal}
+              transition={{ delay: i * 0.1 }}
+              className="product-card p-6 md:p-8"
+            >
+              <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/20 block mb-4">
+                {item.title}
+              </span>
+              {item.lines.map((line, j) => (
+                <p key={j} className={`${j === 0 ? 'text-sm text-white/70 font-medium' : 'text-sm text-white/40 leading-relaxed mt-1'}`}>
+                  {line}
+                </p>
+              ))}
+              <p className="text-sm font-medium text-white/60 mt-3">{item.accent}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div variants={scrollReveal} className="mt-6 product-card p-8 md:p-10 text-center">
+          <h3 className="text-lg font-bold tracking-tight text-white/80">Stay Updated</h3>
+          <p className="text-sm text-white/30 max-w-lg mx-auto mt-2 leading-relaxed font-light">
+            Join our WhatsApp channel for daily stock updates and exclusive product arrivals.
+          </p>
+          <a
+            href="https://whatsapp.com/channel/0029Vb6hJE6F1YlVNfnyBk21"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-6 px-6 py-3 text-[10px] font-semibold tracking-[0.15em] uppercase text-white border border-white/10 hover:bg-white hover:text-black transition-all duration-500"
+            style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+          >
+            Join Channel
+            <ArrowRight size={12} />
+          </a>
+        </motion.div>
+      </div>
+    </motion.section>
+  );
+}
+
+/*
+ * =============================================================================
+ * FOOTER
+ * =============================================================================
+ */
+function Footer() {
+  return (
+    <footer className="relative z-10 border-t border-white/5 px-6 py-10">
+      <div className="max-w-7xl mx-auto text-center space-y-3">
+        <span className="text-sm font-bold tracking-tighter text-white/80">TECHSTORE</span>
+        <p className="text-xs text-white/20 tracking-wider">
+          &copy; {new Date().getFullYear()} TechStore. All rights reserved.
+        </p>
+        <p className="text-[10px] text-white/10 tracking-[0.15em] uppercase">
+          Flagship Phones &bull; Premium Laptops
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+/*
+ * =============================================================================
+ * PAGE — TechStore Landing
+ * =============================================================================
+ */
+export default function TechStore() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState({});
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [expandedFilter, setExpandedFilter] = useState('Product Categories');
-  const [introDone, setIntroDone] = useState(false);
   const mainRef = useRef(null);
-  const heroRef = useRef(null);
 
   const { scrollYProgress } = useScroll({ target: mainRef, offset: ['start start', 'end start'] });
-  const heroBlur = useTransform(scrollYProgress, [0, 0.2], [0, 6]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0.6]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
-
-  const springBlur = useSpring(heroBlur, { stiffness: 100, damping: 30 });
-  const springOpacity = useSpring(heroOpacity, { stiffness: 100, damping: 30 });
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIntroDone(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  const heroBlur = useTransform(scrollYProgress, [0, 0.2], [0, 4]);
+  const springBlur = useSpring(heroBlur, { stiffness: 80, damping: 25 });
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
@@ -307,17 +705,14 @@ export default function PremiumTecStore() {
       const searchMatch =
         product.name.toLowerCase().includes(q) ||
         product.processor.toLowerCase().includes(q) ||
-        product.ram.toLowerCase().includes(q) ||
         product.storage.toLowerCase().includes(q) ||
-        product.specs.toLowerCase().includes(q);
+        product.category.toLowerCase().includes(q);
 
       const filterMatch = Object.entries(selectedFilters).every(([key, values]) => {
         if (values.length === 0) return true;
-        if (key === 'Product Categories') return values.includes(product.category);
-        if (key === 'Processor Family') return values.some(v => product.processor.includes(v.split(' ')[0]));
-        if (key === 'RAM') return values.some(v => product.ram.includes(v.split('G')[0]));
-        if (key === 'Storage') return values.some(v => product.storage.includes(v.split('G')[0]));
-        if (key === 'Product Status') return values.includes(product.condition);
+        if (key === 'Category') return values.includes(product.category);
+        if (key === 'Processor') return values.some(v => product.processor.includes(v));
+        if (key === 'Storage') return values.some(v => product.storage.includes(v));
         return true;
       });
 
@@ -325,14 +720,8 @@ export default function PremiumTecStore() {
     });
   }, [searchQuery, selectedFilters]);
 
-  const handleWhatsAppSecure = useCallback((product) => {
-    const message = `Hi PremiumTec, I'd like to secure the following item:
-
-\u{1F4CD} Product: ${product.name}
-\uD83D\uDCBB Specifications: ${product.specs}
-\uD83D\uDCB0 Listed Price: $${product.price.toFixed(2)}
-
-Please confirm availability for pickup or same-day Harare delivery.`;
+  const handleWhatsApp = useCallback((product) => {
+    const message = `Hi TechStore, I'd like to inquire about:\n\nProduct: ${product.name}\nSpecs: ${product.processor} | ${product.storage} | ${product.display}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability.`;
     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(message)}`, '_blank');
   }, []);
 
@@ -352,501 +741,38 @@ Please confirm availability for pickup or same-day Harare delivery.`;
 
   const activeFilterCount = Object.values(selectedFilters).reduce((sum, arr) => sum + arr.length, 0);
 
+  const scrollToProducts = useCallback(() => {
+    const el = document.getElementById('products');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   return (
-    <div ref={mainRef} className="min-h-screen bg-[#121316] relative overflow-x-hidden">
-      <RainEffect />
-
-      <div className="fixed inset-0 z-[1] pointer-events-none overflow-hidden">
-        <div className="ambient-orb-1 absolute -top-32 -left-32 w-[700px] h-[700px] rounded-full opacity-[0.04]"
-          style={{ background: 'radial-gradient(circle, #00D2FF 0%, transparent 70%)' }} />
-        <div className="ambient-orb-2 absolute -bottom-48 -right-48 w-[800px] h-[800px] rounded-full opacity-[0.03]"
-          style={{ background: 'radial-gradient(circle, #0066FF 0%, transparent 70%)' }} />
-      </div>
-
-      {/* ── Intro Condensation Overlay ── */}
-      <AnimatePresence>
-        {!introDone && (
-          <motion.div
-            initial={{ opacity: 1, filter: 'blur(20px)' }}
-            exit={{ opacity: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }}
-            className="fixed inset-0 z-[100] bg-[#121316] flex items-center justify-center"
-          >
-            <motion.div
-              variants={introVariants}
-              initial="hidden"
-              animate="visible"
-              className="text-center"
-            >
-              <motion.div variants={childVariants} className="mb-6">
-                <div className="inline-flex items-center gap-2 liquid-glass-pill px-5 py-2">
-                  <MapPin size={12} className="text-[#00D2FF]" />
-                  <span className="text-[10px] font-semibold tracking-widest uppercase text-white/70">Curated in Harare, Zimbabwe</span>
-                </div>
-              </motion.div>
-              <motion.h1
-                variants={wipeReveal}
-                className="text-5xl md:text-7xl font-black tracking-tighter"
-              >
-                <span className="gradient-text">Premium Hardware.</span>
-              </motion.h1>
-              <motion.div
-                variants={wipeReveal}
-                className="overflow-hidden mt-2"
-              >
-                <span className="text-5xl md:text-7xl font-black tracking-tighter text-white/90">Zero Compromise.</span>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div ref={mainRef} className="min-h-screen bg-[#000000] relative overflow-x-hidden">
+      <AmbientBackground />
 
       <div className="relative z-10">
-        {/* ── Liquid Glass Navigation ── */}
-        <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="sticky top-0 z-50 glass-nav"
-        >
-          <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-0.5">
-              <span className="text-xl md:text-2xl font-black tracking-tighter text-white">PREMIUM</span>
-              <span className="text-xl md:text-2xl font-black tracking-tighter gradient-text">TEC</span>
-            </div>
+        <Navigation onShopNow={scrollToProducts} />
 
-            <div className="hidden md:flex items-center gap-6 text-[11px] font-medium tracking-widest uppercase text-white/40">
-              <div className="flex items-center gap-1.5">
-                <MapPin size={10} className="text-[#00D2FF]" />
-                <span>Harare, ZW</span>
-              </div>
-              <span className="w-px h-3 bg-white/10" />
-              <div className="flex items-center gap-1.5">
-                <Clock size={10} className="text-white/40" />
-                <span>Mon\u2013Sat 08:30\u201317:00</span>
-              </div>
-            </div>
+        <motion.div style={{ filter: `blur(${springBlur}px)` }}>
+          <Hero onShopNow={scrollToProducts} />
+        </motion.div>
 
-            <a
-              href="https://wa.me/263780579633"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="md:hidden flex items-center gap-1.5 px-3 py-1.5 bg-white/10 hover:bg-[#00D2FF]/20 text-white text-[10px] font-bold tracking-widest uppercase rounded-full border border-white/10 transition-all duration-300"
-            >
-              <MessageCircle size={12} />
-              Chat
-            </a>
-          </div>
-        </motion.nav>
+        <div id="products">
+          <ProductShowcase
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            filteredProducts={filteredProducts}
+            handleWhatsApp={handleWhatsApp}
+            filterOptions={filterOptions}
+            selectedFilters={selectedFilters}
+            toggleFilter={toggleFilter}
+            activeFilterCount={activeFilterCount}
+            clearAllFilters={clearAllFilters}
+          />
+        </div>
 
-        {/* ── Hero Section ── */}
-        <motion.section
-          ref={heroRef}
-          style={{ filter: `blur(${springBlur}px)`, opacity: springOpacity, scale: heroScale }}
-          className="relative px-4 md:px-6 pt-20 md:pt-28 pb-0"
-        >
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center"
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 2.5, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex items-center gap-2 liquid-glass-pill px-5 py-2 mb-8"
-              >
-                <MapPin size={12} className="text-[#00D2FF]" />
-                <span className="text-[10px] font-semibold tracking-widest uppercase text-white/70">Curated in Harare, Zimbabwe</span>
-              </motion.div>
-
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.92] mb-6">
-                <span className="gradient-text text-refraction">Premium Hardware.</span>
-                <br />
-                <span className="text-white/90">Zero Compromise.</span>
-              </h1>
-
-              <p className="text-sm md:text-base text-white/50 max-w-xl mx-auto leading-relaxed mb-10">
-                Zimbabwe&apos;s most premium digital hardware showroom. Curated elite technology for creators, professionals, gamers, and power users.
-              </p>
-
-              <div className="flex items-center justify-center gap-6 md:gap-8 mb-12">
-                <div className="flex items-center gap-2">
-                  <Shield size={14} className="text-[#00D2FF]" />
-                  <span className="text-[11px] font-semibold tracking-wider uppercase text-white/50">Verified</span>
-                </div>
-                <span className="w-px h-4 bg-white/10" />
-                <div className="flex items-center gap-2">
-                  <Zap size={14} className="text-[#00D2FF]" />
-                  <span className="text-[11px] font-semibold tracking-wider uppercase text-white/50">Same-Day</span>
-                </div>
-                <span className="w-px h-4 bg-white/10" />
-                <div className="flex items-center gap-2">
-                  <Star size={14} className="text-[#00D2FF]" />
-                  <span className="text-[11px] font-semibold tracking-wider uppercase text-white/50">Top Rated</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ── Liquid Glass Search ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.8, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-input rounded-[50px] overflow-hidden"
-            >
-              <div className="relative group">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-[#00D2FF] transition-colors duration-300" size={18} />
-                <input
-                  type="text"
-                  placeholder="Search processors, memory, storage, or console..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-14 pr-12 py-4 md:py-5 bg-transparent text-white placeholder:text-white/30 focus:outline-none text-sm md:text-base"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-white/30 hover:text-white/60 transition-colors"
-                  >
-                    <X size={16} />
-                  </button>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* ── Main Catalog Section ── */}
-        <section className="relative px-4 md:px-6 py-10 md:py-14">
-          <div className="max-w-7xl mx-auto">
-            <AnimatePresence>
-              {activeFilterCount > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="mb-6 overflow-hidden"
-                >
-                  <div className="flex items-center justify-between liquid-glass-pill px-4 py-3 !rounded-xl">
-                    <span className="text-xs text-white/50">
-                      <span className="text-[#00D2FF] font-semibold">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
-                    </span>
-                    <button
-                      onClick={clearAllFilters}
-                      className="text-[10px] font-semibold tracking-wider uppercase px-3 py-1.5 border border-white/10 hover:border-[#00D2FF]/30 hover:bg-[#00D2FF]/10 text-white/50 hover:text-[#00D2FF] rounded-full transition-all duration-300"
-                    >
-                      Clear All
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-              {/* ── Filter Sidebar ── */}
-              <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block' : 'hidden lg:block'}`}>
-                <div className="sticky top-24">
-                  <div className="liquid-glass-card !rounded-2xl p-5">
-                    <div className="flex items-center justify-between mb-5 pb-4 border-b border-white/5">
-                      <div className="flex items-center gap-2">
-                        <SlidersHorizontal size={14} className="text-white/40" />
-                        <h3 className="text-[11px] font-bold text-white/80 tracking-widest uppercase">Filters</h3>
-                      </div>
-                      {activeFilterCount > 0 && (
-                        <span className="text-[10px] font-bold text-[#00D2FF] tracking-wider">{activeFilterCount}</span>
-                      )}
-                    </div>
-
-                    <div className="space-y-0">
-                      {Object.entries(filterOptions).map(([filterName, values]) => {
-                        const isOpen = expandedFilter === filterName;
-                        const selectedInCategory = selectedFilters[filterName]?.length || 0;
-                        return (
-                          <div key={filterName} className="border-b border-white/5 last:border-b-0">
-                            <button
-                              onClick={() => setExpandedFilter(isOpen ? null : filterName)}
-                              className="w-full flex items-center justify-between py-3.5 text-[11px] font-semibold tracking-wider uppercase text-white/40 hover:text-white/80 transition-colors duration-150"
-                            >
-                              <span>{filterName}</span>
-                              <div className="flex items-center gap-2">
-                                {selectedInCategory > 0 && (
-                                  <span className="text-[10px] font-bold text-[#00D2FF]">{selectedInCategory}</span>
-                                )}
-                                <ChevronDown
-                                  size={13}
-                                  className={`text-white/30 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                                />
-                              </div>
-                            </button>
-
-                            <AnimatePresence initial={false}>
-                              {isOpen && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: 'auto' }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                                  className="overflow-hidden"
-                                >
-                                  <div className="pb-4 space-y-2.5">
-                                    {values.map((value) => {
-                                      const isChecked = selectedFilters[filterName]?.includes(value) || false;
-                                      return (
-                                        <label key={value} className="flex items-center gap-3 cursor-pointer group py-0.5">
-                                          <input
-                                            type="checkbox"
-                                            checked={isChecked}
-                                            onChange={() => toggleFilter(filterName, value)}
-                                            className="accent-[#00D2FF]"
-                                          />
-                                          <span className={`text-[12px] transition-colors duration-150 ${isChecked ? 'text-white font-medium' : 'text-white/40 group-hover:text-white/60'}`}>
-                                            {value}
-                                          </span>
-                                        </label>
-                                      );
-                                    })}
-                                  </div>
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {mobileFiltersOpen && (
-                    <button
-                      onClick={() => setMobileFiltersOpen(false)}
-                      className="w-full mt-3 py-3 bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold tracking-widest uppercase rounded-full border border-white/10 transition-all duration-300"
-                    >
-                      Close Filters
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* ── Mobile filter toggle ── */}
-              {!mobileFiltersOpen && (
-                <button
-                  onClick={() => setMobileFiltersOpen(true)}
-                  className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 px-5 py-3 liquid-glass-pill text-white text-[11px] font-semibold tracking-widest uppercase shadow-lg hover:border-[#00D2FF]/30 transition-all duration-300"
-                >
-                  <SlidersHorizontal size={14} />
-                  Filters
-                  {activeFilterCount > 0 && <span className="text-[#00D2FF]">({activeFilterCount})</span>}
-                </button>
-              )}
-
-              {/* ── Product Grid ── */}
-              <div className="lg:col-span-4">
-                <motion.div
-                  variants={staggerContainer}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: '-50px' }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-                >
-                  <AnimatePresence mode="popLayout">
-                    {filteredProducts.length > 0 ? (
-                      filteredProducts.map((product) => (
-                        <motion.div
-                          key={product.id}
-                          variants={staggerItem}
-                          layout
-                          layoutId={`product-${product.id}`}
-                        >
-                          <LiquidGlassCard className="liquid-glass-card !rounded-2xl h-full flex flex-col overflow-hidden group will-change-transform">
-                            <div className="relative h-44 flex items-center justify-center bg-white/[0.02] border-b border-white/5 overflow-hidden">
-                              <motion.div
-                                initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-                                whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                className="text-6xl transition-all duration-500 ease-out group-hover:scale-110 select-none"
-                              >
-                                {product.image}
-                              </motion.div>
-                              {product.badge && (
-                                <div className="absolute top-3 left-3 text-[9px] font-bold tracking-widest uppercase bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white px-2 py-1 rounded-full">
-                                  {product.badge}
-                                </div>
-                              )}
-                              {product.condition === 'Brand New Boxed' && !product.badge && (
-                                <div className="absolute top-3 right-3 text-[9px] font-bold tracking-widest uppercase bg-white/10 text-white/70 px-2 py-1 rounded-full border border-white/10">
-                                  NEW
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="flex-1 flex flex-col p-5 space-y-3">
-                              <div>
-                                <h3 className="text-[15px] font-bold leading-snug text-white/90 group-hover:text-[#00D2FF] transition-colors duration-300">
-                                  {product.name}
-                                </h3>
-                                <p className="text-[11px] tracking-widest uppercase text-white/30 mt-1 font-medium">
-                                  {product.condition}
-                                </p>
-                              </div>
-
-                              <div className="text-[11px] text-white/30 tracking-wider font-mono leading-relaxed border-t border-white/5 pt-3">
-                                {product.specs}
-                              </div>
-
-                              <div className="flex items-baseline gap-2 mt-auto pt-2">
-                                <span className="text-2xl font-black tracking-tight text-white">
-                                  ${product.price.toFixed(2)}
-                                </span>
-                                {product.originalPrice > product.price && (
-                                  <span className="text-xs text-white/30 line-through">
-                                    ${product.originalPrice.toFixed(2)}
-                                  </span>
-                                )}
-                              </div>
-
-                              <button
-                                onClick={() => handleWhatsAppSecure(product)}
-                                className="w-full py-3 mt-2 bg-white/10 hover:bg-gradient-to-r hover:from-[#00D2FF] hover:to-[#0066FF] text-white font-bold text-[11px] tracking-wider uppercase rounded-full border border-white/10 hover:border-transparent transition-all duration-300 flex items-center justify-center gap-2 active:scale-[0.98] will-change-transform"
-                              >
-                                <MessageCircle size={14} />
-                                Secure via WhatsApp
-                              </button>
-                            </div>
-                          </LiquidGlassCard>
-                        </motion.div>
-                      ))
-                    ) : (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="col-span-full"
-                      >
-                        <div className="text-center py-20">
-                          <div className="text-6xl mb-4">\uD83D\uDD0D</div>
-                          <p className="text-white/50 text-sm mb-1">No products match your filters.</p>
-                          <p className="text-white/30 text-xs mb-4">Try adjusting your search or filter criteria.</p>
-                          <button
-                            onClick={clearAllFilters}
-                            className="text-[11px] font-semibold tracking-wider uppercase text-[#00D2FF] hover:underline px-4 py-2 border border-[#00D2FF]/30 hover:border-[#00D2FF] rounded-full transition-all duration-300"
-                          >
-                            Clear all filters
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  className="mt-10 pt-6 border-t border-white/5 text-center"
-                >
-                  <p className="text-xs text-white/30 tracking-wider">
-                    Showing <span className="text-[#00D2FF] font-semibold">{filteredProducts.length}</span> of <span className="text-[#00D2FF] font-semibold">{products.length}</span> products
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Showroom Info Section ── */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          className="relative px-4 md:px-6 py-16 md:py-20 border-t border-white/5"
-        >
-          <div className="max-w-6xl mx-auto">
-            <motion.div variants={scrollReveal} className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-white/90">Your Premium Showroom</h2>
-              <div className="h-[2px] w-10 bg-gradient-to-r from-[#00D2FF] to-[#0066FF] mt-3 rounded-full" />
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                {
-                  icon: MapPin,
-                  title: 'Store Location',
-                  lines: ['Corner Speke & Mbuya Nehanda', 'Sirus Mall, 1st Floor, Office B10'],
-                  accent: 'Harare, Zimbabwe'
-                },
-                {
-                  icon: Clock,
-                  title: 'Operations',
-                  lines: ['Monday \u2013 Saturday', '08:30 \u2013 17:00'],
-                  accent: 'Harare Delivery Available'
-                },
-                {
-                  icon: Truck,
-                  title: 'Shipping',
-                  lines: ['Same-day delivery within Harare', 'Nationwide shipping across Zimbabwe'],
-                  accent: 'Fast & Reliable'
-                }
-              ].map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  variants={scrollReveal}
-                  transition={{ delay: i * 0.1 }}
-                  className="liquid-glass-card !rounded-2xl p-6 md:p-8"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 border border-white/10 flex-shrink-0">
-                      <item.icon size={16} className="text-[#00D2FF]" />
-                    </div>
-                    <div>
-                      <h3 className="text-[10px] font-bold tracking-widest uppercase text-white/30 mb-3">{item.title}</h3>
-                      {item.lines.map((line, j) => (
-                        <p key={j} className={`${j === 0 ? 'text-sm text-white/80 font-semibold' : 'text-sm text-white/50 leading-relaxed mt-1'}`}>
-                          {line}
-                        </p>
-                      ))}
-                      <p className="text-sm font-bold text-[#00D2FF] mt-2">{item.accent}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* WhatsApp CTA */}
-            <motion.div variants={scrollReveal} className="mt-10 liquid-glass-card !rounded-2xl p-8 md:p-10 text-center">
-              <h3 className="text-lg md:text-xl font-black tracking-tight text-white/90">Stay Updated on Latest Arrivals</h3>
-              <p className="text-sm text-white/50 max-w-lg mx-auto mt-2 leading-relaxed">
-                Join our official WhatsApp community channel for daily stock updates and exclusive product arrivals.
-              </p>
-              <a
-                href="https://whatsapp.com/channel/0029Vb6hJE6F1YlVNfnyBk21"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 px-8 py-3 bg-white/10 hover:bg-gradient-to-r hover:from-[#00D2FF] hover:to-[#0066FF] text-white font-bold text-[11px] tracking-widest uppercase rounded-full border border-white/10 hover:border-transparent transition-all duration-300"
-              >
-                Join WhatsApp Channel
-                <ArrowRight size={14} />
-              </a>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* ── Footer ── */}
-        <footer className="border-t border-white/5 px-4 md:px-6 py-10">
-          <div className="max-w-7xl mx-auto text-center space-y-3">
-            <div className="flex items-center justify-center gap-0.5">
-              <span className="text-sm font-black tracking-tighter text-white">PREMIUM</span>
-              <span className="text-sm font-black tracking-tighter gradient-text">TEC</span>
-            </div>
-            <p className="text-xs text-white/30 tracking-wider">
-              &copy; {new Date().getFullYear()} PremiumTec Zimbabwe. All rights reserved.
-            </p>
-            <p className="text-[10px] text-white/20 tracking-widest uppercase">
-              Zimbabwe&apos;s Most Premium Digital Hardware Showroom
-            </p>
-          </div>
-        </footer>
+        <InfoSection />
+        <Footer />
       </div>
     </div>
   );
