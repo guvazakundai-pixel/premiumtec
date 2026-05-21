@@ -95,12 +95,14 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between" ref={dropdownRef}>
         <Link href="/" className="flex items-center shrink-0">
           <Image
-            src="/images/techstore-logo.png"
+            src="/logo.png"
             alt="Tech Store"
-            width={240}
-            height={60}
-            className="h-12 w-auto object-contain"
+            width={320}
+            height={80}
+            className="h-10 w-auto object-contain"
             priority
+            quality={100}
+            style={{ imageRendering: 'crisp-edges' }}
           />
         </Link>
 

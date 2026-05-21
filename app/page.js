@@ -11,8 +11,9 @@ import {
   RefreshCw, Users, Award, Clock3, Gamepad,
   Tablet, Laptop, Tv, Speaker, Watch, Camera
 } from 'lucide-react';
-import { products as allProducts, getBrand, getSubcategory, getUsageType, categories } from '@/app/products/data';
+import { products as allProducts, getBrand, getSubcategory, getUsageType, getAspectRatio, categories } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
+import ProductModal from '@/app/components/ProductModal';
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -38,6 +39,25 @@ const filterOptions = {
   Processor: [...new Set(products.filter(p => p.processor !== 'N/A').map(p => p.processor))],
   Storage: [...new Set(products.filter(p => p.storage !== 'N/A').map(p => p.storage))],
 };
+
+function getKeySpecs(product) {
+  const specs = [];
+  if (product.processor && product.processor !== 'N/A') specs.push(product.processor);
+  if (product.storage && product.storage !== 'N/A') specs.push(product.storage);
+  if (product.display && product.display !== 'N/A') specs.push(product.display);
+  return specs.slice(0, 4);
+}
+
+function getSavings(product) {
+  if (!product.originalPrice || product.originalPrice <= product.price) return 0;
+  return product.originalPrice - product.price;
+}
+
+function getPriceTier(price) {
+  if (price < 200) return { label: 'Budget', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
+  if (price < 500) return { label: 'Mid-Range', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' };
+  return { label: 'Premium', color: 'bg-violet-500/10 text-violet-400 border-violet-500/20' };
+}
 
 function lcg(seed) {
   return ((seed * 1664525 + 1013904223) & 0x7fffffff) / 0x80000000;
@@ -223,7 +243,7 @@ function CategoryGateway() {
   );
 }
 
-function LaptopBrands() {
+function LaptopsSection({ setSelectedProduct }) {
   const { addItem } = useCart();
   const [notify, setNotify] = useState(null);
 
@@ -233,27 +253,18 @@ function LaptopBrands() {
     setTimeout(() => setNotify(null), 2000);
   }, [addItem]);
 
-  const laptops = useMemo(() => products.filter(p => p.category === 'Laptops'), []);
-  const brands = useMemo(() => {
-    const grouped = {};
-    laptops.forEach(p => {
-      const b = getBrand(p);
-      if (!grouped[b]) grouped[b] = [];
-      grouped[b].push(p);
-    });
-    const order = ['HP', 'Dell', 'ASUS', 'Apple'];
-    return order.filter(b => grouped[b]).map(b => ({ brand: b, items: grouped[b] }));
-  }, [laptops]);
+  const laptops = useMemo(() =>
+    [...products.filter(p => p.category === 'Laptops')].sort((a, b) => a.price - b.price),
+  []);
 
-  const getCpu = (p) => p.processor !== 'N/A' ? p.processor.split(' ').slice(0, 3).join(' ') : '';
-  const getRam = (p) => {
-    const m = p.storage.match(/(\d+GB\s*RAM)/i);
-    return m ? m[1] : (p.description.match(/(\d+GB)\s*RAM/i) ? p.description.match(/(\d+GB)\s*RAM/i)[1] + ' RAM' : '');
-  };
-  const getStorage = (p) => p.storage !== 'N/A' ? p.storage.split('+')[0].trim() : '';
+  const tiers = useMemo(() => [
+    { label: 'Budget', range: 'Under $200', min: 0, max: 199, color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' },
+    { label: 'Mid-Range', range: '$200 – $499', min: 200, max: 499, color: 'bg-blue-500/10 text-blue-600 border-blue-500/20' },
+    { label: 'Premium', range: '$500+', min: 500, max: Infinity, color: 'bg-violet-500/10 text-violet-600 border-violet-500/20' },
+  ].map(t => ({ ...t, items: laptops.filter(p => p.price >= t.min && p.price <= t.max) })).filter(t => t.items.length > 0), [laptops]);
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28 section-gray">
+    <section id="laptops-section" className="relative z-10 px-6 py-24 md:py-28 section-gray">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -270,66 +281,73 @@ function LaptopBrands() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-zinc-400">Brands</span>
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-zinc-400">Laptops</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-zinc-900">Laptops by Brand</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-zinc-900">Laptops</h2>
+          <p className="text-sm text-zinc-400 mt-3 max-w-lg font-light">Affordable refurbished laptops for every budget — sorted by price.</p>
         </motion.div>
 
-        {brands.map(({ brand, items }) => (
-          <div key={brand} className="mb-12 last:mb-0">
+        {tiers.map(({ label, range, color, items }) => (
+          <div key={label} className="mb-12 last:mb-0">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-1 h-5 rounded-full bg-[#2563EB]" />
-              <h3 className="text-lg font-semibold text-zinc-800">{brand}</h3>
+              <h3 className="text-lg font-semibold text-zinc-800">{label}</h3>
+              <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-medium ${color}`}>{range}</span>
               <span className="text-xs text-zinc-400">({items.length} devices)</span>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin">
-              {items.map(product => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="w-64 flex-shrink-0"
-                >
-                  <div className="card-light h-full flex flex-col group">
-                    <a href={`/products/${product.slug}`} className="aspect-[4/3] flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {items.map(product => {
+                const savings = getSavings(product);
+                const specs = getKeySpecs(product);
+                return (
+                  <div key={product.id} className="card-light h-full flex flex-col group">
+                    <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-zinc-50 to-transparent border-b border-zinc-100 overflow-hidden cursor-pointer"
+                      style={{ aspectRatio: getAspectRatio(product) }}>
                       {product.image ? (
                         <img src={product.image} alt={product.name}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
-                        <Laptop size={40} className="text-white/20" />
+                        <Laptop size={40} className="text-zinc-300" />
                       )}
-                    </a>
+                      {product.badge && (
+                        <span className="absolute top-3 left-3 badge-light text-[9px]">{product.badge}</span>
+                      )}
+                      {savings > 10 && (
+                        <span className="absolute top-3 right-3 text-[9px] px-2 py-0.5 rounded-full bg-emerald-500 text-white font-semibold">Save ${savings}</span>
+                      )}
+                    </div>
                     <div className="flex-1 flex flex-col p-4 gap-2">
-                      <a href={`/products/${product.slug}`}>
-                        <h4 className="text-xs font-medium text-zinc-800 leading-snug line-clamp-2 hover:text-zinc-900 transition-colors">{product.name}</h4>
-                      </a>
-                      <div className="flex flex-wrap gap-1">
-                        {getCpu(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-600">{getCpu(product)}</span>}
-                        {getRam(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-600">{getRam(product)}</span>}
-                        {getStorage(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-600">{getStorage(product)}</span>}
+                      <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
+                        <h4 className="text-sm font-semibold text-zinc-800 leading-snug line-clamp-2 hover:text-zinc-900 transition-colors">{product.name}</h4>
                       </div>
-                      <div className="mt-auto pt-2 border-t border-zinc-100 flex items-center justify-between gap-2">
-                        <span className="text-base font-semibold text-zinc-900">${product.price.toLocaleString()}</span>
-                        <button
-                          onClick={() => handleAdd(product)}
+                      <div className="flex flex-wrap gap-1">
+                        {specs.map((spec, i) => (
+                          <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-500">{spec}</span>
+                        ))}
+                      </div>
+                      <div className="mt-auto pt-3 border-t border-zinc-100 flex items-center justify-between">
+                        <div>
+                          <span className="text-lg font-bold text-zinc-900">${product.price.toLocaleString()}</span>
+                          {product.originalPrice && <span className="text-xs text-zinc-400 line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
+                          {savings > 10 && <span className="text-[10px] text-emerald-600 font-medium ml-2">Save ${savings}</span>}
+                        </div>
+                        <button onClick={() => handleAdd(product)}
                           disabled={!product.inStock}
-                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                        >
+                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
                           Add to Cart
                         </button>
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}
 
         <motion.div variants={fadeUp} className="text-center mt-8">
           <a href="/laptops" className="text-xs text-zinc-400 hover:text-zinc-800 transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
-            View All Laptops <ArrowRight size={14} />
+            Browse All Laptops <ArrowRight size={14} />
           </a>
         </motion.div>
       </div>
@@ -337,7 +355,103 @@ function LaptopBrands() {
   );
 }
 
-function PhonesSection() {
+function FeaturedDeals({ setSelectedProduct }) {
+  const { addItem } = useCart();
+  const [notify, setNotify] = useState(null);
+
+  const handleAdd = useCallback((product) => {
+    addItem(product);
+    setNotify(`${product.name} added to cart`);
+    setTimeout(() => setNotify(null), 2000);
+  }, [addItem]);
+
+  const deals = useMemo(() =>
+    [...products.filter(p => p.badge && (p.badge === 'DEAL' || p.badge === 'NEW' || p.price < 300))]
+      .sort((a, b) => (a.originalPrice ? (a.originalPrice - a.price) : 0) - (b.originalPrice ? (b.originalPrice - b.price) : 0))
+      .reverse()
+      .slice(0, 6),
+  []);
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
+      <div className="ambient-container" aria-hidden="true">
+        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.12), transparent)' }} />
+        <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.08), transparent)' }} />
+      </div>
+      {notify && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
+          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
+        >
+          {notify}
+        </motion.div>
+      )}
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Deals</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Featured Deals</h2>
+          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">Best-value products handpicked for you.</p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {deals.map(product => {
+            const savings = getSavings(product);
+            const specs = getKeySpecs(product);
+            return (
+              <div key={product.id}>
+                <div className="glass-card h-full flex flex-col group overflow-hidden">
+                  <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-white/[0.02] overflow-hidden cursor-pointer"
+                    style={{ aspectRatio: getAspectRatio(product) }}>
+                    {product.image ? (
+                      <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    ) : (
+                      <Package size={48} className="text-white/20" />
+                    )}
+                    {product.badge && (
+                      <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">{product.badge}</span>
+                    )}
+                    {savings > 10 && (
+                      <span className="absolute top-3 right-3 px-2 py-1 text-[9px] font-semibold rounded-full bg-emerald-500 text-white">-${savings}</span>
+                    )}
+                  </div>
+                  <div className="p-4 flex flex-col gap-2 flex-1">
+                    <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
+                      <h3 className="text-sm font-semibold text-white/80 leading-snug group-hover:text-white transition-colors">{product.name}</h3>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {specs.slice(0, 2).map((spec, i) => (
+                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
+                      ))}
+                    </div>
+                    <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
+                      <div>
+                        <span className="text-lg font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-white/30 line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
+                      </div>
+                      <button onClick={() => handleAdd(product)}
+                        disabled={!product.inStock}
+                        className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PhonesSection({ setSelectedProduct }) {
   const [activeTab, setActiveTab] = useState('All');
 
   const phones = useMemo(() => products.filter(p => p.category === 'Phones'), []);
@@ -400,25 +514,27 @@ function PhonesSection() {
           {filtered.map(product => (
             <motion.div key={product.id} variants={fadeUp}>
               <div className="glass-card h-full flex flex-col group p-5">
-                <a href={`/products/${product.slug}`} className="aspect-[3/4] flex items-center justify-center bg-white/[0.02] rounded-xl border border-white/[0.04] overflow-hidden">
+                <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-white/[0.02] rounded-xl border border-white/[0.04] overflow-hidden cursor-pointer"
+                  style={{ aspectRatio: getAspectRatio(product) }}>
                   {product.image ? (
                     <img src={product.image} alt={product.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   ) : (
                     <Smartphone size={48} className="text-white/20" />
                   )}
-                </a>
-                {product.badge && (
-                  <span className="text-[9px] px-2 py-1 rounded-full bg-[#2563EB]/10 text-[#38BDF8] font-medium border border-[#2563EB]/15 self-start mb-2">
-                    {product.badge}
-                  </span>
-                )}
+                  {product.badge && (
+                    <span className="absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full bg-[#2563EB]/10 text-[#38BDF8] font-medium border border-[#2563EB]/15">
+                      {product.badge}
+                    </span>
+                  )}
+                </div>
                 <a href={`/products/${product.slug}`}>
                   <h3 className="text-sm font-medium text-white/80 leading-snug mb-2 hover:text-white transition-colors">{product.name}</h3>
                 </a>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {product.storage && product.storage !== 'N/A' && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
-                  {product.display && product.display !== 'N/A' && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.display}</span>}
+                  {getKeySpecs(product).map((spec, i) => (
+                    <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
+                  ))}
                 </div>
                 <div className="flex items-center gap-1.5 mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -426,15 +542,16 @@ function PhonesSection() {
                   ))}
                   <span className="text-[10px] text-white/30 ml-1">{product.rating}</span>
                 </div>
-                <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-lg font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                    {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                  <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                      {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-400 font-medium">Save $${getSavings(product)}</span>}
+                    </div>
+                    <div onClick={() => setSelectedProduct(product)} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#2563EB] hover:text-blue-400 transition-colors cursor-pointer">
+                      View
+                    </div>
                   </div>
-                  <a href={`/products/${product.slug}`} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#2563EB] hover:text-blue-400 transition-colors">
-                    View
-                  </a>
-                </div>
                 <button
                   onClick={() => {
                     const msg = `Hi Tech Store, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
@@ -460,7 +577,7 @@ function PhonesSection() {
   );
 }
 
-function GamingShowcase() {
+function GamingShowcase({ setSelectedProduct }) {
   const gamingProducts = useMemo(() => products.filter(p => p.category === 'Gaming'), []);
   const gamingDesktop = useMemo(() => gamingProducts.filter(p => p.name.toLowerCase().includes('desktop')), [gamingProducts]);
   const consoles = useMemo(() => gamingProducts.filter(p => p.name.toLowerCase().includes('playstation') || p.name.toLowerCase().includes('xbox')), [gamingProducts]);
@@ -497,8 +614,8 @@ function GamingShowcase() {
               {gamingDesktop.slice(0, 2).map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <a href={`/products/${product.slug}`}
-                    className="block h-full rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-950/40 to-[#0F1A2E] p-6 group hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500">
+                  <div onClick={() => setSelectedProduct(product)}
+                    className="block h-full rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-950/40 to-[#0F1A2E] p-6 group hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500 cursor-pointer">
                     <div className="flex items-start gap-5">
                       <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
                         {product.image ? (
@@ -517,7 +634,7 @@ function GamingShowcase() {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -532,7 +649,7 @@ function GamingShowcase() {
               {consoles.map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <a href={`/products/${product.slug}`} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500">
+                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500 cursor-pointer">
                     <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
                         <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -549,7 +666,7 @@ function GamingShowcase() {
                         <span className={`text-[10px] ${product.inStock ? 'text-green-400/70' : 'text-amber-400/70'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
                       </div>
                     </div>
-                  </a>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -564,7 +681,7 @@ function GamingShowcase() {
               {gear.slice(0, 2).map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <a href={`/products/${product.slug}`} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500">
+                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500 cursor-pointer">
                     <div className="w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
                         <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -574,10 +691,17 @@ function GamingShowcase() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">{product.name}</h4>
-                      <p className="text-xs text-white/35">{product.processor !== 'N/A' ? product.processor : product.display}</p>
-                      <span className="text-sm font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {getKeySpecs(product).slice(0, 2).map((spec, i) => (
+                          <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
+                        ))}
+                      </div>
+                      <div className="flex items-baseline gap-2 mt-1">
+                        <span className="text-sm font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-[10px] text-white/30 line-through">${product.originalPrice.toLocaleString()}</span>}
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -594,7 +718,7 @@ function GamingShowcase() {
   );
 }
 
-function PCShowcase() {
+function PCShowcase({ setSelectedProduct }) {
   const pcs = useMemo(() => products.filter(p => p.category === 'PCs'), []);
 
   const getPerformanceLabel = useCallback((product) => {
@@ -662,12 +786,10 @@ function PCShowcase() {
                     </span>
                   </div>
 
-                  {!isCustom && (
+                  {!isCustom && getKeySpecs(product).length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4 relative z-10">
-                      {product.processor !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{product.processor}</span>}
-                      {product.storage !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{product.storage}</span>}
-                      {product.features?.filter(f => f.toLowerCase().includes('gpu') || f.toLowerCase().includes('rtx') || f.toLowerCase().includes('graphics')).slice(0, 1).map((f, idx) => (
-                        <span key={idx} className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{f}</span>
+                      {getKeySpecs(product).map((spec, i) => (
+                        <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{spec}</span>
                       ))}
                     </div>
                   )}
@@ -688,11 +810,12 @@ function PCShowcase() {
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-bold text-zinc-900">${product.price.toLocaleString()}</span>
                         {product.originalPrice && <span className="text-xs text-zinc-400 line-through">${product.originalPrice.toLocaleString()}</span>}
+                        {getSavings(product) > 10 && <span className="text-[10px] text-emerald-600 font-medium">Save $${getSavings(product)}</span>}
                       </div>
-                      <a href={`/products/${product.slug}`}
+                      <button onClick={() => setSelectedProduct(product)}
                         className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#059669] hover:text-[#10B981] transition-colors flex items-center gap-1">
                         View Details <ChevronRight size={12} />
-                      </a>
+                      </button>
                     </div>
                   )}
                 </div>
@@ -753,7 +876,8 @@ function WhyChooseUs() {
 
 function ProductShowcase({
   searchQuery, setSearchQuery, filteredProducts, handleWhatsApp,
-  filterOptions, selectedFilters, toggleFilter, activeFilterCount, clearAllFilters
+  filterOptions, selectedFilters, toggleFilter, activeFilterCount, clearAllFilters,
+  setSelectedProduct
 }) {
   const [expandedFilter, setExpandedFilter] = useState('Category');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -925,7 +1049,8 @@ function ProductShowcase({
                         <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
                       </button>
 
-                      <a href={`/products/${product.slug}`} className="aspect-[4/3] flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden relative">
+                      <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden cursor-pointer"
+                        style={{ aspectRatio: getAspectRatio(product) }}>
                         {product.image ? (
                           <img src={product.image} alt={product.name}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
@@ -937,7 +1062,7 @@ function ProductShowcase({
                         {product.badge && (
                           <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>
                         )}
-                      </a>
+                      </div>
 
                       <div className="flex-1 flex flex-col p-5 space-y-2.5">
                         <div>
@@ -948,7 +1073,7 @@ function ProductShowcase({
                         </div>
 
                         <div className="flex flex-wrap gap-1.5">
-                          {[product.processor.split(' ').slice(0, 2).join(' '), product.storage.split('/')[0].trim(), product.display.split(' ')[0]].filter(spec => spec && spec !== 'N/A').map((spec, i) => (
+                          {getKeySpecs(product).slice(0, 3).map((spec, i) => (
                             <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40 font-light">{spec}</span>
                           ))}
                         </div>
@@ -964,6 +1089,7 @@ function ProductShowcase({
                           <div className="flex items-baseline gap-3">
                             <span className="text-lg font-semibold text-[#F1F5F9] tracking-tight">${product.price.toLocaleString()}</span>
                             {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                            {getSavings(product) > 10 && <span className="text-[9px] text-emerald-400 font-medium">Save $${getSavings(product)}</span>}
                           </div>
                           <div className="flex items-center gap-1.5">
                             <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-400' : 'bg-amber-400'}`} />
@@ -1297,7 +1423,13 @@ function InfoSection() {
 export default function TechStore() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const mainRef = useRef(null);
+
+  useEffect(() => {
+    window.__openProductModal = setSelectedProduct;
+    return () => { delete window.__openProductModal; };
+  }, []);
 
   const { scrollYProgress } = useScroll({ target: mainRef, offset: ['start start', 'end start'] });
   const heroBlur = useTransform(scrollYProgress, [0, 0.2], [0, 3]);
@@ -1354,7 +1486,8 @@ export default function TechStore() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  return (
+    return (
+    <>
     <div ref={mainRef} className="min-h-screen bg-[#0A1224] relative overflow-x-hidden">
       <div className="noise-overlay" />
 
@@ -1364,11 +1497,18 @@ export default function TechStore() {
         </motion.div>
 
         <CategoryGateway />
-        <LaptopBrands />
-        <PhonesSection />
-        <GamingShowcase />
-        <PCShowcase />
+        <FeaturedDeals setSelectedProduct={setSelectedProduct} />
+        <LaptopsSection setSelectedProduct={setSelectedProduct} />
+        <GamingShowcase setSelectedProduct={setSelectedProduct} />
+        <PhonesSection setSelectedProduct={setSelectedProduct} />
+        <PCShowcase setSelectedProduct={setSelectedProduct} />
+
+        <div id="repairs">
+          <RepairServices />
+        </div>
+
         <WhyChooseUs />
+        <TrustStats />
 
         <div id="products">
           <ProductShowcase
@@ -1381,27 +1521,30 @@ export default function TechStore() {
             toggleFilter={toggleFilter}
             activeFilterCount={activeFilterCount}
             clearAllFilters={clearAllFilters}
+            setSelectedProduct={setSelectedProduct}
           />
         </div>
 
-        <div id="repairs">
-          <RepairServices />
-        </div>
-
-        <TrustStats />
         <Testimonials />
         <FAQ />
         <NewsletterSection />
         <InfoSection />
+        </div>
+
+        <button
+          onClick={scrollToProducts}
+          className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-[#2563EB] text-white shadow-[0_4px_24px_rgba(37,99,235,0.35)] flex items-center justify-center hover:bg-[#1D4ED8] transition-all duration-500 active:scale-95"
+          style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+        >
+          <ShoppingBag size={18} />
+        </button>
       </div>
 
-      <button
-        onClick={scrollToProducts}
-        className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-[#2563EB] text-white shadow-[0_4px_24px_rgba(37,99,235,0.35)] flex items-center justify-center hover:bg-[#1D4ED8] transition-all duration-500 active:scale-95"
-        style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
-      >
-        <ShoppingBag size={18} />
-      </button>
-    </div>
-  );
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+        )}
+      </AnimatePresence>
+    </>
+    );
 }

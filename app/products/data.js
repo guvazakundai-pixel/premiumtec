@@ -542,6 +542,21 @@ export function getSubcategory(product) {
   return null;
 }
 
+export function getAspectRatio(product) {
+  const cat = product.category?.toLowerCase() || '';
+  if (cat === 'phones') return '3/4';
+  if (cat === 'gaming') {
+    const n = product.name?.toLowerCase() || '';
+    if (n.includes('playstation') || n.includes('xbox')) return '1/1';
+    if (n.includes('monitor') || n.includes('sceptre')) return '16/9';
+    return '4/3';
+  }
+  if (cat === 'accessories') return '1/1';
+  if (cat === 'pcs') return '4/3';
+  // Laptops and everything else
+  return '4/3';
+}
+
 export const categories = [
   { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 32, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 5, desc: 'Consoles, desktops & monitors' },
