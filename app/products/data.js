@@ -368,6 +368,34 @@ export const products = [
     description: 'Apple iPad M5 with 8GB RAM and 256GB storage. The ultimate creative and productivity tablet with M5 chip performance.',
     features: ['Apple M5 Chip', '8GB RAM', '256GB Storage', '13" Liquid Retina XDR Display', 'USB-C', 'iPadOS'],
   },
+  {
+    id: 43, name: 'ASUS Vivobook X1404V', category: 'Laptops',
+    slug: 'asus-vivobook-x1404v-i5',
+    processor: 'Core i5-1334U 13th Gen', storage: '256GB SSD',
+    display: '14" FHD', price: 550, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.5, reviews: 0,
+    description: 'ASUS Vivobook X1404V with Core i5-1334U 13th Gen, 12GB RAM, 256GB SSD, and 14" FHD display. Reliable everyday performance.',
+    features: ['Core i5-1334U 13th Gen', '12GB RAM', '256GB SSD', '14" FHD Display', 'Windows 11', 'Slim Design'],
+  },
+  {
+    id: 44, name: 'ASUS Vivobook X1404V Core i7', category: 'Laptops',
+    slug: 'asus-vivobook-x1404v-i7',
+    processor: 'Core i7-1354U 13th Gen', storage: '512GB SSD',
+    display: '14" FHD', price: 750, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.6, reviews: 0,
+    description: 'ASUS Vivobook X1404V with Core i7-1354U 13th Gen, 12GB RAM, 512GB SSD, 14" FHD display, and Windows 11.',
+    features: ['Core i7-1354U 13th Gen', '12GB RAM', '512GB SSD', '14" FHD Display', 'Windows 11', 'Slim Design'],
+  },
+  {
+    id: 45, name: 'ASUS Zenbook UX3405C', category: 'Laptops',
+    slug: 'asus-zenbook-ux3405c',
+    processor: 'Core Ultra 9 285H Series 2', storage: '1TB SSD',
+    display: '14" Touchscreen', price: 1450, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.7, reviews: 0,
+    image: '/images/asus-zenbook-ux3405c.jpg',
+    description: 'ASUS Zenbook UX3405C in Jasper Gray with Core Ultra 9 285H Series 2, 32GB RAM, 1TB SSD, and 14" touchscreen. Premium ultrabook.',
+    features: ['Core Ultra 9 285H Series 2', '32GB RAM', '1TB SSD', '14" Touchscreen', 'Jasper Gray', 'Windows 11'],
+  },
 ];
 
 export function getProductBySlug(slug) {
@@ -379,7 +407,7 @@ export function getProductsByCategory(category) {
 }
 
 export const categories = [
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 29, desc: 'Professional computing power' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 32, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 5, desc: 'Consoles, desktops & monitors' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
 ];
