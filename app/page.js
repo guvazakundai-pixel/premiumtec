@@ -45,6 +45,8 @@ function getKeySpecs(product) {
   if (product.processor && product.processor !== 'N/A') specs.push(product.processor);
   if (product.storage && product.storage !== 'N/A') specs.push(product.storage);
   if (product.display && product.display !== 'N/A') specs.push(product.display);
+  const ramFeature = product.features?.find(f => f.toLowerCase().includes('gb ram') || f.toLowerCase().includes('gb ddr'));
+  if (ramFeature && !specs.some(s => s.toLowerCase().includes('gb ram') || s.toLowerCase().includes('gb ddr'))) specs.push(ramFeature);
   return specs.slice(0, 4);
 }
 

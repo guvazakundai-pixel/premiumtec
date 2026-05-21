@@ -6,8 +6,8 @@ export const products = [
     display: '15" HD', price: 200, originalPrice: null,
     badge: 'DEAL', inStock: true, rating: 4.3, reviews: 3,
     image: '/images/hp-250-g5.jpg',
-    description: 'Reliable HP 250 G5 notebook powered by Intel Core i5 6th generation. Perfect for everyday productivity, with 8GB RAM and a fast 256GB SSD.',
-    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', 'Windows 11 Pro', '15" HD Display', 'Lightweight design'],
+    description: 'Reliable HP 250 G5 notebook powered by Intel Core i5 6th generation. Perfect for everyday productivity with 8GB RAM and a fast 256GB SSD. Battery tested, Grade A condition, 90-day warranty included.',
+    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', 'Windows 11 Pro', '15" HD Display', 'Lightweight design', '90-Day Warranty', 'Grade A'],
   },
 
   // ─── GAMING DESKTOPS ───
@@ -24,12 +24,12 @@ export const products = [
   {
     id: 19, name: 'Gaming Desktop Core i9', category: 'Gaming',
     slug: 'gaming-desktop-i9',
-    processor: 'Core i9 11th Gen', storage: '512GB SSD',
+    processor: 'Core i9 11900K', storage: '1TB NVMe SSD',
     display: 'N/A', price: 1000, originalPrice: null,
     badge: 'GAMING', inStock: true, rating: 4.8, reviews: 4,
     image: '/images/gaming-desktop-i9.jpg',
-    description: 'Ultimate gaming desktop powered by Intel Core i9 11th Generation processor. Blazing fast performance for the most demanding games and applications.',
-    features: ['Core i9 11th Generation', 'High-performance cooling', 'Dedicated graphics', 'Custom RGB lighting', 'Windows 11 Pro'],
+    description: 'Ultimate gaming desktop powered by Intel Core i9 11900K, NVIDIA RTX 4070 12GB, 32GB DDR4 RAM, and 1TB NVMe SSD. Liquid cooling and 750W PSU. Blazing performance for the most demanding games.',
+    features: ['Core i9 11900K', '32GB DDR4 RAM', '1TB NVMe SSD', 'NVIDIA RTX 4070 12GB', 'Liquid Cooling', '750W PSU', 'Windows 11 Pro'],
   },
 
   // ─── GAMING CONSOLES ───
@@ -59,11 +59,11 @@ export const products = [
     id: 22, name: 'Sceptre 24" Monitor', category: 'Gaming',
     slug: 'sceptre-24-monitor',
     processor: 'N/A', storage: 'N/A',
-    display: '24" HD', price: 155, originalPrice: 170,
+    display: '24" FHD 75Hz', price: 155, originalPrice: 170,
     badge: 'NEW', inStock: true, rating: 4.4, reviews: 8,
     image: '/images/sceptre-24-monitor.jpg',
-    description: 'Brand new 24 inch monitor. Perfect for work and play with crisp visuals and slim bezel design.',
-    features: ['24" Display', 'Brand New', 'HD Resolution', 'Slim Bezel Design', 'VESA Mount Compatible'],
+    description: 'Brand new 24 inch Sceptre monitor with 1920x1080 FHD resolution and 75Hz refresh rate. Crisp visuals, slim bezel design, VESA compatible. Perfect for work and play.',
+    features: ['24" FHD 1920x1080', '75Hz Refresh Rate', 'Brand New', 'Slim Bezel Design', 'VESA Mount Compatible'],
   },
 
   // ─── VALUE LAPTOPS ───
@@ -71,21 +71,21 @@ export const products = [
     id: 9, name: 'HP 820 Elitebook G3', category: 'Laptops',
     slug: 'hp-820-elitebook-g3',
     processor: 'Core i5 6th Gen', storage: '256GB SSD',
-    display: '12.5" HD', price: 180, originalPrice: 190,
+    display: '12.5" HD 1366x768', price: 180, originalPrice: 190,
     badge: 'DEAL', inStock: true, rating: 4.2, reviews: 5,
     image: '/images/hp-820-elitebook-g3.jpg',
-    description: 'Compact and powerful HP Elitebook 820 G3. Perfect for professionals on the go.',
-    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '12.5" HD Display', 'Windows 11 Pro', 'Lightweight design'],
+    description: 'Compact and powerful HP Elitebook 820 G3 with Core i5 6th Gen, 8GB RAM, and 256GB SSD. Perfect for professionals on the go. Battery tested, Grade A condition, 90-day warranty included.',
+    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '12.5" HD Display', 'Windows 11 Pro', 'Lightweight design', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 10, name: 'HP Pavilion Gaming Laptop', category: 'Laptops',
     slug: 'hp-pavilion-gaming',
     processor: 'AMD Ryzen 5 4600', storage: '512GB SSD',
-    display: '15.6" HD', price: 590, originalPrice: 650,
+    display: '15.6" HD 60Hz', price: 590, originalPrice: 650,
     badge: 'GAMING', inStock: true, rating: 4.5, reviews: 7,
     image: '/images/hp-pavilion-gaming.jpg',
-    description: 'HP Pavilion Gaming laptop with AMD Ryzen 5 4600, dedicated NVIDIA GTX 1060 4GB graphics, 16GB RAM, and 512GB SSD.',
-    features: ['AMD Ryzen 5 4600', '16GB RAM', '512GB SSD', 'NVIDIA GTX 1060 4GB Dedicated', '15.6" HD Display', 'Gaming keyboard'],
+    description: 'HP Pavilion Gaming laptop with AMD Ryzen 5 4600, dedicated NVIDIA GTX 1060 4GB graphics, 16GB RAM, and 512GB SSD. Gaming keyboard, backlit, battery tested. Grade A condition with 90-day warranty.',
+    features: ['AMD Ryzen 5 4600', '16GB RAM', '512GB SSD', 'NVIDIA GTX 1060 4GB', '15.6" HD 60Hz Display', 'Backlit Keyboard', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 11, name: 'Dell Latitude E5470', category: 'Laptops',
@@ -94,8 +94,8 @@ export const products = [
     display: '14" HD', price: 200, originalPrice: 220,
     badge: 'DEAL', inStock: true, rating: 4.3, reviews: 6,
     image: '/images/dell-latitude-e5470.jpg',
-    description: 'Reliable Dell Latitude E5470 with Core i5 6th Gen, 256GB SSD, 8GB RAM, backlit keyboard, and excellent battery life. Comes with warranty.',
-    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Excellent Battery', 'With Warranty'],
+    description: 'Reliable Dell Latitude E5470 with Core i5 6th Gen, 8GB RAM, 256GB SSD, backlit keyboard, and excellent battery life. Grade A condition with 90-day warranty.',
+    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Excellent Battery', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 12, name: 'HP Elitebook 840 G3', category: 'Laptops',
@@ -104,18 +104,18 @@ export const products = [
     display: '14" HD', price: 200, originalPrice: 240,
     badge: 'DEAL', inStock: true, rating: 4.3, reviews: 8,
     image: '/images/hp-elitebook-840-g3.jpg',
-    description: 'Premium HP Elitebook 840 G3 with Core i5 6th Gen, 256GB SSD, 8GB RAM, and backlit keyboard. Wholesale $200, Retail $240.',
-    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Windows 11 Pro'],
+    description: 'Premium HP Elitebook 840 G3 with Core i5 6th Gen, 8GB RAM, 256GB SSD, and backlit keyboard. Battery tested, Grade A condition, 90-day warranty included.',
+    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Windows 11 Pro', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 13, name: 'HP 840 Elitebook G6 Core i7', category: 'Laptops',
     slug: 'hp-840-elitebook-g6',
-    processor: 'Core i7 7th Gen', storage: '256GB SSD',
-    display: '14" HD', price: 330, originalPrice: 380,
+    processor: 'Core i7 8665U 8th Gen', storage: '256GB SSD',
+    display: '14" FHD', price: 330, originalPrice: 380,
     badge: 'DEAL', inStock: true, rating: 4.4, reviews: 4,
     image: '/images/hp-840-elitebook-g6.jpg',
-    description: 'High-performance HP Elitebook 840 G6 with Core i7 7th Gen processor, 256GB SSD, 8GB RAM, and backlit keyboard.',
-    features: ['Core i7 7th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Windows 11 Pro'],
+    description: 'High-performance HP Elitebook 840 G6 with Intel Core i7 8665U 8th Gen, 256GB SSD, 8GB RAM, and 14" FHD display. Premium business ultrabook with backlit keyboard. Grade A condition, 90-day warranty included.',
+    features: ['Core i7 8665U 8th Generation', '8GB RAM', '256GB SSD', '14" FHD Display', 'Backlit Keyboard', 'Windows 11 Pro', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 14, name: 'Dell Latitude 5450', category: 'Laptops',
@@ -124,8 +124,8 @@ export const products = [
     display: '14" HD', price: 160, originalPrice: 180,
     badge: 'DEAL', inStock: true, rating: 4.1, reviews: 5,
     image: '/images/dell-latitude-5450.jpg',
-    description: 'Budget-friendly Dell Latitude 5450 with Core i5 5th Gen, 500GB HDD, 8GB RAM, backlit keyboard, and excellent battery life.',
-    features: ['Core i5 5th Generation', '8GB RAM', '500GB HDD', '14" HD Display', 'Backlit Keyboard', 'Excellent Battery'],
+    description: 'Budget-friendly Dell Latitude 5450 with Core i5 5th Gen, 8GB RAM, 500GB HDD, backlit keyboard, and excellent battery life. Grade A condition, 90-day warranty included.',
+    features: ['Core i5 5th Generation', '8GB RAM', '500GB HDD', '14" HD Display', 'Backlit Keyboard', 'Excellent Battery', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 15, name: 'Dell Latitude 5470', category: 'Laptops',
@@ -134,8 +134,8 @@ export const products = [
     display: '14" HD', price: 190, originalPrice: 220,
     badge: 'DEAL', inStock: true, rating: 4.3, reviews: 6,
     image: '/images/dell-latitude-5470.jpg',
-    description: 'Dell Latitude 5470 with Core i5 6th Gen, 256GB SSD, 8GB RAM, 14" HD display, backlit keyboard, and excellent battery life.',
-    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Excellent Battery'],
+    description: 'Dell Latitude 5470 with Core i5 6th Gen, 8GB RAM, 256GB SSD, 14" HD display, backlit keyboard, and excellent battery life. Grade A condition, 90-day warranty included.',
+    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Excellent Battery', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 16, name: 'HP Elitebook 840 G5', category: 'Laptops',
@@ -144,8 +144,8 @@ export const products = [
     display: '14" HD', price: 280, originalPrice: null,
     badge: 'DEAL', inStock: true, rating: 4.4, reviews: 5,
     image: '/images/hp-elitebook-840-g5.jpg',
-    description: 'HP Elitebook 840 G5 with Core i5 8th Gen processor, 256GB SSD, and 8GB RAM. Premium business laptop in excellent condition.',
-    features: ['Core i5 8th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Windows 11 Pro'],
+    description: 'HP Elitebook 840 G5 with Core i5 8th Gen, 8GB RAM, and 256GB SSD. Premium business laptop with backlit keyboard. Battery tested, Grade A condition, 90-day warranty included.',
+    features: ['Core i5 8th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Backlit Keyboard', 'Windows 11 Pro', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 17, name: 'HP Elitebook 1030 G2 x360', category: 'Laptops',
@@ -164,18 +164,18 @@ export const products = [
     display: '14" HD', price: 320, originalPrice: null,
     badge: 'DEAL', inStock: true, rating: 4.5, reviews: 3,
     image: '/images/dell-latitude-5420.jpg',
-    description: 'Dell Latitude 5420 with Core i5 10th Generation, 256GB SSD, and 8GB RAM. Business-ready laptop with excellent performance.',
-    features: ['Core i5 10th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Windows 11 Pro', 'Business-grade build'],
+    description: 'Dell Latitude 5420 with Core i5 10th Gen, 8GB RAM, and 256GB SSD. Business-ready laptop with excellent performance. Grade A condition, battery tested, 90-day warranty.',
+    features: ['Core i5 10th Generation', '8GB RAM', '256GB SSD', '14" HD Display', 'Windows 11 Pro', 'Business-grade build', '90-Day Warranty', 'Grade A'],
   },
   {
-    id: 23, name: 'MacBook', category: 'Laptops',
-    slug: 'macbook',
-    processor: 'Intel Core i5', storage: '256GB SSD',
-    display: '13.3" Retina', price: 500, originalPrice: null,
-    badge: null, inStock: true, rating: 4.4, reviews: 6,
+    id: 23, name: 'MacBook Pro 13"', category: 'Laptops',
+    slug: 'macbook-pro-13',
+    processor: 'Core i5 8th Gen', storage: '256GB SSD',
+    display: '13.3" Retina 2560x1600', price: 500, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.4, reviews: 6,
     image: '/images/macbook.jpg',
-    description: 'Apple MacBook in excellent condition. Perfect for everyday use with Retina display and premium build quality.',
-    features: ['Intel Core i5', '8GB RAM', '256GB SSD', '13.3" Retina Display', 'macOS', 'Premium aluminum body'],
+    description: 'Apple MacBook Pro 13" with Core i5 8th Gen, 8GB RAM, 256GB SSD, and stunning Retina display. Premium aluminum body, Touch Bar. Grade A condition, battery tested, 90-day warranty.',
+    features: ['Core i5 8th Generation', '8GB RAM', '256GB SSD', '13.3" Retina 2560x1600', 'Touch Bar', 'macOS', 'Premium aluminum', '90-Day Warranty', 'Grade A'],
   },
   {
     id: 24, name: 'Proline Notebook', category: 'Laptops',
@@ -184,8 +184,8 @@ export const products = [
     display: '14" HD', price: 110, originalPrice: null,
     badge: 'BUDGET', inStock: true, rating: 4.0, reviews: 4,
     image: '/images/proline.jpg',
-    description: 'Affordable Proline notebook with DualCore processor, 500GB storage, 4GB RAM, 14" screen, and excellent battery life.',
-    features: ['DualCore Processor', '4GB RAM', '500GB HDD', '14" HD Screen', 'Excellent Battery Life', 'Budget-friendly'],
+    description: 'Affordable Proline notebook with DualCore processor, 4GB RAM, 500GB HDD, and 14" screen. Excellent battery life. Budget-friendly computing with 90-day warranty.',
+    features: ['DualCore Processor', '4GB RAM', '500GB HDD', '14" HD Screen', 'Excellent Battery Life', 'Budget-friendly', '90-Day Warranty'],
   },
   {
     id: 25, name: 'HP Spectre 13.5', category: 'Laptops',
@@ -349,13 +349,14 @@ export const products = [
     features: ['Core Ultra 9 258V Series 2', '32GB RAM', '2TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'Windows 11'],
   },
   {
-    id: 41, name: 'Apple MacBook Neo (2026)', category: 'Laptops',
-    slug: 'apple-macbook-neo-2026',
-    processor: 'Apple Silicon', storage: '512GB SSD',
-    display: '14" Liquid Retina', price: 1000, originalPrice: null,
+    id: 41, name: 'MacBook Air M3', category: 'Laptops',
+    slug: 'macbook-air-m3',
+    processor: 'Apple M3', storage: '256GB SSD',
+    display: '13.6" Liquid Retina', price: 1000, originalPrice: null,
     badge: 'NEW', inStock: true, rating: 4.7, reviews: 0,
-    description: 'Brand new Apple MacBook Neo (2026) with 8GB RAM, 512GB SSD, and stunning 14" Liquid Retina display. Next-gen performance in a sleek design.',
-    features: ['Apple Silicon', '8GB RAM', '512GB SSD', '14" Liquid Retina Display', '2026 Model', 'macOS'],
+    image: '/images/macbook.jpg',
+    description: 'Brand new MacBook Air M3 with 8GB RAM, 256GB SSD, and stunning 13.6" Liquid Retina display. Apple M3 chip delivers incredible performance and all-day battery life. Lightweight and fanless design.',
+    features: ['Apple M3 Chip', '8GB RAM', '256GB SSD', '13.6" Liquid Retina Display', 'macOS Sonoma', 'All-day battery', 'Fanless design'],
   },
   {
     id: 42, name: 'Apple iPad M5', category: 'Laptops',
@@ -509,6 +510,7 @@ export function getBrand(product) {
   if (name.includes('dell')) return 'Dell';
   if (name.includes('asus')) return 'ASUS';
   if (name.includes('apple') || name.includes('macbook')) return 'Apple';
+  if (name.includes('ipad')) return 'Apple';
   if (name.includes('proline')) return 'Proline';
   if (name.includes('playstation') || name.includes('xbox')) return 'Sony/Microsoft';
   if (name.includes('sceptre')) return 'Sceptre';
@@ -533,7 +535,7 @@ export function getSubcategory(product) {
   if (name.includes('latitude')) return 'Latitude';
   if (name.includes('vivobook')) return 'VivoBook';
   if (name.includes('zenbook')) return 'ZenBook';
-  if (name.includes('macbook') || name.includes('macbook neo')) return 'MacBook';
+  if (name.includes('macbook')) return 'MacBook';
   if (name.includes('ipad')) return 'iPad';
   if (name.includes('proline')) return 'Proline';
   if (name.includes('playstation')) return 'PlayStation';
