@@ -41,19 +41,14 @@ export default function Nav() {
       style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" className="flex items-center group">
           <Image
             src="/images/techstore-logo.jpg"
             alt="Tech Store"
-            width={32}
-            height={32}
-            className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-[#2563EB]/20 group-hover:shadow-[#2563EB]/40 transition-all duration-500"
+            width={120}
+            height={40}
+            className="h-8 w-auto object-contain"
           />
-          <span className={`font-bold tracking-tight text-white select-none transition-all duration-500 ${
-            scrolled ? 'text-sm' : 'text-base'
-          }`}>
-            TECH STORE
-          </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-6">
