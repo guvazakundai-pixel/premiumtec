@@ -1,4 +1,7 @@
 'use client';
-import dynamic from 'next/dynamic';
-const CategoryPage = dynamic(() => import('@/app/components/CategoryPage'), { ssr: false });
-export default function PhonesPage() { return <CategoryPage category="phones" />; }
+
+import CategoryPage from '@/app/components/CategoryPage';
+
+export default function PhonesPage() {
+  return <CategoryPage category="Phones" title="Smartphones" description="Latest smartphones from Apple, Samsung, Google, and more." />;
+}

@@ -398,6 +398,101 @@ export const products = [
     description: 'ASUS Zenbook UX3405C in Jasper Gray with Core Ultra 9 285H Series 2, 32GB RAM, 1TB SSD, and 14" touchscreen. Premium ultrabook.',
     features: ['Core Ultra 9 285H Series 2', '32GB RAM', '1TB SSD', '14" Touchscreen', 'Jasper Gray', 'Windows 11'],
   },
+
+  // ─── SMARTPHONES ───
+  {
+    id: 46, name: 'iPhone 16 Pro Max', category: 'Phones',
+    slug: 'iphone-16-pro-max',
+    processor: 'A18 Pro', storage: '256GB',
+    display: '6.9" OLED 120Hz', price: 1499, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 3,
+    description: 'Latest iPhone 16 Pro Max with A18 Pro chip, 256GB storage, 6.9" OLED display with 120Hz ProMotion, and titanium design.',
+    features: ['A18 Pro Chip', '256GB Storage', '6.9" OLED 120Hz', 'Titanium Design', '48MP Camera', 'iOS 19'],
+  },
+  {
+    id: 47, name: 'Samsung Galaxy S25 Ultra', category: 'Phones',
+    slug: 'samsung-galaxy-s25-ultra',
+    processor: 'Snapdragon 8 Gen 4', storage: '256GB',
+    display: '6.9" AMOLED 120Hz', price: 1399, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 2,
+    description: 'Samsung Galaxy S25 Ultra with Snapdragon 8 Gen 4, 256GB storage, 6.9" AMOLED display, and S Pen support.',
+    features: ['Snapdragon 8 Gen 4', '256GB Storage', '6.9" AMOLED 120Hz', 'S Pen', '200MP Camera', 'Android 15'],
+  },
+  {
+    id: 48, name: 'Samsung Galaxy A16', category: 'Phones',
+    slug: 'samsung-galaxy-a16',
+    processor: 'Exynos 1330', storage: '128GB',
+    display: '6.5" Super AMOLED', price: 280, originalPrice: 320,
+    badge: 'DEAL', inStock: true, rating: 4.3, reviews: 5,
+    description: 'Affordable Samsung Galaxy A16 with Exynos 1330 processor, 128GB storage, and 6.5" Super AMOLED display.',
+    features: ['Exynos 1330', '128GB Storage', '6.5" Super AMOLED', '50MP Camera', '5000mAh Battery', 'Android 14'],
+  },
+  {
+    id: 49, name: 'Nothing Phone 3', category: 'Phones',
+    slug: 'nothing-phone-3',
+    processor: 'Snapdragon 8s Gen 3', storage: '256GB',
+    display: '6.7" OLED 120Hz', price: 599, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.6, reviews: 4,
+    description: 'Nothing Phone 3 with Snapdragon 8s Gen 3, 256GB storage, 6.7" OLED display, and iconic Glyph Interface lighting.',
+    features: ['Snapdragon 8s Gen 3', '256GB Storage', '6.7" OLED 120Hz', 'Glyph Interface', '50MP Dual Camera', 'Nothing OS'],
+  },
+  {
+    id: 50, name: 'Google Pixel 10 Pro', category: 'Phones',
+    slug: 'google-pixel-10-pro',
+    processor: 'Tensor G5', storage: '256GB',
+    display: '6.7" OLED 120Hz', price: 899, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.7, reviews: 2,
+    description: 'Google Pixel 10 Pro with Tensor G5 chip, 256GB storage, 6.7" OLED display, and the best camera on any smartphone.',
+    features: ['Tensor G5', '256GB Storage', '6.7" OLED 120Hz', 'Best Camera', 'AI Features', 'Android 15'],
+  },
+  {
+    id: 51, name: 'Xiaomi 14T Pro', category: 'Phones',
+    slug: 'xiaomi-14t-pro',
+    processor: 'Dimensity 9300+', storage: '512GB',
+    display: '6.67" AMOLED 144Hz', price: 499, originalPrice: 599,
+    badge: 'DEAL', inStock: true, rating: 4.5, reviews: 6,
+    description: 'Xiaomi 14T Pro with Dimensity 9300+, 512GB storage, 6.67" AMOLED 144Hz display, and Leica co-engineered camera.',
+    features: ['Dimensity 9300+', '512GB Storage', '6.67" AMOLED 144Hz', 'Leica Camera', '120W Charging', 'MIUI'],
+  },
+
+  // ─── PCS & WORKSTATIONS ───
+  {
+    id: 52, name: 'Gaming PC Ryzen 7', category: 'PCs',
+    slug: 'gaming-pc-ryzen-7',
+    processor: 'AMD Ryzen 7 5700X', storage: '1TB SSD',
+    display: 'N/A', price: 850, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.6, reviews: 3,
+    image: '/images/gaming-desktop.jpg',
+    description: 'Gaming PC with AMD Ryzen 7 5700X, 16GB RAM, 1TB SSD, and NVIDIA RTX 3060 12GB. Perfect for 1440p gaming.',
+    features: ['AMD Ryzen 7 5700X', '16GB RAM', '1TB SSD', 'NVIDIA RTX 3060 12GB', 'RGB Cooling', 'Windows 11 Pro'],
+  },
+  {
+    id: 53, name: 'Office PC Core i5', category: 'PCs',
+    slug: 'office-pc-core-i5',
+    processor: 'Core i5 12th Gen', storage: '512GB SSD',
+    display: 'N/A', price: 450, originalPrice: null,
+    badge: null, inStock: true, rating: 4.3, reviews: 4,
+    description: 'Reliable office PC with Core i5 12th Gen, 16GB RAM, 512GB SSD. Ideal for productivity, accounting, and day-to-day office work.',
+    features: ['Core i5 12th Gen', '16GB RAM', '512GB SSD', 'Integrated Graphics', 'WiFi/Bluetooth', 'Windows 11 Pro'],
+  },
+  {
+    id: 54, name: 'Workstation Core i9', category: 'PCs',
+    slug: 'workstation-core-i9',
+    processor: 'Core i9 13th Gen', storage: '2TB SSD',
+    display: 'N/A', price: 1500, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.8, reviews: 2,
+    description: 'Professional workstation with Core i9 13th Gen, 32GB RAM, 2TB SSD, and NVIDIA RTX 4070. Built for creators and engineers.',
+    features: ['Core i9 13th Gen', '32GB RAM', '2TB SSD', 'NVIDIA RTX 4070', 'Liquid Cooling', 'Windows 11 Pro'],
+  },
+  {
+    id: 55, name: 'Custom Build Service', category: 'PCs',
+    slug: 'custom-build-service',
+    processor: 'Custom Configurable', storage: 'Custom',
+    display: 'N/A', price: 200, originalPrice: null,
+    badge: 'SERVICE', inStock: true, rating: 4.9, reviews: 8,
+    description: 'Custom PC build service. We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.',
+    features: ['Custom Configuration', 'Professional Assembly', 'Cable Management', 'Thermal Optimization', 'Stress Tested', 'Warranty Included'],
+  },
 ];
 
 export function getProductBySlug(slug) {
@@ -408,8 +503,49 @@ export function getProductsByCategory(category) {
   return products.filter(p => p.category.toLowerCase() === category.toLowerCase());
 }
 
+export function getBrand(product) {
+  const name = product.name.toLowerCase();
+  if (name.includes('hp ')) return 'HP';
+  if (name.includes('dell')) return 'Dell';
+  if (name.includes('asus')) return 'ASUS';
+  if (name.includes('apple') || name.includes('macbook')) return 'Apple';
+  if (name.includes('proline')) return 'Proline';
+  if (name.includes('playstation') || name.includes('xbox')) return 'Sony/Microsoft';
+  if (name.includes('sceptre')) return 'Sceptre';
+  return 'Other';
+}
+
+export function getUsageType(product) {
+  const name = product.name.toLowerCase();
+  if (name.includes('gaming') || product.badge === 'GAMING') return 'Gaming';
+  if (name.includes('omnibook') || name.includes('zenbook') || name.includes('spectre') || name.includes('elitebook')) return 'Premium';
+  if (product.price < 200) return 'Budget';
+  if (product.price < 500) return 'Value';
+  return 'Performance';
+}
+
+export function getSubcategory(product) {
+  const name = product.name.toLowerCase();
+  if (name.includes('elitebook')) return 'EliteBook';
+  if (name.includes('pavilion')) return 'Pavilion';
+  if (name.includes('omnibook')) return 'OmniBook';
+  if (name.includes('spectre')) return 'Spectre';
+  if (name.includes('latitude')) return 'Latitude';
+  if (name.includes('vivobook')) return 'VivoBook';
+  if (name.includes('zenbook')) return 'ZenBook';
+  if (name.includes('macbook') || name.includes('macbook neo')) return 'MacBook';
+  if (name.includes('ipad')) return 'iPad';
+  if (name.includes('proline')) return 'Proline';
+  if (name.includes('playstation')) return 'PlayStation';
+  if (name.includes('xbox')) return 'Xbox';
+  if (name.includes('desktop')) return 'Desktop';
+  return null;
+}
+
 export const categories = [
   { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 32, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 5, desc: 'Consoles, desktops & monitors' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
+  { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 8, desc: 'Latest smartphones & deals' },
+  { slug: 'pcs', name: 'PCs', icon: 'Monitor', count: 4, desc: 'Desktops & workstations' },
 ];

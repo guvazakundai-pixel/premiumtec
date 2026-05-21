@@ -11,7 +11,9 @@ import { useCart } from '@/app/context/CartContext';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/laptops', label: 'Laptops' },
+  { href: '/phones', label: 'Phones' },
   { href: '/gaming', label: 'Gaming' },
+  { href: '/pcs', label: 'PCs' },
   { href: '/repairs', label: 'Repairs' },
   { href: '/accessories', label: 'Accessories' },
   { href: '/about', label: 'About' },

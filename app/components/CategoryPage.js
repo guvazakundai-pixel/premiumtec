@@ -9,7 +9,7 @@ import { useCart } from '@/app/context/CartContext';
 
 const ease = [0.16, 1, 0.3, 1];
 
-export default function CategoryPage({ category }) {
+export default function CategoryPage({ category, title, description }) {
   const [search, setSearch] = useState('');
   const [wishlist, setWishlist] = useState(new Set());
   const [priceRange, setPriceRange] = useState([0, 5000]);
@@ -39,11 +39,11 @@ export default function CategoryPage({ category }) {
     setTimeout(() => setNotify(null), 2000);
   }, [addItem]);
 
-  const pageTitle = category === 'phones' ? 'Phones' : category === 'laptops' ? 'Laptops' : category === 'gaming' ? 'Gaming' : 'Accessories';
-  const pageDesc = category === 'phones' ? 'Flagship mobile technology — iPhone, Samsung, and Nothing.' :
+  const pageTitle = title || (category === 'phones' ? 'Phones' : category === 'laptops' ? 'Laptops' : category === 'gaming' ? 'Gaming' : 'Accessories');
+  const pageDesc = description || (category === 'phones' ? 'Flagship mobile technology — iPhone, Samsung, and Nothing.' :
     category === 'laptops' ? 'Premium & budget laptops — MacBook, Dell, HP, and more.' :
     category === 'gaming' ? 'Consoles, desktops, monitors, and gaming gear.' :
-    'Printers, chargers, keyboards, and repair services.';
+    'Printers, chargers, keyboards, and repair services.');
 
   return (
     <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">

@@ -8,9 +8,10 @@ import {
   Heart, Check, ShoppingBag, ChevronRight,
   MapPin, Clock, Package, Smartphone, Monitor, Gamepad2,
   Wrench, Cpu, HardDrive, MonitorSmartphone, Zap,
-  RefreshCw, Users, Award, Clock3, Gamepad
+  RefreshCw, Users, Award, Clock3, Gamepad,
+  Tablet, Laptop, Tv, Speaker, Watch, Camera
 } from 'lucide-react';
-import { products as allProducts } from '@/app/products/data';
+import { products as allProducts, getBrand, getSubcategory, getUsageType, categories } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
 
 const ease = [0.16, 1, 0.3, 1];
@@ -32,6 +33,7 @@ const stagger = {
 const products = allProducts;
 
 const filterOptions = {
+  Brand: [...new Set(products.map(p => getBrand(p)))],
   Category: [...new Set(products.map(p => p.category))],
   Processor: [...new Set(products.filter(p => p.processor !== 'N/A').map(p => p.processor))],
   Storage: [...new Set(products.filter(p => p.storage !== 'N/A').map(p => p.storage))],
@@ -156,52 +158,571 @@ function Hero({ onShop, onRepairs }) {
   );
 }
 
-function CategoryGrid() {
+function CategoryGateway() {
   const cats = [
-    { icon: Monitor, title: 'Laptops', desc: 'Premium & budget computing', count: 18, slug: '/laptops', color: '#2563EB' },
-    { icon: Gamepad2, title: 'Gaming', desc: 'Consoles, desktops & monitors', count: 5, slug: '/gaming', color: '#7C3AED' },
-    { icon: Wrench, title: 'Repairs', desc: 'Diagnostics, upgrades & fixes', count: null, slug: '/repairs', color: '#059669' },
-    { icon: Package, title: 'Accessories', desc: 'Printers, chargers & more', count: 3, slug: '/accessories', color: '#D97706' },
+    { icon: Gamepad2, name: 'Gaming Consoles', href: '/gaming', bg: 'from-violet-600/40 to-violet-900/60' },
+    { icon: Smartphone, name: 'Smartphones', href: '/phones', bg: 'from-blue-600/40 to-blue-900/60' },
+    { icon: Laptop, name: 'Laptops', href: '/laptops', bg: 'from-cyan-600/40 to-cyan-900/60' },
+    { icon: Monitor, name: 'PCs', href: '/pcs', bg: 'from-emerald-600/40 to-emerald-900/60' },
+    { icon: Package, name: 'Accessories', href: '/accessories', bg: 'from-amber-600/40 to-amber-900/60' },
+    { icon: Wrench, name: 'Repairs', href: '/repairs', bg: 'from-green-600/40 to-green-900/60' },
+    { icon: Award, name: 'Deals', href: '/laptops?deals=true', bg: 'from-rose-600/40 to-rose-900/60' },
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28">
+    <section className="relative z-10 px-6 py-24 md:py-28 bg-[#0A1224]">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
             <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Categories</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Explore Our Range</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Shop by Category</h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
           {cats.map((cat, i) => {
             const Icon = cat.icon;
             return (
               <motion.a
-                key={cat.title}
-                href={cat.slug}
+                key={cat.name}
+                href={cat.href}
                 initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.1 }}
-                className="group block"
+                variants={scaleIn} transition={{ delay: i * 0.07 }}
+                className="group block h-48"
               >
-                <div className="glass-card p-7 h-full flex flex-col relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-[0.03] pointer-events-none"
-                    style={{ background: `radial-gradient(circle, ${cat.color}, transparent)`, transform: 'translate(30%, -30%)' }} />
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-all duration-500 group-hover:scale-110"
-                    style={{ background: `${cat.color}15`, border: `1px solid ${cat.color}20` }}>
-                    <Icon size={20} style={{ color: cat.color }} />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white/90 mb-1.5">{cat.title}</h3>
-                  <p className="text-sm text-white/35 font-light flex-1">{cat.desc}</p>
-                  <div className="flex items-center gap-1.5 mt-4 text-xs font-medium transition-all duration-500 group-hover:gap-2.5"
-                    style={{ color: cat.color }}>
-                    <span>Explore</span>
-                    <ChevronRight size={13} />
-                  </div>
+                <div className={`h-full rounded-2xl overflow-hidden relative flex flex-col items-center justify-center text-center p-5 bg-gradient-to-br ${cat.bg} transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl`}>
+                  <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+                  <Icon size={36} className="text-white/80 relative z-10 mb-3 group-hover:scale-110 transition-transform duration-500" />
+                  <h3 className="text-lg font-bold text-white relative z-10">{cat.name}</h3>
+                  <span className="text-xs text-white/60 mt-2 relative z-10 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-500">
+                    Browse <ChevronRight size={12} />
+                  </span>
                 </div>
               </motion.a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LaptopBrands() {
+  const { addItem } = useCart();
+  const [notify, setNotify] = useState(null);
+
+  const handleAdd = useCallback((product) => {
+    addItem(product);
+    setNotify(`${product.name} added to cart`);
+    setTimeout(() => setNotify(null), 2000);
+  }, [addItem]);
+
+  const laptops = useMemo(() => products.filter(p => p.category === 'Laptops'), []);
+  const brands = useMemo(() => {
+    const grouped = {};
+    laptops.forEach(p => {
+      const b = getBrand(p);
+      if (!grouped[b]) grouped[b] = [];
+      grouped[b].push(p);
+    });
+    const order = ['HP', 'Dell', 'ASUS', 'Apple'];
+    return order.filter(b => grouped[b]).map(b => ({ brand: b, items: grouped[b] }));
+  }, [laptops]);
+
+  const getCpu = (p) => p.processor.split(' ').slice(0, 3).join(' ');
+  const getRam = (p) => {
+    const m = p.storage.match(/(\d+GB\s*RAM)/i);
+    return m ? m[1] : (p.description.match(/(\d+GB)\s*RAM/i) ? p.description.match(/(\d+GB)\s*RAM/i)[1] + ' RAM' : '');
+  };
+  const getStorage = (p) => p.storage.split('+')[0].trim();
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-28 section-gray">
+      {notify && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
+          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
+        >
+          {notify}
+        </motion.div>
+      )}
+
+      <div className="max-w-7xl mx-auto">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Brands</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Laptops by Brand</h2>
+        </motion.div>
+
+        {brands.map(({ brand, items }) => (
+          <div key={brand} className="mb-12 last:mb-0">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-1 h-5 rounded-full bg-[#2563EB]" />
+              <h3 className="text-lg font-semibold text-white/80">{brand}</h3>
+              <span className="text-xs text-white/30">({items.length} devices)</span>
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin">
+              {items.map(product => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="w-64 flex-shrink-0"
+                >
+                  <div className="card-light h-full flex flex-col group">
+                    <div className="h-36 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] overflow-hidden">
+                      {product.image ? (
+                        <img src={product.image} alt={product.name}
+                          className="w-full h-full object-contain p-3 transition-all duration-500 group-hover:scale-110"
+                          style={{ maxWidth: '140px', maxHeight: '120px' }} />
+                      ) : (
+                        <Laptop size={40} className="text-white/20" />
+                      )}
+                    </div>
+                    <div className="flex-1 flex flex-col p-4 gap-2">
+                      <h4 className="text-xs font-medium text-white/80 leading-snug line-clamp-2">{product.name}</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {getCpu(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getCpu(product)}</span>}
+                        {getRam(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getRam(product)}</span>}
+                        {getStorage(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getStorage(product)}</span>}
+                      </div>
+                      <div className="mt-auto pt-2 border-t border-white/[0.04] flex items-center justify-between gap-2">
+                        <span className="text-base font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                        <button
+                          onClick={() => handleAdd(product)}
+                          disabled={!product.inStock}
+                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <motion.div variants={fadeUp} className="text-center mt-8">
+          <a href="/laptops" className="btn-premium btn-premium--ghost text-xs">
+            View All Laptops <ArrowRight size={14} />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function PhonesSection() {
+  const [activeTab, setActiveTab] = useState('All');
+
+  const phones = useMemo(() => products.filter(p => p.category === 'Phones'), []);
+
+  const getPhoneBrand = useCallback((product) => {
+    const n = product.name.toLowerCase();
+    if (n.includes('iphone') || n.includes('apple')) return 'Apple';
+    if (n.includes('samsung') || n.includes('galaxy')) return 'Samsung';
+    if (n.includes('pixel') || n.includes('google')) return 'Google';
+    if (n.includes('xiaomi') || n.includes('redmi') || n.includes('poco')) return 'Xiaomi';
+    if (n.includes('nothing')) return 'Nothing';
+    return 'Other';
+  }, []);
+
+  const tabs = ['All', 'Apple', 'Samsung', 'Google', 'Xiaomi', 'Nothing'];
+
+  const filtered = useMemo(() => {
+    if (activeTab === 'All') return phones;
+    return phones.filter(p => getPhoneBrand(p) === activeTab);
+  }, [activeTab, phones, getPhoneBrand]);
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
+      <div className="ambient-container" aria-hidden="true">
+        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.15), transparent)' }} />
+        <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.1), transparent)' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Mobiles</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Smartphones</h2>
+        </motion.div>
+
+        <motion.div
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+          className="flex flex-wrap gap-2 mb-10"
+        >
+          {tabs.map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-full text-[10px] font-semibold tracking-[0.15em] uppercase transition-all duration-300 ${
+                activeTab === tab
+                  ? 'bg-[#2563EB] text-white shadow-[0_4px_20px_rgba(37,99,235,0.25)]'
+                  : 'border border-white/10 text-white/40 hover:text-white hover:border-white/20'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </motion.div>
+
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+        >
+          {filtered.map(product => (
+            <motion.div key={product.id} variants={fadeUp}>
+              <div className="glass-card h-full flex flex-col group p-5">
+                <div className="h-32 flex items-center justify-center mb-4 bg-white/[0.02] rounded-xl border border-white/[0.04]">
+                  {product.image ? (
+                    <img src={product.image} alt={product.name}
+                      className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110"
+                      style={{ maxWidth: '130px', maxHeight: '100px' }} />
+                  ) : (
+                    <Smartphone size={48} className="text-white/20" />
+                  )}
+                </div>
+                {product.badge && (
+                  <span className="text-[9px] px-2 py-1 rounded-full bg-[#2563EB]/10 text-[#38BDF8] font-medium border border-[#2563EB]/15 self-start mb-2">
+                    {product.badge}
+                  </span>
+                )}
+                <h3 className="text-sm font-medium text-white/80 leading-snug mb-2">{product.name}</h3>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {product.storage && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
+                  {product.display && product.display !== 'N/A' && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.display}</span>}
+                </div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400/80 fill-amber-400/80' : 'text-white/10'} />
+                  ))}
+                  <span className="text-[10px] text-white/30 ml-1">{product.rating}</span>
+                </div>
+                <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-lg font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                    {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    const msg = `Hi Tech Store, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
+                    window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
+                  }}
+                  className="w-full mt-3 py-2.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all duration-500"
+                >
+                  Inquire on WhatsApp
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {filtered.length === 0 && (
+          <div className="text-center py-16">
+            <Smartphone size={40} className="text-white/20 mx-auto mb-3" />
+            <p className="text-white/40 text-sm">No phones in this category yet.</p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function GamingShowcase() {
+  const gamingProducts = useMemo(() => products.filter(p => p.category === 'Gaming'), []);
+  const gamingDesktop = useMemo(() => gamingProducts.filter(p => p.name.toLowerCase().includes('desktop')), [gamingProducts]);
+  const consoles = useMemo(() => gamingProducts.filter(p => p.name.toLowerCase().includes('playstation') || p.name.toLowerCase().includes('xbox')), [gamingProducts]);
+  const gear = useMemo(() => gamingProducts.filter(p => !p.name.toLowerCase().includes('desktop') && !p.name.toLowerCase().includes('playstation') && !p.name.toLowerCase().includes('xbox')), [gamingProducts]);
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#7C3AED]/[0.04] via-transparent to-[#0A1224] pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-violet-600/5 blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-600/5 blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-rose-600/5 blur-[100px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#7C3AED] to-[#A855F7]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Gaming</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Gaming Zone</h2>
+          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
+            Consoles, desktops, monitors, and gear for every level of play.
+          </p>
+        </motion.div>
+
+        <div className="space-y-12">
+          <div>
+            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+              Top Gaming Picks
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {gamingDesktop.slice(0, 2).map((product, i) => (
+                <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  variants={scaleIn} transition={{ delay: i * 0.1 }}>
+                  <a href={`/products/${product.slug}`}
+                    className="block h-full rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-950/40 to-[#0F1A2E] p-6 group hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500">
+                    <div className="flex items-start gap-5">
+                      <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
+                        {product.image ? (
+                          <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                        ) : (
+                          <Gamepad2 size={40} className="text-violet-400/50" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-violet-400/60">{product.badge || 'GAMING'}</span>
+                        <h4 className="text-base font-semibold text-white/80 mt-1 group-hover:text-white transition-colors">{product.name}</h4>
+                        <p className="text-xs text-white/35 mt-2 line-clamp-2">{product.description}</p>
+                        <div className="flex items-baseline gap-2 mt-3">
+                          <span className="text-xl font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                          {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+              Best Sellers
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {consoles.map((product, i) => (
+                <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  variants={scaleIn} transition={{ delay: i * 0.1 }}>
+                  <div className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500">
+                    <div className="w-24 h-24 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
+                      {product.image ? (
+                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                      ) : (
+                        <Gamepad size={36} className="text-blue-400/50" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-blue-400/60">{product.badge || 'CONSOLE'}</span>
+                      <h4 className="text-sm font-semibold text-white/80 mt-1">{product.name}</h4>
+                      <p className="text-xs text-white/35 mt-1 line-clamp-1">{product.display}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="text-lg font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                        <span className={`text-[10px] ${product.inStock ? 'text-green-400/70' : 'text-amber-400/70'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse" />
+              Gaming Gear
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {gear.slice(0, 2).map((product, i) => (
+                <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  variants={scaleIn} transition={{ delay: i * 0.1 }}>
+                  <div className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500">
+                    <div className="w-16 h-16 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
+                      {product.image ? (
+                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-1.5 transition-transform duration-500 group-hover:scale-110" />
+                      ) : (
+                        <Monitor size={24} className="text-rose-400/50" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-medium text-white/80">{product.name}</h4>
+                      <p className="text-xs text-white/35">{product.processor !== 'N/A' ? product.processor : product.display}</p>
+                      <span className="text-sm font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <motion.div variants={fadeUp} className="text-center mt-12">
+          <a href="/gaming" className="btn-premium btn-premium--primary text-xs">
+            Explore All Gaming <ArrowRight size={14} />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function PCShowcase() {
+  const pcs = useMemo(() => products.filter(p => p.category === 'PCs'), []);
+
+  const getPerformanceLabel = useCallback((product) => {
+    const n = product.name.toLowerCase();
+    if (n.includes('gaming') && n.includes('ryzen')) return 'Mid Range';
+    if (n.includes('workstation') || n.includes('core i9')) return 'High Performance';
+    if (n.includes('office') || n.includes('core i5')) return 'Entry Level';
+    if (n.includes('custom')) return 'Custom Build';
+    return 'Standard';
+  }, []);
+
+  const getPerformanceColor = (label) => {
+    switch (label) {
+      case 'Entry Level': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+      case 'Mid Range': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      case 'High Performance': return 'bg-violet-500/10 text-violet-400 border-violet-500/20';
+      case 'Custom Build': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+      default: return 'bg-white/5 text-white/40 border-white/10';
+    }
+  };
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-28 section-light">
+      <div className="max-w-7xl mx-auto">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#059669] to-[#10B981]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Desktops</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Performance PCs</h2>
+          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
+            From office-ready to high-performance workstations — built for what you do.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {pcs.map((product, i) => {
+            const label = getPerformanceLabel(product);
+            const colorClass = getPerformanceColor(label);
+            const isCustom = label === 'Custom Build';
+            return (
+              <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                variants={scaleIn} transition={{ delay: i * 0.1 }}>
+                <div className={`h-full rounded-2xl p-6 relative overflow-hidden group transition-all duration-500 hover:shadow-xl ${
+                  isCustom
+                    ? 'bg-gradient-to-br from-amber-900/20 to-amber-950/30 border border-amber-500/20 hover:border-amber-400/30'
+                    : 'glass-card hover:border-[#059669]/20'
+                }`}>
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/[0.02] to-transparent" />
+
+                  <div className="flex items-start justify-between mb-4 relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        isCustom ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-[#059669]/10 border border-[#059669]/15'
+                      }`}>
+                        {isCustom ? <Wrench size={18} className="text-amber-400" /> : <Monitor size={18} className="text-[#059669]" />}
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-white/90">{product.name}</h3>
+                        {product.badge && <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.badge}</span>}
+                      </div>
+                    </div>
+                    <span className={`text-[9px] font-semibold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full border ${colorClass}`}>
+                      {label}
+                    </span>
+                  </div>
+
+                  {!isCustom && (
+                    <div className="flex flex-wrap gap-2 mb-4 relative z-10">
+                      {product.processor !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40">{product.processor}</span>}
+                      {product.storage !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
+                      {product.features?.filter(f => f.toLowerCase().includes('gpu') || f.toLowerCase().includes('rtx') || f.toLowerCase().includes('graphics')).slice(0, 1).map((f, idx) => (
+                        <span key={idx} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40">{f}</span>
+                      ))}
+                    </div>
+                  )}
+
+                  {isCustom ? (
+                    <div className="relative z-10">
+                      <p className="text-sm text-white/50 font-light leading-relaxed mb-4">
+                        We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.
+                      </p>
+                      <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%27d%20like%20to%20discuss%20a%20custom%20PC%20build."
+                        target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.15em] uppercase px-5 py-3 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30 transition-all duration-500">
+                        Start Your Build <ArrowRight size={14} />
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="relative z-10 mt-auto pt-4 border-t border-white/[0.04] flex items-center justify-between">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xl font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                      </div>
+                      <a href={`/products/${product.slug}`}
+                        className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#059669] hover:text-[#10B981] transition-colors flex items-center gap-1">
+                        View Details <ChevronRight size={12} />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <motion.div variants={fadeUp} className="text-center mt-10">
+          <a href="/pcs" className="btn-premium btn-premium--ghost text-xs">
+            View All PCs <ArrowRight size={14} />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function WhyChooseUs() {
+  const features = [
+    { icon: Shield, title: '100% Authentic', desc: 'Every device sourced from official distributors. Full manufacturer warranty included.' },
+    { icon: Truck, title: 'Free Express Delivery', desc: 'Complimentary express shipping on orders over $999. Same-day within Harare.' },
+    { icon: Star, title: 'Best Price Guarantee', desc: 'Found a lower price? We will match it. Premium tech should never mean overpaying.' },
+  ];
+
+  return (
+    <section className="relative z-10 px-6 py-24 md:py-28">
+      <div className="max-w-7xl mx-auto">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14 text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Why Choose Us</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Why Tech Store</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {features.map((f, i) => {
+            const Icon = f.icon;
+            return (
+              <motion.div key={f.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                variants={scaleIn} transition={{ delay: i * 0.1 }}>
+                <div className="glass-card p-7 h-full text-center md:text-left">
+                  <div className="w-11 h-11 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/15 flex items-center justify-center mb-4 mx-auto md:mx-0">
+                    <Icon size={20} className="text-[#2563EB]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white/90 mb-2">{f.title}</h3>
+                  <p className="text-sm text-white/35 font-light leading-relaxed">{f.desc}</p>
+                </div>
+              </motion.div>
             );
           })}
         </div>
@@ -262,7 +783,7 @@ function ProductShowcase({
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
             <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Collection</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Premium Devices</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">All Premium Devices</h2>
           <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
             Carefully selected devices, each chosen for exceptional build quality and performance.
           </p>
@@ -475,96 +996,6 @@ function ProductShowcase({
               </p>
             </motion.div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WhyChooseUs() {
-  const features = [
-    { icon: Shield, title: '100% Authentic', desc: 'Every device sourced from official distributors. Full manufacturer warranty included.' },
-    { icon: Truck, title: 'Free Express Delivery', desc: 'Complimentary express shipping on orders over $999. Same-day within Harare.' },
-    { icon: Star, title: 'Best Price Guarantee', desc: 'Found a lower price? We will match it. Premium tech should never mean overpaying.' },
-  ];
-
-  return (
-    <section className="relative z-10 px-6 py-24 md:py-28">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Why Choose Us</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Why Tech Store</h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {features.map((f, i) => {
-            const Icon = f.icon;
-            return (
-              <motion.div key={f.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                <div className="glass-card p-7 h-full text-center md:text-left">
-                  <div className="w-11 h-11 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/15 flex items-center justify-center mb-4 mx-auto md:mx-0">
-                    <Icon size={20} className="text-[#2563EB]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white/90 mb-2">{f.title}</h3>
-                  <p className="text-sm text-white/35 font-light leading-relaxed">{f.desc}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function GamingShowcase() {
-  const items = [
-    { title: 'Gaming Desktops', desc: 'Core i7 & i9 rigs with dedicated GPUs and RGB cooling', price: 'From $1,000', color: '#7C3AED' },
-    { title: 'Consoles', desc: 'PlayStation 5 & Xbox Series X — 4K gaming', price: 'From $550', color: '#2563EB' },
-    { title: 'Gaming Laptops', desc: 'HP Pavilion, ASUS ROG — high-refresh rate displays', price: 'From $590', color: '#059669' },
-    { title: 'Monitors & Gear', desc: '24" displays, mechanical keyboards, and accessories', price: 'From $155', color: '#D97706' },
-  ];
-
-  return (
-    <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#7C3AED]/[0.02] via-transparent to-transparent pointer-events-none" />
-      <div className="max-w-7xl mx-auto relative">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#7C3AED] to-[#A855F7]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Gaming</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Gaming Setup</h2>
-          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
-            Consoles, desktops, monitors, and gear for every level of play.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {items.map((item, i) => (
-            <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              variants={scaleIn} transition={{ delay: i * 0.1 }}>
-              <div className="glass-card p-7 h-full flex flex-col relative overflow-hidden group cursor-pointer">
-                <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-700"
-                  style={{ background: `radial-gradient(circle, ${item.color}, transparent)` }} />
-                <div className="flex items-center gap-3 mb-3">
-                  <Gamepad size={18} style={{ color: item.color }} />
-                  <h3 className="text-base font-semibold text-white/90">{item.title}</h3>
-                </div>
-                <p className="text-sm text-white/35 font-light flex-1">{item.desc}</p>
-                <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/[0.04]">
-                  <span className="text-sm font-medium" style={{ color: item.color }}>{item.price}</span>
-                  <span className="text-xs text-white/25 group-hover:text-white/50 transition-colors flex items-center gap-1">
-                    View <ChevronRight size={12} />
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>
@@ -871,6 +1302,7 @@ export default function TechStore() {
         product.category.toLowerCase().includes(q);
       const filterMatch = Object.entries(selectedFilters).every(([key, values]) => {
         if (values.length === 0) return true;
+        if (key === 'Brand') return values.some(v => getBrand(product) === v);
         if (key === 'Category') return values.includes(product.category);
         if (key === 'Processor') return values.some(v => product.processor.includes(v));
         if (key === 'Storage') return values.some(v => product.storage.includes(v));
@@ -920,7 +1352,11 @@ export default function TechStore() {
           <Hero onShop={scrollToProducts} onRepairs={scrollToRepairs} />
         </motion.div>
 
-        <CategoryGrid />
+        <CategoryGateway />
+        <LaptopBrands />
+        <PhonesSection />
+        <GamingShowcase />
+        <PCShowcase />
         <WhyChooseUs />
 
         <div id="products">
@@ -936,8 +1372,6 @@ export default function TechStore() {
             clearAllFilters={clearAllFilters}
           />
         </div>
-
-        <GamingShowcase />
 
         <div id="repairs">
           <RepairServices />
