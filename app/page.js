@@ -245,12 +245,12 @@ function LaptopBrands() {
     return order.filter(b => grouped[b]).map(b => ({ brand: b, items: grouped[b] }));
   }, [laptops]);
 
-  const getCpu = (p) => p.processor.split(' ').slice(0, 3).join(' ');
+  const getCpu = (p) => p.processor !== 'N/A' ? p.processor.split(' ').slice(0, 3).join(' ') : '';
   const getRam = (p) => {
     const m = p.storage.match(/(\d+GB\s*RAM)/i);
     return m ? m[1] : (p.description.match(/(\d+GB)\s*RAM/i) ? p.description.match(/(\d+GB)\s*RAM/i)[1] + ' RAM' : '');
   };
-  const getStorage = (p) => p.storage.split('+')[0].trim();
+  const getStorage = (p) => p.storage !== 'N/A' ? p.storage.split('+')[0].trim() : '';
 
   return (
     <section className="relative z-10 px-6 py-24 md:py-28 section-gray">
@@ -270,17 +270,17 @@ function LaptopBrands() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Brands</span>
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-zinc-400">Brands</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Laptops by Brand</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-zinc-900">Laptops by Brand</h2>
         </motion.div>
 
         {brands.map(({ brand, items }) => (
           <div key={brand} className="mb-12 last:mb-0">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-1 h-5 rounded-full bg-[#2563EB]" />
-              <h3 className="text-lg font-semibold text-white/80">{brand}</h3>
-              <span className="text-xs text-white/30">({items.length} devices)</span>
+              <h3 className="text-lg font-semibold text-zinc-800">{brand}</h3>
+              <span className="text-xs text-zinc-400">({items.length} devices)</span>
             </div>
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin">
               {items.map(product => (
@@ -295,22 +295,22 @@ function LaptopBrands() {
                     <a href={`/products/${product.slug}`} className="aspect-[4/3] flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden">
                       {product.image ? (
                         <img src={product.image} alt={product.name}
-                          className="w-full h-full object-contain p-4 transition-all duration-500 group-hover:scale-110" />
+                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
                         <Laptop size={40} className="text-white/20" />
                       )}
                     </a>
                     <div className="flex-1 flex flex-col p-4 gap-2">
                       <a href={`/products/${product.slug}`}>
-                        <h4 className="text-xs font-medium text-white/80 leading-snug line-clamp-2 hover:text-white transition-colors">{product.name}</h4>
+                        <h4 className="text-xs font-medium text-zinc-800 leading-snug line-clamp-2 hover:text-zinc-900 transition-colors">{product.name}</h4>
                       </a>
                       <div className="flex flex-wrap gap-1">
-                        {getCpu(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getCpu(product)}</span>}
-                        {getRam(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getRam(product)}</span>}
-                        {getStorage(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getStorage(product)}</span>}
+                        {getCpu(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-600">{getCpu(product)}</span>}
+                        {getRam(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-600">{getRam(product)}</span>}
+                        {getStorage(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-600">{getStorage(product)}</span>}
                       </div>
-                      <div className="mt-auto pt-2 border-t border-white/[0.04] flex items-center justify-between gap-2">
-                        <span className="text-base font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
+                      <div className="mt-auto pt-2 border-t border-zinc-100 flex items-center justify-between gap-2">
+                        <span className="text-base font-semibold text-zinc-900">${product.price.toLocaleString()}</span>
                         <button
                           onClick={() => handleAdd(product)}
                           disabled={!product.inStock}
@@ -328,7 +328,7 @@ function LaptopBrands() {
         ))}
 
         <motion.div variants={fadeUp} className="text-center mt-8">
-          <a href="/laptops" className="btn-premium btn-premium--ghost text-xs">
+          <a href="/laptops" className="text-xs text-zinc-400 hover:text-zinc-800 transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
             View All Laptops <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -403,7 +403,7 @@ function PhonesSection() {
                 <a href={`/products/${product.slug}`} className="aspect-[3/4] flex items-center justify-center bg-white/[0.02] rounded-xl border border-white/[0.04] overflow-hidden">
                   {product.image ? (
                     <img src={product.image} alt={product.name}
-                      className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   ) : (
                     <Smartphone size={48} className="text-white/20" />
                   )}
@@ -417,7 +417,7 @@ function PhonesSection() {
                   <h3 className="text-sm font-medium text-white/80 leading-snug mb-2 hover:text-white transition-colors">{product.name}</h3>
                 </a>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {product.storage && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
+                  {product.storage && product.storage !== 'N/A' && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
                   {product.display && product.display !== 'N/A' && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.display}</span>}
                 </div>
                 <div className="flex items-center gap-1.5 mb-3">
@@ -431,6 +431,9 @@ function PhonesSection() {
                     <span className="text-lg font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
                     {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
                   </div>
+                  <a href={`/products/${product.slug}`} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#2563EB] hover:text-blue-400 transition-colors">
+                    View
+                  </a>
                 </div>
                 <button
                   onClick={() => {
@@ -499,7 +502,7 @@ function GamingShowcase() {
                     <div className="flex items-start gap-5">
                       <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
                         {product.image ? (
-                          <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
+                          <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (
                           <Gamepad2 size={40} className="text-violet-400/50" />
                         )}
@@ -532,7 +535,7 @@ function GamingShowcase() {
                   <a href={`/products/${product.slug}`} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500">
                     <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <Gamepad size={36} className="text-blue-400/50" />
                       )}
@@ -564,7 +567,7 @@ function GamingShowcase() {
                   <a href={`/products/${product.slug}`} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500">
                     <div className="w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <Monitor size={24} className="text-rose-400/50" />
                       )}
@@ -619,10 +622,10 @@ function PCShowcase() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#059669] to-[#10B981]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Desktops</span>
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-zinc-400">Desktops</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Performance PCs</h2>
-          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-zinc-900">Performance PCs</h2>
+          <p className="text-sm text-zinc-400 mt-3 max-w-lg font-light">
             From office-ready to high-performance workstations — built for what you do.
           </p>
         </motion.div>
@@ -650,8 +653,8 @@ function PCShowcase() {
                         {isCustom ? <Wrench size={18} className="text-amber-400" /> : <Monitor size={18} className="text-[#059669]" />}
                       </div>
                       <div>
-                        <h3 className="text-base font-semibold text-white/90">{product.name}</h3>
-                        {product.badge && <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.badge}</span>}
+                        <h3 className="text-base font-semibold text-zinc-900">{product.name}</h3>
+                        {product.badge && <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-zinc-400">{product.badge}</span>}
                       </div>
                     </div>
                     <span className={`text-[9px] font-semibold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full border ${colorClass}`}>
@@ -661,17 +664,17 @@ function PCShowcase() {
 
                   {!isCustom && (
                     <div className="flex flex-wrap gap-2 mb-4 relative z-10">
-                      {product.processor !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40">{product.processor}</span>}
-                      {product.storage !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
+                      {product.processor !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{product.processor}</span>}
+                      {product.storage !== 'N/A' && <span className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{product.storage}</span>}
                       {product.features?.filter(f => f.toLowerCase().includes('gpu') || f.toLowerCase().includes('rtx') || f.toLowerCase().includes('graphics')).slice(0, 1).map((f, idx) => (
-                        <span key={idx} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40">{f}</span>
+                        <span key={idx} className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{f}</span>
                       ))}
                     </div>
                   )}
 
                   {isCustom ? (
                     <div className="relative z-10">
-                      <p className="text-sm text-white/50 font-light leading-relaxed mb-4">
+                      <p className="text-sm text-zinc-600 font-light leading-relaxed mb-4">
                         We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.
                       </p>
                       <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%27d%20like%20to%20discuss%20a%20custom%20PC%20build."
@@ -681,10 +684,10 @@ function PCShowcase() {
                       </a>
                     </div>
                   ) : (
-                    <div className="relative z-10 mt-auto pt-4 border-t border-white/[0.04] flex items-center justify-between">
+                    <div className="relative z-10 mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                        <span className="text-xl font-bold text-zinc-900">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-zinc-400 line-through">${product.originalPrice.toLocaleString()}</span>}
                       </div>
                       <a href={`/products/${product.slug}`}
                         className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#059669] hover:text-[#10B981] transition-colors flex items-center gap-1">
@@ -699,7 +702,7 @@ function PCShowcase() {
         </div>
 
         <motion.div variants={fadeUp} className="text-center mt-10">
-          <a href="/pcs" className="btn-premium btn-premium--ghost text-xs">
+          <a href="/pcs" className="text-xs text-zinc-400 hover:text-zinc-800 transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
             View All PCs <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -925,7 +928,7 @@ function ProductShowcase({
                       <a href={`/products/${product.slug}`} className="aspect-[4/3] flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden relative">
                         {product.image ? (
                           <img src={product.image} alt={product.name}
-                            className="w-full h-full object-contain p-4 transition-all duration-700 group-hover:scale-110" />
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
                         ) : (
                           <div className="w-24 h-32 rounded-xl border border-white/10 flex items-center justify-center text-white/20 text-xs bg-white/[0.02]">
                             {product.name.split(' ').slice(0, 2).join(' ')}
@@ -945,7 +948,7 @@ function ProductShowcase({
                         </div>
 
                         <div className="flex flex-wrap gap-1.5">
-                          {[product.processor.split(' ').slice(0, 2).join(' '), product.storage.split('/')[0].trim(), product.display.split(' ')[0]].map((spec, i) => (
+                          {[product.processor.split(' ').slice(0, 2).join(' '), product.storage.split('/')[0].trim(), product.display.split(' ')[0]].filter(spec => spec && spec !== 'N/A').map((spec, i) => (
                             <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40 font-light">{spec}</span>
                           ))}
                         </div>
