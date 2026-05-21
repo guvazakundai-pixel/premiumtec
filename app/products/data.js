@@ -275,6 +275,13 @@ export const products = [
     processor: 'Core Ultra 7 256V Series 2', storage: '1TB SSD',
     display: '14" Touchscreen', price: 1250, originalPrice: null,
     badge: 'NEW', inStock: true, rating: 4.6, reviews: 0,
+    image: '/images/omnibook-x-flip-14-fm0023dx-1.jpg',
+    images: [
+      '/images/omnibook-x-flip-14-fm0023dx-1.jpg',
+      '/images/omnibook-x-flip-14-fm0023dx-2.jpg',
+      '/images/omnibook-x-flip-14-fm0023dx-3.jpg',
+      '/images/omnibook-x-flip-14-fm0023dx-4.jpg',
+    ],
     description: 'HP Omnibook X Flip powered by Intel Core Ultra 7 Series 2, 16GB RAM, 1TB SSD, and 14" touchscreen. Premium ultrabook performance.',
     features: ['Core Ultra 7 256V Series 2', '16GB RAM', '1TB SSD', '14" Touchscreen', 'Flip Design', 'Windows 11'],
   },
