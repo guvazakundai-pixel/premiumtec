@@ -40,11 +40,8 @@ export default function Nav() {
       style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2563EB] to-[#38BDF8] flex items-center justify-center shadow-lg shadow-[#2563EB]/20 group-hover:shadow-[#2563EB]/40 transition-all duration-500">
-            <span className="text-xs font-black text-white">T</span>
-          </div>
-          <span className={`font-bold tracking-tight text-white select-none transition-all duration-500 ${
+        <Link href="/" className="flex items-center group">
+          <span className={`font-extrabold tracking-tight text-[#2563EB] select-none transition-all duration-500 ${
             scrolled ? 'text-sm' : 'text-base'
           }`}>
             TECH STORE
