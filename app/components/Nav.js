@@ -43,13 +43,13 @@ export default function Nav() {
       style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center shrink-0">
           <Image
             src="/images/techstore-logo.png"
             alt="Tech Store"
-            width={160}
-            height={40}
-            className="h-8 w-auto object-contain"
+            width={200}
+            height={50}
+            className="h-10 w-auto object-contain"
             priority
           />
         </Link>
