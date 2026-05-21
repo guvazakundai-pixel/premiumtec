@@ -10,9 +10,9 @@ import { useCart } from '@/app/context/CartContext';
 const links = [
   { href: '/phones', label: 'Phones' },
   { href: '/laptops', label: 'Laptops' },
+  { href: '/gaming', label: 'Gaming' },
+  { href: '/accessories', label: 'Accessories' },
   { href: '/about', label: 'About' },
-  { href: '/support', label: 'Support' },
-  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Nav() {

@@ -8,6 +8,7 @@ import {
   Heart, Check, ShoppingBag, ChevronRight,
   MapPin, Clock, Package, Smartphone, Monitor, Gamepad2
 } from 'lucide-react';
+import { products as allProducts } from '@/app/products/data';
 
 const easePremium = [0.16, 1, 0.3, 1];
 
@@ -39,113 +40,12 @@ const scaleIn = {
   }
 };
 
-const products = [
-  {
-    id: 1, name: 'iPhone 16 Pro Max', category: 'Phones',
-    processor: 'A18 Pro', storage: '256GB / 512GB / 1TB',
-    display: '6.9" OLED 120Hz', price: 1599, originalPrice: null,
-    badge: 'FLAGSHIP', inStock: true, rating: 4.9,
-    Image: () => (
-      <svg viewBox="0 0 120 200" className="w-20 h-32" fill="none" stroke="currentColor" strokeWidth="1">
-        <rect x="8" y="2" width="104" height="196" rx="16" className="stroke-white/30" />
-        <rect x="12" y="8" width="96" height="170" rx="10" className="stroke-white/10" />
-        <circle cx="60" cy="182" r="4" className="stroke-white/20" />
-        <rect x="48" y="4" width="24" height="6" rx="3" className="stroke-white/15" />
-      </svg>
-    )
-  },
-  {
-    id: 2, name: 'Samsung Galaxy S25 Ultra', category: 'Phones',
-    processor: 'Snapdragon 8 Gen 4', storage: '256GB / 512GB / 1TB',
-    display: '6.9" Dynamic AMOLED 120Hz', price: 1499, originalPrice: null,
-    badge: 'FLAGSHIP', inStock: true, rating: 4.8,
-    Image: () => (
-      <svg viewBox="0 0 110 200" className="w-[4.5rem] h-32" fill="none" stroke="currentColor" strokeWidth="1">
-        <rect x="2" y="2" width="106" height="196" rx="8" className="stroke-white/30" />
-        <rect x="6" y="8" width="98" height="170" rx="4" className="stroke-white/10" />
-        <circle cx="55" cy="182" r="3" className="stroke-white/20" />
-        <rect x="42" y="186" width="26" height="8" rx="2" className="stroke-white/15" />
-      </svg>
-    )
-  },
-  {
-    id: 3, name: 'Nothing Phone (3)', category: 'Phones',
-    processor: 'Snapdragon 8s Gen 3', storage: '256GB / 512GB',
-    display: '6.7" OLED 120Hz', price: 799, originalPrice: null,
-    badge: 'ICONIC', inStock: true, rating: 4.7,
-    Image: () => (
-      <svg viewBox="0 0 100 200" className="w-[3.75rem] h-32" fill="none" stroke="currentColor" strokeWidth="1">
-        <rect x="4" y="2" width="92" height="196" rx="12" className="stroke-white/30" />
-        <rect x="8" y="8" width="84" height="170" rx="8" className="stroke-white/10" />
-        <circle cx="50" cy="182" r="3.5" className="stroke-white/20" />
-        <line x1="20" y1="30" x2="80" y2="30" className="stroke-white/[0.06]" strokeWidth="0.5" />
-      </svg>
-    )
-  },
-  {
-    id: 4, name: 'MacBook Pro 16" M4 Max', category: 'Laptops',
-    processor: 'Apple M4 Max', storage: '1TB / 2TB / 4TB SSD',
-    display: '16.2" Liquid Retina XDR', price: 3499, originalPrice: 3999,
-    badge: 'NEW', inStock: true, rating: 4.9,
-    Image: () => (
-      <svg viewBox="0 0 200 130" className="w-full h-24" fill="none" stroke="currentColor" strokeWidth="1">
-        <rect x="4" y="4" width="192" height="110" rx="6" className="stroke-white/30" />
-        <rect x="10" y="10" width="180" height="98" rx="3" className="stroke-white/[0.06]" />
-        <rect x="70" y="114" width="60" height="12" rx="1" className="stroke-white/20" />
-        <rect x="80" y="116" width="40" height="8" rx="1" className="stroke-white/[0.06]" />
-      </svg>
-    )
-  },
-  {
-    id: 5, name: 'Dell XPS 16', category: 'Laptops',
-    processor: 'Intel Core Ultra 9', storage: '1TB / 2TB SSD',
-    display: '16.3" OLED 4K+', price: 2499, originalPrice: null,
-    badge: null, inStock: true, rating: 4.6,
-    Image: () => (
-      <svg viewBox="0 0 200 130" className="w-full h-24" fill="none" stroke="currentColor" strokeWidth="1">
-        <rect x="2" y="2" width="196" height="112" rx="4" className="stroke-white/30" />
-        <rect x="8" y="8" width="184" height="100" rx="2" className="stroke-white/[0.06]" />
-        <rect x="65" y="114" width="70" height="14" rx="1" className="stroke-white/20" />
-        <line x1="40" y1="20" x2="60" y2="20" className="stroke-white/[0.06]" strokeWidth="0.5" />
-      </svg>
-    )
-  },
-  {
-    id: 6, name: 'ASUS ROG Zephyrus G16', category: 'Laptops',
-    processor: 'AMD Ryzen AI 9', storage: '1TB / 2TB SSD',
-    display: '16" OLED 240Hz', price: 2199, originalPrice: null,
-    badge: null, inStock: false, rating: 4.7,
-    Image: () => (
-      <svg viewBox="0 0 200 130" className="w-full h-24" fill="none" stroke="currentColor" strokeWidth="1">
-        <rect x="2" y="2" width="196" height="112" rx="4" className="stroke-white/30" />
-        <rect x="8" y="8" width="184" height="100" rx="2" className="stroke-white/[0.06]" />
-        <rect x="60" y="114" width="80" height="14" rx="1" className="stroke-white/20" />
-        <rect x="160" y="18" width="26" height="8" rx="2" className="stroke-white/[0.08]" />
-      </svg>
-    )
-  },
-  {
-    id: 7, name: 'HP 250 G5 Notebook', category: 'Laptops',
-    processor: 'Core i5 6th Gen', storage: '256GB SSD',
-    display: '15" HD', price: 200, originalPrice: 230,
-    badge: 'DEAL', inStock: true, rating: 4.3,
-    Image: () => (
-      <div className="w-full h-full flex items-center justify-center p-4">
-        <img
-          src="/images/hp-250-g5.jpg"
-          alt="HP 250 G5 Notebook"
-          className="w-full h-full object-contain rounded-xl"
-          style={{ maxWidth: '180px', maxHeight: '160px' }}
-        />
-      </div>
-    )
-  },
-];
+const products = allProducts;
 
 const filterOptions = {
-  Category: ['Phones', 'Laptops'],
-  Processor: ['A18 Pro', 'Snapdragon 8 Gen 4', 'Snapdragon 8s Gen 3', 'Apple M4 Max', 'Intel Core Ultra 9', 'AMD Ryzen AI 9', 'Core i5 6th Gen'],
-  Storage: ['256GB', '512GB', '1TB', '2TB', '4TB', '256GB SSD'],
+  Category: [...new Set(products.map(p => p.category))],
+  Processor: [...new Set(products.filter(p => p.processor !== 'N/A').map(p => p.processor))],
+  Storage: [...new Set(products.filter(p => p.storage !== 'N/A').map(p => p.storage))],
 };
 
 function lcg(seed) {
@@ -500,16 +400,27 @@ function ProductShowcase({
                       </button>
 
                       <div className="h-52 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] relative overflow-hidden">
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.7, ease: easePremium }}
-                          className="transition-all duration-700 group-hover:scale-110"
-                          style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
-                        >
-                          <product.Image />
-                        </motion.div>
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, ease: easePremium }}
+                            className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4"
+                            style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+                          >
+                            {product.image ? (
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-contain rounded-xl"
+                                style={{ maxWidth: '180px', maxHeight: '160px' }}
+                              />
+                            ) : (
+                              <div className="w-24 h-32 rounded-2xl border border-white/10 flex items-center justify-center text-white/20 text-xs bg-white/[0.02]">
+                                {product.name.split(' ').slice(0, 2).join(' ')}
+                              </div>
+                            )}
+                          </motion.div>
 
                         {product.badge && (
                           <span className="absolute top-3 left-3 badge-premium text-[9px]">
@@ -617,9 +528,10 @@ function ProductShowcase({
 
 function FeaturedCategories() {
   const categories = [
-    { icon: Smartphone, title: 'Flagship Phones', desc: 'Premium mobile technology', highlight: '6 Devices' },
-    { icon: Monitor, title: 'Premium Laptops', desc: 'Professional computing power', highlight: '12 Devices' },
-    { icon: Gamepad2, title: 'Gaming Setup', desc: 'High-performance rigs', highlight: '8 Devices' },
+    { icon: Smartphone, title: 'Phones', desc: 'Flagship mobile technology', count: 3, slug: '/phones' },
+    { icon: Monitor, title: 'Laptops', desc: 'Premium & budget computing', count: 18, slug: '/laptops' },
+    { icon: Gamepad2, title: 'Gaming', desc: 'Consoles, desktops & monitors', count: 5, slug: '/gaming' },
+    { icon: Package, title: 'Accessories', desc: 'Printers, chargers & repairs', count: 3, slug: '/accessories' },
   ];
 
   return (
@@ -643,7 +555,7 @@ function FeaturedCategories() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {categories.map((cat, i) => {
             const Icon = cat.icon;
             return (

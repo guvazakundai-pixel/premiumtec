@@ -99,8 +99,8 @@ export default function CategoryPage({ category }) {
                   <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                     transition={{ duration: 0.7, ease: easePrem }}
                     className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
-                    {product.id === 7 ? (
-                      <img src="/images/hp-250-g5.jpg" alt={product.name}
+                    {product.image ? (
+                      <img src={product.image} alt={product.name}
                         className="w-full h-full object-contain rounded-xl"
                         style={{ maxWidth: '180px', maxHeight: '160px' }} />
                     ) : (

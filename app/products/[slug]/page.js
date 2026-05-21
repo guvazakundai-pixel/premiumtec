@@ -46,8 +46,8 @@ export default function ProductDetail({ params }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}
             className="product-card h-80 lg:h-96 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent p-8">
-            {product.id === 7 ? (
-              <img src="/images/hp-250-g5.jpg" alt={product.name}
+            {product.image ? (
+              <img src={product.image} alt={product.name}
                 className="w-full h-full object-contain rounded-2xl"
                 style={{ maxWidth: '300px', maxHeight: '300px' }} />
             ) : (
