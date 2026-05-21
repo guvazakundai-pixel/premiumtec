@@ -158,10 +158,8 @@ function Hero({ onShop, onRepairs }) {
 
 function CategoryGrid() {
   const cats = [
-    { icon: Monitor, title: 'Laptops', desc: 'Premium & budget computing', count: 18, slug: '/laptops', color: '#2563EB' },
-    { icon: Gamepad2, title: 'Gaming', desc: 'Consoles, desktops & monitors', count: 5, slug: '/gaming', color: '#7C3AED' },
-    { icon: Wrench, title: 'Repairs', desc: 'Diagnostics, upgrades & fixes', count: null, slug: '/repairs', color: '#059669' },
-    { icon: Package, title: 'Accessories', desc: 'Printers, chargers & more', count: 3, slug: '/accessories', color: '#D97706' },
+    { icon: Smartphone, title: 'Phones', desc: 'Flagship mobile technology', count: 3, slug: '/phones', color: '#2563EB' },
+    { icon: Monitor, title: 'Laptops', desc: 'Premium computing power', count: 3, slug: '/laptops', color: '#7C3AED' },
   ];
 
   return (
@@ -175,7 +173,7 @@ function CategoryGrid() {
           <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Explore Our Range</h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {cats.map((cat, i) => {
             const Icon = cat.icon;
             return (
