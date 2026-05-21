@@ -292,16 +292,18 @@ function LaptopBrands() {
                   className="w-64 flex-shrink-0"
                 >
                   <div className="card-light h-full flex flex-col group">
-                    <div className="h-44 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] overflow-hidden">
+                    <a href={`/products/${product.slug}`} className="aspect-[4/3] flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden">
                       {product.image ? (
                         <img src={product.image} alt={product.name}
-                          className="w-full h-full object-cover p-3 transition-all duration-500 group-hover:scale-110" />
+                          className="w-full h-full object-contain p-4 transition-all duration-500 group-hover:scale-110" />
                       ) : (
                         <Laptop size={40} className="text-white/20" />
                       )}
-                    </div>
+                    </a>
                     <div className="flex-1 flex flex-col p-4 gap-2">
-                      <h4 className="text-xs font-medium text-white/80 leading-snug line-clamp-2">{product.name}</h4>
+                      <a href={`/products/${product.slug}`}>
+                        <h4 className="text-xs font-medium text-white/80 leading-snug line-clamp-2 hover:text-white transition-colors">{product.name}</h4>
+                      </a>
                       <div className="flex flex-wrap gap-1">
                         {getCpu(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getCpu(product)}</span>}
                         {getRam(product) && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{getRam(product)}</span>}
@@ -398,20 +400,22 @@ function PhonesSection() {
           {filtered.map(product => (
             <motion.div key={product.id} variants={fadeUp}>
               <div className="glass-card h-full flex flex-col group p-5">
-                <div className="h-40 flex items-center justify-center mb-4 bg-white/[0.02] rounded-xl border border-white/[0.04]">
+                <a href={`/products/${product.slug}`} className="aspect-[3/4] flex items-center justify-center bg-white/[0.02] rounded-xl border border-white/[0.04] overflow-hidden">
                   {product.image ? (
                     <img src={product.image} alt={product.name}
-                      className="w-full h-full object-cover p-3 transition-transform duration-500 group-hover:scale-110" />
+                      className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
                   ) : (
                     <Smartphone size={48} className="text-white/20" />
                   )}
-                </div>
+                </a>
                 {product.badge && (
                   <span className="text-[9px] px-2 py-1 rounded-full bg-[#2563EB]/10 text-[#38BDF8] font-medium border border-[#2563EB]/15 self-start mb-2">
                     {product.badge}
                   </span>
                 )}
-                <h3 className="text-sm font-medium text-white/80 leading-snug mb-2">{product.name}</h3>
+                <a href={`/products/${product.slug}`}>
+                  <h3 className="text-sm font-medium text-white/80 leading-snug mb-2 hover:text-white transition-colors">{product.name}</h3>
+                </a>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {product.storage && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.storage}</span>}
                   {product.display && product.display !== 'N/A' && <span className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{product.display}</span>}
@@ -495,7 +499,7 @@ function GamingShowcase() {
                     <div className="flex items-start gap-5">
                       <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
                         {product.image ? (
-                          <img src={product.image} alt={product.name} className="w-full h-full object-cover p-0 transition-transform duration-500 group-hover:scale-110" />
+                          <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
                         ) : (
                           <Gamepad2 size={40} className="text-violet-400/50" />
                         )}
@@ -525,24 +529,24 @@ function GamingShowcase() {
               {consoles.map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500">
+                  <a href={`/products/${product.slug}`} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500">
                     <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-cover p-0 transition-transform duration-500 group-hover:scale-110" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <Gamepad size={36} className="text-blue-400/50" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-blue-400/60">{product.badge || 'CONSOLE'}</span>
-                      <h4 className="text-sm font-semibold text-white/80 mt-1">{product.name}</h4>
+                      <h4 className="text-sm font-semibold text-white/80 mt-1 group-hover:text-white transition-colors">{product.name}</h4>
                       <p className="text-xs text-white/35 mt-1 line-clamp-1">{product.display}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="text-lg font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
                         <span className={`text-[10px] ${product.inStock ? 'text-green-400/70' : 'text-amber-400/70'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
                       </div>
                     </div>
-                  </div>
+                  </a>
                 </motion.div>
               ))}
             </div>
@@ -557,20 +561,20 @@ function GamingShowcase() {
               {gear.slice(0, 2).map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500">
+                  <a href={`/products/${product.slug}`} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500">
                     <div className="w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-cover p-0 transition-transform duration-500 group-hover:scale-110" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <Monitor size={24} className="text-rose-400/50" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-white/80">{product.name}</h4>
+                      <h4 className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">{product.name}</h4>
                       <p className="text-xs text-white/35">{product.processor !== 'N/A' ? product.processor : product.display}</p>
                       <span className="text-sm font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
                     </div>
-                  </div>
+                  </a>
                 </motion.div>
               ))}
             </div>
@@ -918,23 +922,15 @@ function ProductShowcase({
                         <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
                       </button>
 
-                      <a href={`/products/${product.slug}`} className="h-60 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden">
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.7, ease }}
-                          className="w-full h-full flex items-center justify-center"
-                        >
-                          {product.image ? (
-                            <img src={product.image} alt={product.name}
-                              className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-all duration-700" />
-                          ) : (
-                            <div className="w-24 h-32 rounded-xl border border-white/10 flex items-center justify-center text-white/20 text-xs bg-white/[0.02]">
-                              {product.name.split(' ').slice(0, 2).join(' ')}
-                            </div>
-                          )}
-                        </motion.div>
+                      <a href={`/products/${product.slug}`} className="aspect-[4/3] flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden relative">
+                        {product.image ? (
+                          <img src={product.image} alt={product.name}
+                            className="w-full h-full object-contain p-4 transition-all duration-700 group-hover:scale-110" />
+                        ) : (
+                          <div className="w-24 h-32 rounded-xl border border-white/10 flex items-center justify-center text-white/20 text-xs bg-white/[0.02]">
+                            {product.name.split(' ').slice(0, 2).join(' ')}
+                          </div>
+                        )}
                         {product.badge && (
                           <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>
                         )}
