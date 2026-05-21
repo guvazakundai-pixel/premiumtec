@@ -15,9 +15,9 @@ export default function Footer() {
               <Image
                 src="/images/techstore-logo.png"
                 alt="Tech Store"
-                width={220}
-                height={55}
-                className="h-12 w-auto object-contain"
+                width={280}
+                height={70}
+                className="h-14 w-auto object-contain"
               />
             </Link>
             <p className="text-sm text-white/30 font-light leading-relaxed max-w-xs">

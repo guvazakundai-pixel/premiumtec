@@ -97,9 +97,9 @@ export default function Nav() {
           <Image
             src="/images/techstore-logo.png"
             alt="Tech Store"
-            width={200}
-            height={50}
-            className="h-11 w-auto object-contain"
+            width={240}
+            height={60}
+            className="h-12 w-auto object-contain"
             priority
           />
         </Link>
