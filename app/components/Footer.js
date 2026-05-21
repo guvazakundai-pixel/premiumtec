@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
 export default function Footer() {
@@ -11,14 +10,11 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
-            <Link href="/" className="flex items-center mb-4 group">
-              <Image
-                src="/images/techstore-logo.jpg"
-                alt="Tech Store"
-                width={140}
-                height={46}
-                className="h-10 w-auto object-contain"
-              />
+            <Link href="/" className="flex items-center gap-2.5 mb-4 group">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2563EB] to-[#38BDF8] flex items-center justify-center shadow-lg shadow-[#2563EB]/20">
+                <span className="text-xs font-black text-white">T</span>
+              </div>
+              <span className="text-base font-bold tracking-tight text-white">TECH STORE</span>
             </Link>
             <p className="text-sm text-white/30 font-light leading-relaxed max-w-xs">
               High-performance laptops, gaming setups, repairs, and premium accessories. Your trusted technology partner in Harare.
