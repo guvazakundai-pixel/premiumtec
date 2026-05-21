@@ -258,6 +258,89 @@ export const products = [
     description: 'Brand new HP Pavilion 15 with Core i5 12th Gen, 512GB SSD, and 8GB RAM. Premium entertainment laptop.',
     features: ['Brand New Boxed', 'Core i5 12th Generation', '512GB SSD', '8GB RAM', '15.6" HD Display', 'Full Warranty'],
   },
+
+  // ─── HP OMNIBOOKS ───
+  {
+    id: 32, name: 'HP Omnibook 5 Flip 14-FP0023DX', category: 'Laptops',
+    slug: 'hp-omnibook-5-flip-14-fp0023dx',
+    processor: 'Core 7 150U', storage: '512GB SSD',
+    display: '14" Touchscreen', price: 1000, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.5, reviews: 0,
+    description: 'HP Omnibook 5 Flip with Core 7 150U, 16GB RAM, 512GB SSD, and 14" touchscreen display. Versatile flip design for work and play.',
+    features: ['Core 7 150U', '16GB RAM', '512GB SSD', '14" Touchscreen', 'Flip Design', 'Windows 11'],
+  },
+  {
+    id: 33, name: 'HP Omnibook X Flip 14-FM0023DX', category: 'Laptops',
+    slug: 'hp-omnibook-x-flip-14-fm0023dx',
+    processor: 'Core Ultra 7 256V Series 2', storage: '1TB SSD',
+    display: '14" Touchscreen', price: 1250, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.6, reviews: 0,
+    description: 'HP Omnibook X Flip powered by Intel Core Ultra 7 Series 2, 16GB RAM, 1TB SSD, and 14" touchscreen. Premium ultrabook performance.',
+    features: ['Core Ultra 7 256V Series 2', '16GB RAM', '1TB SSD', '14" Touchscreen', 'Flip Design', 'Windows 11'],
+  },
+  {
+    id: 34, name: 'HP Omnibook X Flip 16-AS0033DX', category: 'Laptops',
+    slug: 'hp-omnibook-x-flip-16-as0033dx',
+    processor: 'Core Ultra 7 256V Series 2', storage: '2TB SSD',
+    display: '16" Touchscreen', price: 1450, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.7, reviews: 0,
+    description: 'Large-screen HP Omnibook X Flip with Core Ultra 7 Series 2, 32GB RAM, 2TB SSD, and 16" touchscreen display.',
+    features: ['Core Ultra 7 256V Series 2', '32GB RAM', '2TB SSD', '16" Touchscreen', 'Flip Design', 'Windows 11'],
+  },
+  {
+    id: 35, name: 'HP Omnibook X 16-AW0033DX', category: 'Laptops',
+    slug: 'hp-omnibook-x-16-aw0033dx',
+    processor: 'Core Ultra 7 255H', storage: '2TB SSD',
+    display: '16" Touchscreen', price: 1700, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.8, reviews: 0,
+    description: 'HP Omnibook X with Core Ultra 7 255H, 32GB RAM, 2TB SSD, 16" touchscreen, and NVIDIA GeForce RTX 4050 6GB graphics. Powerhouse for creators and gamers.',
+    features: ['Core Ultra 7 255H', '32GB RAM', '2TB SSD', '16" Touchscreen', 'NVIDIA RTX 4050 6GB', 'Windows 11'],
+  },
+  {
+    id: 36, name: 'HP Omnibook 7 Flip 16-AU0019ST', category: 'Laptops',
+    slug: 'hp-omnibook-7-flip-16-au0019st',
+    processor: 'Core Ultra 9 288V Series 2', storage: '1TB SSD',
+    display: '16" Touchscreen', price: 1570, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.8, reviews: 0,
+    description: 'HP Omnibook 7 Flip with top-tier Core Ultra 9 288V Series 2, 32GB RAM, 1TB SSD, and 16" touchscreen. Flagship performance.',
+    features: ['Core Ultra 9 288V Series 2', '32GB RAM', '1TB SSD', '16" Touchscreen', 'Flip Design', 'Windows 11'],
+  },
+  {
+    id: 37, name: 'HP Omnibook X Flip 16-AS0043DX', category: 'Laptops',
+    slug: 'hp-omnibook-x-flip-16-as0043dx',
+    processor: 'Core Ultra 9 288V Series 2', storage: '2TB SSD',
+    display: '16" Touchscreen', price: 1650, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 0,
+    description: 'HP Omnibook X Flip 16 with Core Ultra 9 288V Series 2, 32GB RAM, 2TB SSD, and 16" touchscreen. Maximum storage and speed.',
+    features: ['Core Ultra 9 288V Series 2', '32GB RAM', '2TB SSD', '16" Touchscreen', 'Flip Design', 'Windows 11'],
+  },
+  {
+    id: 38, name: 'HP Omnibook Ultra Flip 14-FH0013NIA', category: 'Laptops',
+    slug: 'hp-omnibook-ultra-flip-14-fh0013nia',
+    processor: 'Core Ultra 7 256V Series 2', storage: '1TB SSD',
+    display: '14" Touchscreen', price: 1450, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.6, reviews: 0,
+    description: 'HP Omnibook Ultra Flip with Core Ultra 7 256V Series 2, 16GB RAM, 1TB SSD, 14" touchscreen, and fingerprint reader.',
+    features: ['Core Ultra 7 256V Series 2', '16GB RAM', '1TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'Windows 11'],
+  },
+  {
+    id: 39, name: 'HP Omnibook Ultra Flip 14-FH000', category: 'Laptops',
+    slug: 'hp-omnibook-ultra-flip-14-fh000',
+    processor: 'Core Ultra 7 258V Series 2', storage: '1TB SSD',
+    display: '14" Touchscreen', price: 1800, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.7, reviews: 0,
+    description: 'HP Omnibook Ultra Flip with Core Ultra 7 258V Series 2, 32GB RAM, 1TB SSD, 14" touchscreen, fingerprint reader, and HP Pen included.',
+    features: ['Core Ultra 7 258V Series 2', '32GB RAM', '1TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'HP Pen Included', 'Windows 11'],
+  },
+  {
+    id: 40, name: 'HP Omnibook Ultra Flip 14-FH0033DX', category: 'Laptops',
+    slug: 'hp-omnibook-ultra-flip-14-fh0033dx',
+    processor: 'Core Ultra 9 258V Series 2', storage: '2TB SSD',
+    display: '14" Touchscreen', price: 2000, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 0,
+    description: 'Ultimate HP Omnibook Ultra Flip with Core Ultra 9 258V Series 2, 32GB RAM, 2TB SSD, 14" touchscreen, and fingerprint reader. The pinnacle of the Omnibook line.',
+    features: ['Core Ultra 9 258V Series 2', '32GB RAM', '2TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'Windows 11'],
+  },
 ];
 
 export function getProductBySlug(slug) {
@@ -269,7 +352,7 @@ export function getProductsByCategory(category) {
 }
 
 export const categories = [
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 18, desc: 'Professional computing power' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 27, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 5, desc: 'Consoles, desktops & monitors' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
 ];
