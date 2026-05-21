@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import {
   Search, X, ArrowRight, ChevronDown, SlidersHorizontal,
   Shield, Truck, HeadphonesIcon, CreditCard, Star,
-  Heart, Check, Menu, ShoppingBag, ChevronRight,
+  Heart, Check, ShoppingBag, ChevronRight,
   MapPin, Clock, Package, Smartphone, Monitor, Gamepad2
 } from 'lucide-react';
 
@@ -173,76 +173,6 @@ function AmbientBackground() {
       <div className="ambient-orb ambient-orb--tertiary" />
       <div className="ambient-noise" />
     </div>
-  );
-}
-
-function Navigation({ onShopNow }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  return (
-    <motion.nav
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.8, ease: easePremium }}
-      className="fixed top-0 left-0 right-0 z-50 glass-nav h-16"
-    >
-      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-[#3B82F6] shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-          <span className="text-base font-bold tracking-tight text-white select-none">
-            PREMIUMTEC
-          </span>
-        </div>
-
-        <div className="hidden md:flex items-center gap-8">
-          <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/40 hover:text-white/70 transition-colors duration-300 cursor-default">
-            Phones
-          </span>
-          <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/40 hover:text-white/70 transition-colors duration-300 cursor-default">
-            Laptops
-          </span>
-          <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/40 hover:text-white/70 transition-colors duration-300 cursor-default">
-            Support
-          </span>
-          <button
-            onClick={onShopNow}
-            className="btn-premium btn-premium--primary text-[10px] px-5 py-2.5"
-          >
-            Shop Now
-            <ArrowRight size={12} />
-          </button>
-        </div>
-
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-white/60 hover:text-white transition-colors"
-        >
-          <Menu size={20} />
-        </button>
-      </div>
-
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="md:hidden glass-panel--sharp mx-4 mt-2 p-4 space-y-3"
-        >
-          {['Phones', 'Laptops', 'Support'].map((item) => (
-            <div key={item} className="text-sm text-white/60 hover:text-white transition-colors py-2 cursor-default">
-              {item}
-            </div>
-          ))}
-          <button
-            onClick={() => { onShopNow(); setMobileMenuOpen(false); }}
-            className="w-full btn-premium btn-premium--primary text-[10px] justify-center"
-          >
-            Shop Now
-            <ArrowRight size={12} />
-          </button>
-        </motion.div>
-      )}
-    </motion.nav>
   );
 }
 
@@ -1005,54 +935,6 @@ function InfoSection() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="relative z-10 border-t border-white/[0.04] px-6 py-14">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-2 h-2 rounded-full bg-[#3B82F6] shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-              <span className="text-base font-bold tracking-tight text-white">PREMIUMTEC</span>
-            </div>
-            <p className="text-sm text-white/30 font-light max-w-sm leading-relaxed">
-              Premium technology curated for those who demand the best. Flagship devices, exceptional service.
-            </p>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">Quick Links</h4>
-            <div className="space-y-2.5">
-              {['Phones', 'Laptops', 'Support', 'Contact'].map((link) => (
-                <p key={link} className="text-sm text-white/30 hover:text-white/60 transition-colors duration-300 cursor-default">
-                  {link}
-                </p>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">Support</h4>
-            <div className="space-y-2.5">
-              {['Warranty', 'Shipping', 'Returns', 'FAQ'].map((link) => (
-                <p key={link} className="text-sm text-white/30 hover:text-white/60 transition-colors duration-300 cursor-default">
-                  {link}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-white/[0.04] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/20">
-            &copy; {new Date().getFullYear()} PremiumTec. All rights reserved.
-          </p>
-          <p className="text-[10px] text-white/10 tracking-[0.15em] uppercase">
-            Flagship Phones &bull; Premium Laptops &bull; Premium Technology
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function TechStore() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState({});
@@ -1114,8 +996,6 @@ export default function TechStore() {
       <AmbientBackground />
 
       <div className="relative z-10">
-        <Navigation onShopNow={scrollToProducts} />
-
         <motion.div style={{ filter: `blur(${springBlur}px)` }}>
           <Hero onShopNow={scrollToProducts} />
         </motion.div>
@@ -1140,7 +1020,6 @@ export default function TechStore() {
         <CustomerReviews />
         <NewsletterSection />
         <InfoSection />
-        <Footer />
       </div>
 
       {/* Floating mobile cart button */}
