@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 
-const WHATSAPP_NUMBER = '263775685616';
+const WHATSAPP_NUMBER = '263780579633';
 
 export default function WhatsAppButton() {
   const [open, setOpen] = useState(false);

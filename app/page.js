@@ -124,12 +124,25 @@ const products = [
       </svg>
     )
   },
+  {
+    id: 7, name: 'HP 250 G5 Notebook', category: 'Laptops',
+    processor: 'Core i5 6th Gen', storage: '256GB SSD',
+    display: '15" HD', price: 200, originalPrice: 230,
+    badge: 'DEAL', inStock: true, rating: 4.3,
+    Image: () => (
+      <img
+        src="/images/hp-250-g5.jpg"
+        alt="HP 250 G5 Notebook"
+        className="w-full h-full object-contain p-4"
+      />
+    )
+  },
 ];
 
 const filterOptions = {
   Category: ['Phones', 'Laptops'],
-  Processor: ['A18 Pro', 'Snapdragon 8 Gen 4', 'Snapdragon 8s Gen 3', 'Apple M4 Max', 'Intel Core Ultra 9', 'AMD Ryzen AI 9'],
-  Storage: ['256GB', '512GB', '1TB', '2TB', '4TB'],
+  Processor: ['A18 Pro', 'Snapdragon 8 Gen 4', 'Snapdragon 8s Gen 3', 'Apple M4 Max', 'Intel Core Ultra 9', 'AMD Ryzen AI 9', 'Core i5 6th Gen'],
+  Storage: ['256GB', '512GB', '1TB', '2TB', '4TB', '256GB SSD'],
 };
 
 function lcg(seed) {

@@ -13,7 +13,7 @@ export default function ContactPage() {
     e.preventDefault();
     if (!name || !email) return;
     const body = `Hi PremiumTec, I'd like to get in touch:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
-    window.open(`https://wa.me/263775685616?text=${encodeURIComponent(body)}`, '_blank');
+    window.open(`https://wa.me/263780579633?text=${encodeURIComponent(body)}`, '_blank');
   };
 
   return (
@@ -66,7 +66,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone size={16} className="text-[#3B82F6] mt-0.5 shrink-0" />
-                  <div><p className="text-sm text-white/70">+263 775 685 616</p><p className="text-xs text-white/40">+263 708 463 628</p></div>
+                  <div><p className="text-sm text-white/70">+263 780 579 633</p><p className="text-xs text-white/40">+263 708 463 628</p></div>
                 </div>
               </div>
             </div>

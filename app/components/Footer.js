@@ -96,13 +96,13 @@ export default function Footer() {
               <p>Sirus Mall, 1st Floor, Harare</p>
               <p className="pt-1">Mon – Sat: 08:30 – 17:00</p>
               <p className="pt-1">
-                <a href="tel:+263775685616" className="hover:text-white/60 transition-colors">+263 775 685 616</a>
+                <a href="tel:+263780579633" className="hover:text-white/60 transition-colors">+263 780 579 633</a>
               </p>
               <p>
                 <a href="tel:+263708463628" className="hover:text-white/60 transition-colors">+263 708 463 628</a>
               </p>
               <p className="pt-1">
-                <a href="https://wa.me/263775685616" target="_blank" rel="noopener noreferrer" className="text-[#3B82F6] hover:text-white transition-colors">
+                <a href="https://wa.me/263780579633" target="_blank" rel="noopener noreferrer" className="text-[#3B82F6] hover:text-white transition-colors">
                   WhatsApp Us
                 </a>
               </p>

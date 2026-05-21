@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
               name: "PremiumTec",
               description: "Curated premium technology — flagship phones and premium laptops in Zimbabwe.",
               url: "https://premiumtec.vercel.app",
-              telephone: "+263775685616",
+              telephone: "+263780579633",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Corner Speke & Mbuya Nehanda, Sirus Mall, 1st Floor",

@@ -48,7 +48,7 @@ export default function TermsPage() {
           </Section>
 
           <Section title="8. Contact">
-            <p>For questions about these terms, contact us via WhatsApp at +263 775 685 616 or visit our showroom at Sirus Mall, 1st Floor, Harare.</p>
+            <p>For questions about these terms, contact us via WhatsApp at +263 780 579 633 or visit our showroom at Sirus Mall, 1st Floor, Harare.</p>
           </Section>
         </div>
       </div>

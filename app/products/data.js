@@ -53,6 +53,15 @@ export const products = [
     description: 'Ultra-slim gaming powerhouse with AMD Ryzen AI 9, NVIDIA GeForce RTX 40 series, and a blazing-fast 240Hz OLED display.',
     features: ['AMD Ryzen AI 9 HX 370', '16" 2.5K OLED 240Hz', 'NVIDIA GeForce RTX 4070', '1TB / 2TB SSD', '16GB DDR5 RAM', 'RGB keyboard'],
   },
+  {
+    id: 7, name: 'HP 250 G5 Notebook', category: 'Laptops',
+    slug: 'hp-250-g5',
+    processor: 'Core i5 6th Gen', storage: '256GB SSD',
+    display: '15" HD', price: 200, originalPrice: 230,
+    badge: 'DEAL', inStock: true, rating: 4.3, reviews: 3,
+    description: 'Reliable HP 250 G5 notebook powered by Intel Core i5 6th generation. Perfect for everyday productivity, with 8GB RAM and a fast 256GB SSD.',
+    features: ['Core i5 6th Generation', '8GB RAM', '256GB SSD', 'Windows 11 Pro', '15" HD Display', 'Lightweight design'],
+  },
 ];
 
 export function getProductBySlug(slug) {
@@ -65,5 +74,5 @@ export function getProductsByCategory(category) {
 
 export const categories = [
   { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 3, desc: 'Premium flagship mobile technology' },
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 3, desc: 'Professional computing power' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 4, desc: 'Professional computing power' },
 ];

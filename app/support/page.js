@@ -24,7 +24,7 @@ export default function SupportPage() {
     e.preventDefault();
     if (!email) return;
     const body = `Hi PremiumTec, I have a support question:\n\nEmail: ${email}\nMessage: ${msg}\n\nPlease get back to me.`;
-    window.open(`https://wa.me/263775685616?text=${encodeURIComponent(body)}`, '_blank');
+    window.open(`https://wa.me/263780579633?text=${encodeURIComponent(body)}`, '_blank');
   };
 
   return (
@@ -76,8 +76,8 @@ export default function SupportPage() {
                 <button type="submit" className="w-full btn-premium btn-premium--primary text-[10px] justify-center">Send via WhatsApp →</button>
               </form>
               <div className="border-t border-white/[0.04] pt-4 space-y-2 text-xs text-white/50">
-                <p><span className="text-[#3B82F6]">Call:</span> +263 775 685 616</p>
-                <p><span className="text-[#3B82F6]">WhatsApp:</span> +263 775 685 616</p>
+                <p><span className="text-[#3B82F6]">Call:</span> +263 780 579 633</p>
+                <p><span className="text-[#3B82F6]">WhatsApp:</span> +263 780 579 633</p>
                 <p><span className="text-[#3B82F6]">Visit:</span> Sirus Mall, 1st Floor, Harare</p>
               </div>
             </div>

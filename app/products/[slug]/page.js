@@ -33,7 +33,7 @@ export default function ProductDetail({ params }) {
 
   const handleWhatsApp = () => {
     const msg = `Hi PremiumTec, I'd like to buy:\n\nProduct: ${product.name}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability and payment options.`;
-    window.open(`https://wa.me/263775685616?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return (

@@ -41,7 +41,7 @@ export default function ReturnsPage() {
 
           <Section title="Return Process">
             <ol className="list-decimal pl-5 space-y-1 text-white/40">
-              <li>Contact us via WhatsApp at +263 775 685 616 within 7 days of delivery</li>
+              <li>Contact us via WhatsApp at +263 780 579 633 within 7 days of delivery</li>
               <li>Provide your order number and reason for return</li>
               <li>Our team will provide return instructions and address</li>
               <li>Ship the item back in its original packaging</li>
@@ -59,7 +59,7 @@ export default function ReturnsPage() {
 
           <Section title="Contact">
             <p>For return inquiries, reach out via:</p>
-            <p className="text-white/60">WhatsApp: +263 775 685 616<br />Call: +263 708 463 628<br />Visit: Sirus Mall, 1st Floor, Harare</p>
+            <p className="text-white/60">WhatsApp: +263 780 579 633<br />Call: +263 708 463 628<br />Visit: Sirus Mall, 1st Floor, Harare</p>
           </Section>
         </div>
       </div>

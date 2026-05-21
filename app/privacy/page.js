@@ -57,7 +57,7 @@ export default function PrivacyPage() {
 
           <Section title="7. Contact Us">
             <p>If you have any questions about this Privacy Policy, please contact us:</p>
-            <p className="text-white/60">WhatsApp: +263 775 685 616<br />Email: Via our contact form at premiumtec.vercel.app/contact<br />Visit: Sirus Mall, 1st Floor, Harare, Zimbabwe</p>
+            <p className="text-white/60">WhatsApp: +263 780 579 633<br />Email: Via our contact form at premiumtec.vercel.app/contact<br />Visit: Sirus Mall, 1st Floor, Harare, Zimbabwe</p>
           </Section>
         </div>
       </div>
