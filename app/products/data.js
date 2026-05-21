@@ -348,6 +348,26 @@ export const products = [
     description: 'Ultimate HP Omnibook Ultra Flip with Core Ultra 9 258V Series 2, 32GB RAM, 2TB SSD, 14" touchscreen, and fingerprint reader. The pinnacle of the Omnibook line.',
     features: ['Core Ultra 9 258V Series 2', '32GB RAM', '2TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'Windows 11'],
   },
+  {
+    id: 41, name: 'Apple MacBook Neo (2026)', category: 'Laptops',
+    slug: 'apple-macbook-neo-2026',
+    processor: 'Apple Silicon', storage: '512GB SSD',
+    display: '14" Liquid Retina', price: 1000, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.7, reviews: 0,
+    description: 'Brand new Apple MacBook Neo (2026) with 8GB RAM, 512GB SSD, and stunning 14" Liquid Retina display. Next-gen performance in a sleek design.',
+    features: ['Apple Silicon', '8GB RAM', '512GB SSD', '14" Liquid Retina Display', '2026 Model', 'macOS'],
+  },
+  {
+    id: 42, name: 'Apple iPad M5', category: 'Laptops',
+    slug: 'apple-ipad-m5',
+    processor: 'Apple M5', storage: '256GB',
+    display: '13" Liquid Retina XDR', price: 1300, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.8, reviews: 0,
+    image: '/images/ipad-m5-1.jpg',
+    images: ['/images/ipad-m5-1.jpg', '/images/ipad-m5-2.jpg'],
+    description: 'Apple iPad M5 with 8GB RAM and 256GB storage. The ultimate creative and productivity tablet with M5 chip performance.',
+    features: ['Apple M5 Chip', '8GB RAM', '256GB Storage', '13" Liquid Retina XDR Display', 'USB-C', 'iPadOS'],
+  },
 ];
 
 export function getProductBySlug(slug) {
@@ -359,7 +379,7 @@ export function getProductsByCategory(category) {
 }
 
 export const categories = [
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 27, desc: 'Professional computing power' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 29, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 5, desc: 'Consoles, desktops & monitors' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
 ];
