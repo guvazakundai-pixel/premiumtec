@@ -14,16 +14,16 @@ import WhatsAppButton from "@/app/components/WhatsAppButton";
 import { CartProvider } from "@/app/context/CartContext";
 
 export const metadata = {
-  title: "PremiumTec — Curated Premium Technology",
+  title: "Tech Store — Premium Technology, Curated for You",
   description:
-    "Discover the finest collection of flagship smartphones, premium laptops, and cutting-edge technology. Curated for those who demand excellence.",
-  keywords: "PremiumTec, flagship phones, premium laptops, technology, premium electronics, curated tech",
+    "High-performance laptops, gaming setups, repairs, and premium accessories in Harare, Zimbabwe. Discover the best in tech.",
+  keywords: "Tech Store, premium laptops, gaming, tech repairs, Harare, Zimbabwe, technology store",
   openGraph: {
-    title: "PremiumTec — Curated Premium Technology",
+    title: "Tech Store — Premium Technology, Curated for You",
     description:
-      "Discover the finest collection of flagship smartphones, premium laptops, and cutting-edge technology. Curated for those who demand excellence.",
+      "High-performance laptops, gaming setups, repairs, and premium accessories in Harare, Zimbabwe.",
     type: "website",
-    siteName: "PremiumTec",
+    siteName: "Tech Store",
     locale: "en_US",
   },
 };
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
       <head>
-        <meta name="theme-color" content="#0B0F14" />
+        <meta name="theme-color" content="#0A1224" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://premiumtec.vercel.app" />
         <script
@@ -41,8 +41,8 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Store",
-              name: "PremiumTec",
-              description: "Curated premium technology — flagship phones and premium laptops in Zimbabwe.",
+              name: "Tech Store",
+              description: "Premium technology — laptops, gaming, repairs, and accessories in Harare, Zimbabwe.",
               url: "https://premiumtec.vercel.app",
               telephone: "+263780579633",
               address: {
@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0B0F14] text-[#F5F7FA] overflow-x-hidden font-sans">
+      <body className="min-h-full flex flex-col bg-[#0A1224] text-[#F1F5F9] overflow-x-hidden font-sans noise-overlay">
         <CartProvider>
           <Nav />
           <main className="flex-1">{children}</main>

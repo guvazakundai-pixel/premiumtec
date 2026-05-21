@@ -7,7 +7,7 @@ import { Search, X, SlidersHorizontal, Star, ArrowRight, Heart, ChevronDown, Sho
 import { products as allProducts } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
 
-const easePrem = [0.16, 1, 0.3, 1];
+const ease = [0.16, 1, 0.3, 1];
 
 export default function CategoryPage({ category }) {
   const [search, setSearch] = useState('');
@@ -39,14 +39,20 @@ export default function CategoryPage({ category }) {
     setTimeout(() => setNotify(null), 2000);
   }, [addItem]);
 
+  const pageTitle = category === 'phones' ? 'Phones' : category === 'laptops' ? 'Laptops' : category === 'gaming' ? 'Gaming' : 'Accessories';
+  const pageDesc = category === 'phones' ? 'Flagship mobile technology — iPhone, Samsung, and Nothing.' :
+    category === 'laptops' ? 'Premium & budget laptops — MacBook, Dell, HP, and more.' :
+    category === 'gaming' ? 'Consoles, desktops, monitors, and gaming gear.' :
+    'Printers, chargers, keyboards, and repair services.';
+
   return (
-    <main className="min-h-screen bg-[#0B0F14] pt-24 pb-20">
+    <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-[14px] text-sm font-medium"
-          style={{ background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.2)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
+          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
         >
           {notify}
         </motion.div>
@@ -56,15 +62,11 @@ export default function CategoryPage({ category }) {
         <div className="flex items-center gap-3 mb-2">
           <Link href="/" className="text-[11px] text-white/30 hover:text-white/60 transition-colors">Home</Link>
           <span className="text-white/10">/</span>
-          <span className="text-[11px] text-white/60">{category}</span>
+          <span className="text-[11px] text-white/60">{pageTitle}</span>
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F5F7FA] mb-2">
-          {category === 'phones' ? 'Flagship Phones' : category === 'laptops' ? 'Premium Laptops' : category}
-        </h1>
-        <p className="text-sm text-white/30 font-light mb-8 max-w-lg">
-          {category === 'phones' ? 'The most advanced mobile devices, meticulously selected for exceptional performance and design.' : 'Professional-grade laptops engineered for creativity, productivity, and performance.'}
-        </p>
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-2">{pageTitle}</h1>
+        <p className="text-sm text-white/30 font-light mb-8 max-w-lg">{pageDesc}</p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="glass-input flex-1 max-w-md">
@@ -87,24 +89,24 @@ export default function CategoryPage({ category }) {
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.06, duration: 0.6, ease: easePrem }}
+              transition={{ delay: i * 0.06, duration: 0.6, ease }}
             >
               <div className="product-card h-full flex flex-col group relative">
                 <button onClick={() => toggleWish(product.id)}
-                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#0B0F14]/60 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-[#3B82F6]/30">
+                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#0A1224]/70 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-[#2563EB]/30">
                   <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
                 </button>
 
-                <Link href={`/products/${product.slug}`} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] relative overflow-hidden">
+                <Link href={`/products/${product.slug}`} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden">
                   <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                    transition={{ duration: 0.7, ease: easePrem }}
+                    transition={{ duration: 0.7, ease }}
                     className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
                     {product.image ? (
                       <img src={product.image} alt={product.name}
                         className="w-full h-full object-contain rounded-xl"
-                        style={{ maxWidth: '180px', maxHeight: '160px' }} />
+                        style={{ maxWidth: '170px', maxHeight: '150px' }} />
                     ) : (
-                      <div className="w-24 h-32 rounded-2xl border border-white/20 flex items-center justify-center text-white/40 text-xs bg-white/[0.02]">
+                      <div className="w-24 h-32 rounded-xl border border-white/20 flex items-center justify-center text-white/40 text-xs bg-white/[0.02]">
                         {product.name.split(' ').slice(0, 2).join(' ')}
                       </div>
                     )}
@@ -112,11 +114,11 @@ export default function CategoryPage({ category }) {
                   {product.badge && <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>}
                 </Link>
 
-                <div className="flex-1 flex flex-col p-6 space-y-3">
+                <div className="flex-1 flex flex-col p-5 space-y-2.5">
                   <div>
                     <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.category}</span>
                     <Link href={`/products/${product.slug}`}>
-                      <h3 className="text-sm font-medium text-white/80 mt-1.5 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
+                      <h3 className="text-sm font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
                     </Link>
                   </div>
 
@@ -133,9 +135,9 @@ export default function CategoryPage({ category }) {
                     <span className="text-[10px] text-white/30 ml-1">{product.rating}</span>
                   </div>
 
-                  <div className="flex items-baseline justify-between mt-2 pt-3 border-t border-white/[0.04]">
+                  <div className="flex items-baseline justify-between pt-2.5 border-t border-white/[0.04]">
                     <div className="flex items-baseline gap-3">
-                      <span className="text-xl font-medium text-[#F5F7FA] tracking-tight">${product.price.toLocaleString()}</span>
+                      <span className="text-lg font-semibold text-[#F1F5F9] tracking-tight">${product.price.toLocaleString()}</span>
                       {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -146,14 +148,14 @@ export default function CategoryPage({ category }) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 mt-1">
+                  <div className="flex gap-2 pt-1">
                     <button onClick={() => handleAdd(product)}
                       disabled={!product.inStock}
-                      className="flex-1 py-3 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-[100px] bg-[#3B82F6] text-white hover:bg-[#2563EB] hover:shadow-[0_4px_20px_rgba(59,130,246,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                      className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] hover:shadow-[0_4px_20px_rgba(37,99,235,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                       Add to Cart
                     </button>
                     <Link href={`/products/${product.slug}`}
-                      className="px-4 py-3 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-[100px] border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500">
+                      className="px-4 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500">
                       View
                     </Link>
                   </div>

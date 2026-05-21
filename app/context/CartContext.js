@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('premiumtec_cart');
+      const saved = localStorage.getItem('techstore_cart');
       if (saved) setItems(JSON.parse(saved));
     } catch {}
     setLoaded(true);
@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     if (loaded) {
-      localStorage.setItem('premiumtec_cart', JSON.stringify(items));
+      localStorage.setItem('techstore_cart', JSON.stringify(items));
     }
   }, [items, loaded]);
 

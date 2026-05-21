@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star, ShoppingBag, Check, Share2 } from 'lucide-react';
-import { getProductBySlug, products } from '@/app/products/data';
+import { ArrowLeft, Star, ShoppingBag, Check } from 'lucide-react';
+import { getProductBySlug } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
 
 export default function ProductDetail({ params }) {
@@ -14,7 +14,6 @@ export default function ProductDetail({ params }) {
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
 
-  // Unwrap params
   useState(() => {
     params.then(p => {
       setSlug(p.slug);
@@ -23,7 +22,7 @@ export default function ProductDetail({ params }) {
   }, [params]);
 
   if (slug && !product) notFound();
-  if (!product) return <div className="min-h-screen bg-[#0B0F14] flex items-center justify-center"><div className="text-white/40">Loading...</div></div>;
+  if (!product) return <div className="min-h-screen bg-[#0A1224] flex items-center justify-center"><div className="text-white/40">Loading...</div></div>;
 
   const handleAdd = () => {
     addItem(product);
@@ -32,12 +31,12 @@ export default function ProductDetail({ params }) {
   };
 
   const handleWhatsApp = () => {
-    const msg = `Hi PremiumTec, I'd like to buy:\n\nProduct: ${product.name}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability and payment options.`;
+    const msg = `Hi Tech Store, I'd like to buy:\n\nProduct: ${product.name}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability and payment options.`;
     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return (
-    <main className="min-h-screen bg-[#0B0F14] pt-24 pb-20">
+    <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <Link href={`/${product.category.toLowerCase()}`} className="inline-flex items-center gap-2 text-[11px] text-white/40 hover:text-white/70 transition-colors mb-8">
           <ArrowLeft size={14} /> Back to {product.category}
@@ -45,13 +44,13 @@ export default function ProductDetail({ params }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}
-            className="product-card h-80 lg:h-96 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent p-8">
+            className="glass-card h-80 lg:h-96 flex items-center justify-center p-8">
             {product.image ? (
               <img src={product.image} alt={product.name}
-                className="w-full h-full object-contain rounded-2xl"
-                style={{ maxWidth: '300px', maxHeight: '300px' }} />
+                className="w-full h-full object-contain rounded-xl"
+                style={{ maxWidth: '280px', maxHeight: '280px' }} />
             ) : (
-              <div className="w-40 h-52 rounded-2xl border border-white/10 flex items-center justify-center text-white/20 bg-white/[0.02]">
+              <div className="w-40 h-52 rounded-xl border border-white/10 flex items-center justify-center text-white/20 bg-white/[0.02]">
                 <span className="text-xs text-center px-4">{product.name}</span>
               </div>
             )}
@@ -59,27 +58,27 @@ export default function ProductDetail({ params }) {
 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1, ease: [0.16,1,0.3,1] }}>
             {product.badge && <span className="badge-premium text-[9px] mb-4 inline-block">{product.badge}</span>}
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-[#F5F7FA] mb-2">{product.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-[#F1F5F9] mb-2">{product.name}</h1>
             <div className="flex items-center gap-2 mb-4">
               {[...Array(5)].map((_, i) => (<Star key={i} size={14} className={i < Math.floor(product.rating) ? 'text-amber-400/80 fill-amber-400/80' : 'text-white/10'} />))}
               <span className="text-xs text-white/40">{product.rating} ({product.reviews} reviews)</span>
             </div>
 
             <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl font-bold text-[#F5F7FA]">${product.price.toLocaleString()}</span>
+              <span className="text-3xl font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
               {product.originalPrice && <span className="text-lg text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
             </div>
 
             <p className="text-sm text-white/40 font-light leading-relaxed mb-6">{product.description}</p>
 
-            <div className="space-y-3 mb-6">
+            <div className="glass-card p-5 mb-6 space-y-3">
               {[
                 { label: 'Processor', value: product.processor },
                 { label: 'Storage', value: product.storage },
                 { label: 'Display', value: product.display },
                 { label: 'Availability', value: product.inStock ? 'In Stock' : 'Low Stock', color: product.inStock ? 'text-green-400' : 'text-amber-400' },
               ].map(spec => (
-                <div key={spec.label} className="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                <div key={spec.label} className="flex items-center justify-between py-2 border-b border-white/[0.04] last:border-b-0">
                   <span className="text-xs text-white/30">{spec.label}</span>
                   <span className={`text-xs font-medium ${spec.color || 'text-white/70'}`}>{spec.value}</span>
                 </div>
@@ -90,18 +89,18 @@ export default function ProductDetail({ params }) {
             <ul className="space-y-2 mb-8">
               {product.features.map((f, i) => (
                 <li key={i} className="flex items-center gap-2 text-xs text-white/50">
-                  <Check size={12} className="text-[#3B82F6] shrink-0" /> {f}
+                  <Check size={12} className="text-[#2563EB] shrink-0" /> {f}
                 </li>
               ))}
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button onClick={handleAdd} disabled={!product.inStock}
-                className="flex-1 py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-[100px] bg-[#3B82F6] text-white hover:bg-[#2563EB] hover:shadow-[0_4px_20px_rgba(59,130,246,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                className="flex-1 py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] hover:shadow-[0_4px_20px_rgba(37,99,235,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 <ShoppingBag size={16} /> {added ? 'Added!' : 'Add to Cart'}
               </button>
               <button onClick={handleWhatsApp}
-                className="py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-[100px] border border-white/10 text-white/70 hover:bg-white/5 hover:border-white/20 transition-all duration-500 flex items-center justify-center gap-2">
+                className="py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/70 hover:bg-white/5 hover:border-white/20 transition-all duration-500 flex items-center justify-center gap-2">
                 Buy via WhatsApp
               </button>
             </div>

@@ -17,13 +17,8 @@ export default function WhatsAppButton() {
     <>
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-72">
-          <div style={{
-            background: 'rgba(22,27,34,0.95)',
-            backdropFilter: 'blur(60px)',
-            border: '1px solid rgba(245,247,250,0.08)',
-            borderRadius: '24px',
-            overflow: 'hidden',
-          }}>
+          <div className="rounded-2xl overflow-hidden border border-white/[0.06] shadow-2xl"
+            style={{ background: 'rgba(10,18,36,0.96)', backdropFilter: 'blur(60px)' }}>
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.04]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center">
@@ -39,28 +34,20 @@ export default function WhatsAppButton() {
               </button>
             </div>
             <div className="p-4 space-y-2">
-              <button
-                onClick={() => handleChat('Hi PremiumTec, I\'d like to inquire about your latest flagship phones.')}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]"
-              >
-                💬 Inquire about phones
-              </button>
-              <button
-                onClick={() => handleChat('Hi PremiumTec, I\'d like to inquire about your premium laptops.')}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]"
-              >
+              <button onClick={() => handleChat("Hi Tech Store, I'd like to inquire about your latest laptops.")}
+                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
                 💻 Inquire about laptops
               </button>
-              <button
-                onClick={() => handleChat('Hi PremiumTec, I need help with an existing order.')}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]"
-              >
-                📦 Order support
+              <button onClick={() => handleChat("Hi Tech Store, I'd like to inquire about gaming setups.")}
+                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
+                🎮 Gaming setups
               </button>
-              <button
-                onClick={() => handleChat('Hi PremiumTec, I have a general question.')}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]"
-              >
+              <button onClick={() => handleChat("Hi Tech Store, I need a repair/service for my device.")}
+                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
+                🔧 Repairs & service
+              </button>
+              <button onClick={() => handleChat("Hi Tech Store, I have a general question.")}
+                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
                 ❓ General inquiry
               </button>
             </div>

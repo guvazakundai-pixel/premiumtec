@@ -1,18 +1,18 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Truck, MapPin, Clock, Package } from 'lucide-react';
+import { Truck, MapPin, Clock } from 'lucide-react';
 
 export default function ShippingPage() {
   return (
-    <main className="min-h-screen bg-[#0B0F14] pt-24 pb-20">
+    <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-5 rounded-full bg-[#3B82F6]" />
-            <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-white/30">Policies</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Policies</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F5F7FA] mb-4">Shipping Information</h1>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-4">Shipping Information</h1>
           <p className="text-sm text-white/30 font-light max-w-lg mb-12">Last updated: January 2026</p>
         </motion.div>
 
@@ -24,18 +24,18 @@ export default function ShippingPage() {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }} className="product-card p-6">
-                <div className="w-10 h-10 rounded-xl bg-[#3B82F6]/[0.08] border border-[#3B82F6]/[0.12] flex items-center justify-center mb-4">
-                  <Icon size={18} className="text-[#3B82F6]" />
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }} className="glass-card p-6">
+                <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/15 flex items-center justify-center mb-4">
+                  <Icon size={18} className="text-[#2563EB]" />
                 </div>
-                <h3 className="text-sm font-semibold text-white/80 mb-2">{item.title}</h3>
+                <h3 className="text-sm font-semibold text-white/85 mb-2">{item.title}</h3>
                 <p className="text-xs text-white/40 font-light">{item.desc}</p>
               </motion.div>
             );
           })}
         </div>
 
-        <div className="product-card p-8 md:p-10 space-y-8">
+        <div className="glass-card p-8 md:p-10 space-y-8">
           <Section title="Delivery Options">
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-white/40">
@@ -78,7 +78,7 @@ export default function ShippingPage() {
           </Section>
 
           <Section title="Free Shipping">
-            <p>Complimentary express delivery within Harare on all orders over $999. Use code <span className="text-[#3B82F6] font-medium">PREMIUMFREE</span> at checkout (via WhatsApp).</p>
+            <p>Complimentary express delivery within Harare on all orders over $999. Use code <span className="text-[#38BDF8] font-medium">TECHFREE</span> at checkout (via WhatsApp).</p>
           </Section>
 
           <Section title="Tracking">
@@ -101,7 +101,7 @@ export default function ShippingPage() {
 function Section({ title, children }) {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white/80 mb-3">{title}</h2>
+      <h2 className="text-lg font-semibold text-white/85 mb-3">{title}</h2>
       <div className="text-sm text-white/40 font-light leading-relaxed space-y-2">{children}</div>
     </div>
   );
