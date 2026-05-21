@@ -6,11 +6,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://premiumtec.vercel.app/phones</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://premiumtec.vercel.app/laptops</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -70,34 +65,5 @@
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
-  <url>
-    <loc>https://premiumtec.vercel.app/products/iphone-16-pro-max</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://premiumtec.vercel.app/products/galaxy-s25-ultra</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://premiumtec.vercel.app/products/nothing-phone-3</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://premiumtec.vercel.app/products/macbook-pro-16-m4-max</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://premiumtec.vercel.app/products/dell-xps-16</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://premiumtec.vercel.app/products/asus-rog-zephyrus-g16</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
+
 </urlset>
