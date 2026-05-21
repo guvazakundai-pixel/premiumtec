@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ShoppingBag } from 'lucide-react';
@@ -40,12 +41,15 @@ export default function Nav() {
       style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <Link href="/" className="flex items-center group">
-          <span className={`font-extrabold tracking-tight text-[#2563EB] select-none transition-all duration-500 ${
-            scrolled ? 'text-sm' : 'text-base'
-          }`}>
-            TECH STORE
-          </span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/images/techstore-logo.png"
+            alt="Tech Store"
+            width={160}
+            height={40}
+            className="h-8 w-auto object-contain"
+            priority
+          />
         </Link>
 
         <div className="hidden md:flex items-center gap-6">
