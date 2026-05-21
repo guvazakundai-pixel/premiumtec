@@ -86,11 +86,10 @@ export default function ProductDetail({ params }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease }}>
-            <div className="glass-card p-6 lg:p-8 flex items-center justify-center min-h-[300px] lg:min-h-[400px] relative overflow-hidden">
+            <div className="glass-card p-6 lg:p-8 flex items-center justify-center min-h-[350px] lg:min-h-[450px] relative overflow-hidden">
               {allImages.length > 0 ? (
                 <img src={allImages[activeImage]} alt={product.name}
-                  className="w-full h-full object-contain transition-all duration-700 hover:scale-105"
-                  style={{ maxWidth: '320px', maxHeight: '320px' }} />
+                  className="w-full h-full object-cover transition-all duration-700 hover:scale-110 rounded-lg" />
               ) : (
                 <div className="flex flex-col items-center justify-center gap-3 text-white/20">
                   <Monitor size={48} />
@@ -196,9 +195,9 @@ export default function ProductDetail({ params }) {
               {relatedProducts.map(p => (
                 <Link key={p.id} href={`/products/${p.slug}`} className="group">
                   <div className="product-card p-4 h-full flex flex-col">
-                    <div className="h-28 flex items-center justify-center mb-3 bg-gradient-to-b from-white/[0.015] to-transparent rounded-xl">
+                    <div className="h-36 flex items-center justify-center mb-3 bg-gradient-to-b from-white/[0.015] to-transparent rounded-xl overflow-hidden">
                       {p.image ? (
-                        <img src={p.image} alt={p.name} className="w-full h-full object-contain" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                        <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
                         <Monitor size={28} className="text-white/20" />
                       )}

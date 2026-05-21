@@ -77,6 +77,21 @@ function Particles({ count = 20 }) {
 function Hero({ onShop, onRepairs }) {
   return (
     <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden">
+      {/* Cinematic gradient background layers */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A1224] via-[#0F1A2E] to-[#0A1224]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-[#2563EB]/[0.08] to-transparent blur-[100px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-gradient-to-bl from-[#38BDF8]/[0.05] to-transparent blur-[100px]" />
+        <div className="absolute top-[40%] left-[30%] w-96 h-96 rounded-full bg-gradient-to-r from-[#2563EB]/[0.04] to-[#38BDF8]/[0.04] blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#0A1224] to-transparent" />
+      </div>
+
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+        backgroundSize: '60px 60px'
+      }} />
+
       <Particles count={24} />
       <div className="absolute inset-0 bg-gradient-to-b from-[#2563EB]/[0.03] via-transparent to-[#0A1224] pointer-events-none" />
 
@@ -277,11 +292,10 @@ function LaptopBrands() {
                   className="w-64 flex-shrink-0"
                 >
                   <div className="card-light h-full flex flex-col group">
-                    <div className="h-36 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] overflow-hidden">
+                    <div className="h-44 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] overflow-hidden">
                       {product.image ? (
                         <img src={product.image} alt={product.name}
-                          className="w-full h-full object-contain p-3 transition-all duration-500 group-hover:scale-110"
-                          style={{ maxWidth: '140px', maxHeight: '120px' }} />
+                          className="w-full h-full object-cover p-3 transition-all duration-500 group-hover:scale-110" />
                       ) : (
                         <Laptop size={40} className="text-white/20" />
                       )}
@@ -384,11 +398,10 @@ function PhonesSection() {
           {filtered.map(product => (
             <motion.div key={product.id} variants={fadeUp}>
               <div className="glass-card h-full flex flex-col group p-5">
-                <div className="h-32 flex items-center justify-center mb-4 bg-white/[0.02] rounded-xl border border-white/[0.04]">
+                <div className="h-40 flex items-center justify-center mb-4 bg-white/[0.02] rounded-xl border border-white/[0.04]">
                   {product.image ? (
                     <img src={product.image} alt={product.name}
-                      className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-110"
-                      style={{ maxWidth: '130px', maxHeight: '100px' }} />
+                      className="w-full h-full object-cover p-3 transition-transform duration-500 group-hover:scale-110" />
                   ) : (
                     <Smartphone size={48} className="text-white/20" />
                   )}
@@ -480,9 +493,9 @@ function GamingShowcase() {
                   <a href={`/products/${product.slug}`}
                     className="block h-full rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-950/40 to-[#0F1A2E] p-6 group hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500">
                     <div className="flex items-start gap-5">
-                      <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
+                      <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
                         {product.image ? (
-                          <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                          <img src={product.image} alt={product.name} className="w-full h-full object-cover p-0 transition-transform duration-500 group-hover:scale-110" />
                         ) : (
                           <Gamepad2 size={40} className="text-violet-400/50" />
                         )}
@@ -513,9 +526,9 @@ function GamingShowcase() {
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
                   <div className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500">
-                    <div className="w-24 h-24 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
+                    <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover p-0 transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <Gamepad size={36} className="text-blue-400/50" />
                       )}
@@ -545,9 +558,9 @@ function GamingShowcase() {
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
                   <div className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500">
-                    <div className="w-16 h-16 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
+                    <div className="w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-contain p-1.5 transition-transform duration-500 group-hover:scale-110" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover p-0 transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <Monitor size={24} className="text-rose-400/50" />
                       )}
@@ -905,18 +918,17 @@ function ProductShowcase({
                         <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
                       </button>
 
-                      <a href={`/products/${product.slug}`} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden">
+                      <a href={`/products/${product.slug}`} className="h-60 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden">
                         <motion.div
                           initial={{ opacity: 0, scale: 0.9 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.7, ease }}
-                          className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4"
+                          className="w-full h-full flex items-center justify-center"
                         >
                           {product.image ? (
                             <img src={product.image} alt={product.name}
-                              className="w-full h-full object-contain rounded-xl"
-                              style={{ maxWidth: '170px', maxHeight: '150px' }} />
+                              className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-all duration-700" />
                           ) : (
                             <div className="w-24 h-32 rounded-xl border border-white/10 flex items-center justify-center text-white/20 text-xs bg-white/[0.02]">
                               {product.name.split(' ').slice(0, 2).join(' ')}
