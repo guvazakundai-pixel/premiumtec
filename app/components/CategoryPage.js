@@ -98,10 +98,16 @@ export default function CategoryPage({ category }) {
                 <Link href={`/products/${product.slug}`} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent border-b border-white/[0.03] relative overflow-hidden">
                   <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                     transition={{ duration: 0.7, ease: easePrem }}
-                    className="transition-all duration-700 group-hover:scale-110">
-                    <div className="w-24 h-32 rounded-2xl border border-white/20 flex items-center justify-center text-white/40 text-xs bg-white/[0.02]">
-                      {product.name.split(' ').slice(0, 2).join(' ')}
-                    </div>
+                    className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
+                    {product.id === 7 ? (
+                      <img src="/images/hp-250-g5.jpg" alt={product.name}
+                        className="w-full h-full object-contain rounded-xl"
+                        style={{ maxWidth: '180px', maxHeight: '160px' }} />
+                    ) : (
+                      <div className="w-24 h-32 rounded-2xl border border-white/20 flex items-center justify-center text-white/40 text-xs bg-white/[0.02]">
+                        {product.name.split(' ').slice(0, 2).join(' ')}
+                      </div>
+                    )}
                   </motion.div>
                   {product.badge && <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>}
                 </Link>

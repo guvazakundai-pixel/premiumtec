@@ -130,11 +130,14 @@ const products = [
     display: '15" HD', price: 200, originalPrice: 230,
     badge: 'DEAL', inStock: true, rating: 4.3,
     Image: () => (
-      <img
-        src="/images/hp-250-g5.jpg"
-        alt="HP 250 G5 Notebook"
-        className="w-full h-full object-contain p-4"
-      />
+      <div className="w-full h-full flex items-center justify-center p-4">
+        <img
+          src="/images/hp-250-g5.jpg"
+          alt="HP 250 G5 Notebook"
+          className="w-full h-full object-contain rounded-xl"
+          style={{ maxWidth: '180px', maxHeight: '160px' }}
+        />
+      </div>
     )
   },
 ];

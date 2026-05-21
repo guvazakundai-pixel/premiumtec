@@ -45,10 +45,16 @@ export default function ProductDetail({ params }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}
-            className="product-card h-80 lg:h-96 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent">
-            <div className="w-40 h-52 rounded-2xl border border-white/10 flex items-center justify-center text-white/20 bg-white/[0.02]">
-              <span className="text-xs text-center px-4">{product.name}</span>
-            </div>
+            className="product-card h-80 lg:h-96 flex items-center justify-center bg-gradient-to-b from-white/[0.02] to-transparent p-8">
+            {product.id === 7 ? (
+              <img src="/images/hp-250-g5.jpg" alt={product.name}
+                className="w-full h-full object-contain rounded-2xl"
+                style={{ maxWidth: '300px', maxHeight: '300px' }} />
+            ) : (
+              <div className="w-40 h-52 rounded-2xl border border-white/10 flex items-center justify-center text-white/20 bg-white/[0.02]">
+                <span className="text-xs text-center px-4">{product.name}</span>
+              </div>
+            )}
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1, ease: [0.16,1,0.3,1] }}>
