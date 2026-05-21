@@ -530,9 +530,9 @@ function PhonesSection({ setSelectedProduct }) {
                     </span>
                   )}
                 </div>
-                <a href={`/products/${product.slug}`}>
+                <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
                   <h3 className="text-sm font-medium text-white/80 leading-snug mb-2 hover:text-white transition-colors">{product.name}</h3>
-                </a>
+                </div>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {getKeySpecs(product).map((spec, i) => (
                     <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
@@ -1069,9 +1069,9 @@ function ProductShowcase({
                       <div className="flex-1 flex flex-col p-5 space-y-2.5">
                         <div>
                           <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.category}</span>
-                          <a href={`/products/${product.slug}`}>
+                          <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
                             <h3 className="text-sm font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
-                          </a>
+                          </div>
                         </div>
 
                         <div className="flex flex-wrap gap-1.5">

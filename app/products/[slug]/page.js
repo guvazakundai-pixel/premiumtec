@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft, Star, ShoppingBag, Check,
   Cpu, HardDrive, Monitor, Package, Shield, Clock,
@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { getProductBySlug, getBrand, getUsageType, getProductsByCategory } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
+import ProductModal from '@/app/components/ProductModal';
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -19,6 +20,7 @@ export default function ProductDetail({ params }) {
   const [product, setProduct] = useState(null);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const { addItem } = useCart();
 
   useState(() => {
@@ -193,7 +195,7 @@ export default function ProductDetail({ params }) {
             </motion.div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map(p => (
-                <Link key={p.id} href={`/products/${p.slug}`} className="group">
+                <div key={p.id} onClick={() => setSelectedProduct(p)} className="group cursor-pointer">
                   <div className="product-card p-4 h-full flex flex-col">
                     <div className="h-36 flex items-center justify-center mb-3 bg-gradient-to-b from-white/[0.015] to-transparent rounded-xl overflow-hidden">
                       {p.image ? (
@@ -209,12 +211,18 @@ export default function ProductDetail({ params }) {
                       <ChevronRight size={12} className="text-white/20 group-hover:text-white/50 transition-colors" />
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </section>
         )}
       </div>
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+        )}
+      </AnimatePresence>
     </main>
   );
 }

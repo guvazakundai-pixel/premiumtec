@@ -1,21 +1,43 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { Search, X, SlidersHorizontal, Star, ArrowRight, Heart, ChevronDown, ShoppingBag } from 'lucide-react';
 import { products as allProducts } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
+import ProductModal from '@/app/components/ProductModal';
 
 const ease = [0.16, 1, 0.3, 1];
+
+function getKeySpecs(product) {
+  const specs = [];
+  if (product.processor && product.processor !== 'N/A') specs.push(product.processor);
+  if (product.storage && product.storage !== 'N/A') specs.push(product.storage);
+  if (product.display && product.display !== 'N/A') specs.push(product.display);
+  const ramFeature = product.features?.find(f => f.toLowerCase().includes('gb ram') || f.toLowerCase().includes('gb ddr'));
+  if (ramFeature && !specs.some(s => s.toLowerCase().includes('gb ram') || s.toLowerCase().includes('gb ddr'))) specs.push(ramFeature);
+  return specs.slice(0, 4);
+}
+
+function getSavings(product) {
+  if (!product.originalPrice || product.originalPrice <= product.price) return 0;
+  return product.originalPrice - product.price;
+}
 
 export default function CategoryPage({ category, title, description }) {
   const [search, setSearch] = useState('');
   const [wishlist, setWishlist] = useState(new Set());
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [showFilters, setShowFilters] = useState(false);
   const [notify, setNotify] = useState(null);
   const { addItem } = useCart();
+
+  useEffect(() => {
+    window.__openProductModal = setSelectedProduct;
+    return () => { delete window.__openProductModal; };
+  }, []);
 
   const products = useMemo(() => {
     return allProducts
@@ -97,7 +119,7 @@ export default function CategoryPage({ category, title, description }) {
                   <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
                 </button>
 
-                <Link href={`/products/${product.slug}`} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden">
+                <div onClick={() => setSelectedProduct(product)} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden cursor-pointer">
                   <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                     transition={{ duration: 0.7, ease }}
                     className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
@@ -112,18 +134,18 @@ export default function CategoryPage({ category, title, description }) {
                     )}
                   </motion.div>
                   {product.badge && <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>}
-                </Link>
+                </div>
 
                 <div className="flex-1 flex flex-col p-5 space-y-2.5">
                   <div>
                     <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.category}</span>
-                    <Link href={`/products/${product.slug}`}>
+                    <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
                       <h3 className="text-sm font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
-                    </Link>
+                    </div>
                   </div>
 
                   <div className="flex flex-wrap gap-1.5">
-                    {[product.processor.split(' ').slice(0, 2).join(' '), product.storage.split('/')[0].trim(), product.display.split(' ')[0]].map((spec, i) => (
+                    {getKeySpecs(product).slice(0, 3).map((spec, i) => (
                       <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40 font-light">{spec}</span>
                     ))}
                   </div>
@@ -139,6 +161,7 @@ export default function CategoryPage({ category, title, description }) {
                     <div className="flex items-baseline gap-3">
                       <span className="text-lg font-semibold text-[#F1F5F9] tracking-tight">${product.price.toLocaleString()}</span>
                       {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-400 font-medium">Save $${getSavings(product)}</span>}
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-400' : 'bg-amber-400'}`} />
@@ -154,10 +177,10 @@ export default function CategoryPage({ category, title, description }) {
                       className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] hover:shadow-[0_4px_20px_rgba(37,99,235,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                       Add to Cart
                     </button>
-                    <Link href={`/products/${product.slug}`}
+                    <button onClick={() => setSelectedProduct(product)}
                       className="px-4 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500">
                       View
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -171,6 +194,12 @@ export default function CategoryPage({ category, title, description }) {
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+        )}
+      </AnimatePresence>
     </main>
   );
 }

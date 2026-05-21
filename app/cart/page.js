@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, ShoppingBag, ArrowLeft, Minus, Plus, ArrowRight } from 'lucide-react';
 import { useCart } from '@/app/context/CartContext';
+import ProductModal from '@/app/components/ProductModal';
 
 export default function CartPage() {
   const { items, updateQty, removeItem, totalItems, totalPrice, clearCart } = useCart();
   const [cleared, setCleared] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleCheckout = () => {
     const msg = items.map(i => `${i.name} x${i.qty} — $${(i.price * i.qty).toLocaleString()}`).join('\n');
@@ -60,9 +62,9 @@ export default function CartPage() {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <Link href={`/products/${item.slug || item.id}`}>
+                  <div onClick={() => setSelectedProduct(item)} className="cursor-pointer">
                     <h3 className="text-sm font-medium text-white/80 hover:text-white transition-colors truncate">{item.name}</h3>
-                  </Link>
+                  </div>
                   <p className="text-[11px] text-white/30 mt-0.5">${item.price.toLocaleString()} each</p>
                 </div>
 
@@ -116,6 +118,12 @@ export default function CartPage() {
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+        )}
+      </AnimatePresence>
     </main>
   );
 }
