@@ -6,7 +6,7 @@ import {
   Search, X, ArrowRight, ChevronDown, SlidersHorizontal,
   Shield, Truck, HeadphonesIcon, CreditCard, Star,
   Heart, Check, ShoppingBag, ChevronRight,
-  MapPin, Clock, Package, Smartphone, Monitor, Gamepad2,
+  Phone, MessageCircle, MapPin, Clock, Package, Smartphone, Monitor, Gamepad2,
   Wrench, Cpu, HardDrive, MonitorSmartphone, Zap,
   RefreshCw, Users, Award, Clock3, Gamepad,
   Tablet, Laptop, Tv, Speaker, Watch, Camera
@@ -256,20 +256,19 @@ function LaptopsSection({ setSelectedProduct }) {
   []);
 
   const tiers = useMemo(() => [
-    { label: 'Budget', range: 'Under $200', min: 0, max: 199, color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' },
-    { label: 'Mid-Range', range: '$200 – $499', min: 200, max: 499, color: 'bg-blue-500/10 text-blue-600 border-blue-500/20' },
-    { label: 'Premium', range: '$500+', min: 500, max: Infinity, color: 'bg-violet-500/10 text-violet-600 border-violet-500/20' },
+    { label: 'Budget', range: 'Under $200', min: 0, max: 199, color: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
+    { label: 'Mid-Range', range: '$200 – $499', min: 200, max: 499, color: 'bg-blue-50 text-blue-600 border-blue-200' },
+    { label: 'Premium', range: '$500+', min: 500, max: Infinity, color: 'bg-violet-50 text-violet-600 border-violet-200' },
   ].map(t => ({ ...t, items: laptops.filter(p => p.price >= t.min && p.price <= t.max) })).filter(t => t.items.length > 0), [laptops]);
 
   return (
-    <section id="laptops-section" className="relative z-10 px-6 py-24 md:py-28 section-gray">
+    <section id="laptops-section" className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
-          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
         >
           {notify}
         </motion.div>
@@ -277,61 +276,57 @@ function LaptopsSection({ setSelectedProduct }) {
 
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-zinc-400">Laptops</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-zinc-900">Laptops</h2>
-          <p className="text-sm text-zinc-400 mt-3 max-w-lg font-light">Affordable refurbished laptops for every budget — sorted by price.</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Laptops</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Laptops</h2>
+          <p className="text-sm text-[#888888] mt-3 max-w-lg">Affordable refurbished laptops for every budget — sorted by price.</p>
         </motion.div>
 
         {tiers.map(({ label, range, color, items }) => (
           <div key={label} className="mb-12 last:mb-0">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-1 h-5 rounded-full bg-[#2563EB]" />
-              <h3 className="text-lg font-semibold text-zinc-800">{label}</h3>
+              <h3 className="text-lg font-semibold text-black">{label}</h3>
               <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-medium ${color}`}>{range}</span>
-              <span className="text-xs text-zinc-400">({items.length} devices)</span>
+              <span className="text-xs text-[#888888]">({items.length} devices)</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {items.map(product => {
                 const savings = getSavings(product);
                 const specs = getKeySpecs(product);
                 return (
-                  <div key={product.id} className="card-light h-full flex flex-col group">
-                    <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-zinc-50 to-transparent border-b border-zinc-100 overflow-hidden cursor-pointer"
+                  <div key={product.id} className="card-gray h-full flex flex-col group">
+                    <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] overflow-hidden cursor-pointer rounded-t-[16px]"
                       style={{ aspectRatio: getAspectRatio(product) }}>
                       {product.image ? (
                         <img src={product.image} alt={product.name}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
-                        <Laptop size={40} className="text-zinc-300" />
+                        <Laptop size={40} className="text-[#888888]" />
                       )}
                       {product.badge && (
-                        <span className="absolute top-3 left-3 badge-light text-[9px]">{product.badge}</span>
+                        <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
                       )}
                       {savings > 10 && (
-                        <span className="absolute top-3 right-3 text-[9px] px-2 py-0.5 rounded-full bg-emerald-500 text-white font-semibold">Save ${savings}</span>
+                        <span className="absolute top-3 right-3 text-[9px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-semibold">Save ${savings}</span>
                       )}
                     </div>
                     <div className="flex-1 flex flex-col p-4 gap-2">
                       <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                        <h4 className="text-sm font-semibold text-zinc-800 leading-snug line-clamp-2 hover:text-zinc-900 transition-colors">{product.name}</h4>
+                        <h4 className="text-sm font-semibold text-[#4B4B4B] leading-snug line-clamp-2 hover:text-black transition-colors">{product.name}</h4>
                       </div>
                       <div className="flex flex-wrap gap-1">
                         {specs.map((spec, i) => (
-                          <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-zinc-200 text-zinc-500">{spec}</span>
+                          <span key={i} className="spec-pill">{spec}</span>
                         ))}
                       </div>
-                      <div className="mt-auto pt-3 border-t border-zinc-100 flex items-center justify-between">
+                      <div className="mt-auto pt-3 border-t border-[#E5E5E5] flex items-center justify-between">
                         <div>
-                          <span className="text-lg font-bold text-zinc-900">${product.price.toLocaleString()}</span>
-                          {product.originalPrice && <span className="text-xs text-zinc-400 line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
+                          <span className="text-lg font-bold text-black">${product.price.toLocaleString()}</span>
+                          {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
                           {savings > 10 && <span className="text-[10px] text-emerald-600 font-medium ml-2">Save ${savings}</span>}
                         </div>
                         <button onClick={() => handleAdd(product)}
                           disabled={!product.inStock}
-                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
+                          className="btn-primary text-[9px] font-semibold tracking-wider px-3 py-2 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
                           Add to Cart
                         </button>
                       </div>
@@ -344,7 +339,7 @@ function LaptopsSection({ setSelectedProduct }) {
         ))}
 
         <motion.div variants={fadeUp} className="text-center mt-8">
-          <a href="/laptops" className="text-xs text-zinc-400 hover:text-zinc-800 transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
+          <a href="/laptops" className="text-xs text-[#888888] hover:text-black transition-colors font-semibold tracking-wider uppercase inline-flex items-center gap-2">
             Browse All Laptops <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -371,30 +366,22 @@ function FeaturedDeals({ setSelectedProduct }) {
   []);
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
-      <div className="ambient-container" aria-hidden="true">
-        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.12), transparent)' }} />
-        <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.08), transparent)' }} />
-      </div>
+    <section className="px-6 py-24 md:py-28 bg-white">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
-          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
         >
           {notify}
         </motion.div>
       )}
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Deals</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Featured Deals</h2>
-          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">Best-value products handpicked for you.</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Deals</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Featured Deals</h2>
+          <p className="text-sm text-[#888888] mt-3 max-w-lg">Best-value products handpicked for you.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -403,38 +390,38 @@ function FeaturedDeals({ setSelectedProduct }) {
             const specs = getKeySpecs(product);
             return (
               <div key={product.id}>
-                <div className="glass-card h-full flex flex-col group overflow-hidden">
-                  <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-white/[0.02] overflow-hidden cursor-pointer"
+                <div className="card-gray h-full flex flex-col group overflow-hidden">
+                  <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] overflow-hidden cursor-pointer"
                     style={{ aspectRatio: getAspectRatio(product) }}>
                     {product.image ? (
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     ) : (
-                      <Package size={48} className="text-white/20" />
+                      <Package size={48} className="text-[#888888]" />
                     )}
                     {product.badge && (
-                      <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">{product.badge}</span>
+                      <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
                     )}
                     {savings > 10 && (
-                      <span className="absolute top-3 right-3 px-2 py-1 text-[9px] font-semibold rounded-full bg-emerald-500 text-white">-${savings}</span>
+                      <span className="absolute top-3 right-3 px-2 py-1 text-[9px] font-semibold rounded-full bg-emerald-600 text-white">-${savings}</span>
                     )}
                   </div>
                   <div className="p-4 flex flex-col gap-2 flex-1">
                     <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                      <h3 className="text-sm font-semibold text-white/80 leading-snug group-hover:text-white transition-colors">{product.name}</h3>
+                      <h3 className="text-sm font-semibold text-[#4B4B4B] leading-snug group-hover:text-black transition-colors">{product.name}</h3>
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {specs.slice(0, 2).map((spec, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
+                        <span key={i} className="spec-pill">{spec}</span>
                       ))}
                     </div>
-                    <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
+                    <div className="mt-auto pt-3 border-t border-[#E5E5E5] flex items-center justify-between">
                       <div>
-                        <span className="text-lg font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-white/30 line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
+                        <span className="text-lg font-bold text-black">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
                       </div>
                       <button onClick={() => handleAdd(product)}
                         disabled={!product.inStock}
-                        className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                        className="btn-primary text-[9px] font-semibold tracking-wider px-3 py-2 disabled:opacity-30 disabled:cursor-not-allowed">
                         Add to Cart
                       </button>
                     </div>
@@ -472,19 +459,11 @@ function PhonesSection({ setSelectedProduct }) {
   }, [activeTab, phones, getPhoneBrand]);
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
-      <div className="ambient-container" aria-hidden="true">
-        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.15), transparent)' }} />
-        <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.1), transparent)' }} />
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
+      <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Mobiles</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Smartphones</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Mobiles</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Smartphones</h2>
         </motion.div>
 
         <motion.div
@@ -495,10 +474,10 @@ function PhonesSection({ setSelectedProduct }) {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-full text-[10px] font-semibold tracking-[0.15em] uppercase transition-all duration-300 ${
+              className={`px-4 py-2 rounded-full text-[10px] font-semibold tracking-wider uppercase transition-all duration-300 ${
                 activeTab === tab
-                  ? 'bg-[#2563EB] text-white shadow-[0_4px_20px_rgba(37,99,235,0.25)]'
-                  : 'border border-white/10 text-white/40 hover:text-white hover:border-white/20'
+                  ? 'bg-black text-white'
+                  : 'border border-[#E5E5E5] text-[#888888] hover:text-black hover:border-black'
               }`}
             >
               {tab}
@@ -511,42 +490,40 @@ function PhonesSection({ setSelectedProduct }) {
         >
           {filtered.map(product => (
             <motion.div key={product.id} variants={fadeUp}>
-              <div className="glass-card h-full flex flex-col group p-5">
-                <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-white/[0.02] rounded-xl border border-white/[0.04] overflow-hidden cursor-pointer"
+              <div className="card-gray h-full flex flex-col group p-5">
+                <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] rounded-xl overflow-hidden cursor-pointer"
                   style={{ aspectRatio: getAspectRatio(product) }}>
                   {product.image ? (
                     <img src={product.image} alt={product.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   ) : (
-                    <Smartphone size={48} className="text-white/20" />
+                    <Smartphone size={48} className="text-[#888888]" />
                   )}
                   {product.badge && (
-                    <span className="absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full bg-[#2563EB]/10 text-[#38BDF8] font-medium border border-[#2563EB]/15">
-                      {product.badge}
-                    </span>
+                    <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
                   )}
                 </div>
                 <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                  <h3 className="text-sm font-medium text-white/80 leading-snug mb-2 hover:text-white transition-colors">{product.name}</h3>
+                  <h3 className="text-sm font-medium text-[#4B4B4B] leading-snug mb-2 hover:text-black transition-colors">{product.name}</h3>
                 </div>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {getKeySpecs(product).map((spec, i) => (
-                    <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
+                    <span key={i} className="spec-pill">{spec}</span>
                   ))}
                 </div>
                 <div className="flex items-center gap-1.5 mb-3">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400/80 fill-amber-400/80' : 'text-white/10'} />
+                    <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
                   ))}
-                  <span className="text-[10px] text-white/30 ml-1">{product.rating}</span>
+                  <span className="text-[10px] text-[#888888] ml-1">{product.rating}</span>
                 </div>
-                  <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
+                  <div className="mt-auto pt-3 border-t border-[#E5E5E5] flex items-center justify-between">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                      {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
-                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-400 font-medium">Save $${getSavings(product)}</span>}
+                      <span className="text-lg font-semibold text-black">${product.price.toLocaleString()}</span>
+                      {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
+                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-600 font-medium">Save ${getSavings(product)}</span>}
                     </div>
-                    <div onClick={() => setSelectedProduct(product)} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#2563EB] hover:text-blue-400 transition-colors cursor-pointer">
+                    <div onClick={() => setSelectedProduct(product)} className="text-[10px] font-semibold tracking-wider uppercase text-black hover:text-[#4B4B4B] transition-colors cursor-pointer">
                       View
                     </div>
                   </div>
@@ -555,7 +532,7 @@ function PhonesSection({ setSelectedProduct }) {
                     const msg = `Hi Core Tech Systems, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
                     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
                   }}
-                  className="w-full mt-3 py-2.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all duration-500"
+                  className="btn-outline w-full mt-3 py-2.5 text-[9px] font-semibold tracking-wider uppercase"
                 >
                   Inquire on WhatsApp
                 </button>
@@ -566,8 +543,8 @@ function PhonesSection({ setSelectedProduct }) {
 
         {filtered.length === 0 && (
           <div className="text-center py-16">
-            <Smartphone size={40} className="text-white/20 mx-auto mb-3" />
-            <p className="text-white/40 text-sm">No phones in this category yet.</p>
+            <Smartphone size={40} className="text-[#E5E5E5] mx-auto mb-3" />
+            <p className="text-[#888888] text-sm">No phones in this category yet.</p>
           </div>
         )}
       </div>
@@ -582,53 +559,40 @@ function GamingShowcase({ setSelectedProduct }) {
   const gear = useMemo(() => gamingProducts.filter(p => !p.name.toLowerCase().includes('desktop') && !p.name.toLowerCase().includes('playstation') && !p.name.toLowerCase().includes('xbox')), [gamingProducts]);
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#7C3AED]/[0.04] via-transparent to-[#0A1224] pointer-events-none" />
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-violet-600/5 blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-600/5 blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-rose-600/5 blur-[100px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="px-6 py-24 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#7C3AED] to-[#A855F7]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Gaming</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Gaming Zone</h2>
-          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Gaming</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Gaming Zone</h2>
+          <p className="text-sm text-[#888888] mt-3 max-w-lg">
             Consoles, desktops, monitors, and gear for every level of play.
           </p>
         </motion.div>
 
         <div className="space-y-12">
           <div>
-            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-              Top Gaming Picks
-            </h3>
+            <h3 className="text-lg font-semibold text-black mb-5">Top Gaming Picks</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {gamingDesktop.slice(0, 2).map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
                   <div onClick={() => setSelectedProduct(product)}
-                    className="block h-full rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-950/40 to-[#0F1A2E] p-6 group hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500 cursor-pointer">
+                    className="card-gray h-full p-6 group cursor-pointer">
                     <div className="flex items-start gap-5">
-                      <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
+                      <div className="w-36 h-36 rounded-xl bg-[#F3F3F3] flex items-center justify-center overflow-hidden shrink-0">
                         {product.image ? (
                           <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (
-                          <Gamepad2 size={40} className="text-violet-400/50" />
+                          <Gamepad2 size={40} className="text-[#888888]" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-violet-400/60">{product.badge || 'GAMING'}</span>
-                        <h4 className="text-base font-semibold text-white/80 mt-1 group-hover:text-white transition-colors">{product.name}</h4>
-                        <p className="text-xs text-white/35 mt-2 line-clamp-2">{product.description}</p>
+                        <span className="badge text-[9px]">{product.badge || 'GAMING'}</span>
+                        <h4 className="text-base font-semibold text-[#4B4B4B] mt-2 group-hover:text-black transition-colors">{product.name}</h4>
+                        <p className="text-xs text-[#888888] mt-2 line-clamp-2">{product.description}</p>
                         <div className="flex items-baseline gap-2 mt-3">
-                          <span className="text-xl font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                          {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
+                          <span className="text-xl font-bold text-black">${product.price.toLocaleString()}</span>
+                          {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
                         </div>
                       </div>
                     </div>
@@ -639,29 +603,26 @@ function GamingShowcase({ setSelectedProduct }) {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-              Best Sellers
-            </h3>
+            <h3 className="text-lg font-semibold text-black mb-5">Best Sellers</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {consoles.map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-blue-400/20 transition-all duration-500 cursor-pointer">
-                    <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
+                  <div onClick={() => setSelectedProduct(product)} className="card-gray p-5 h-full flex items-start gap-4 group cursor-pointer">
+                    <div className="w-28 h-28 rounded-xl bg-[#F3F3F3] flex items-center justify-center overflow-hidden shrink-0">
                       {product.image ? (
                         <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       ) : (
-                        <Gamepad size={36} className="text-blue-400/50" />
+                        <Gamepad size={36} className="text-[#888888]" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-blue-400/60">{product.badge || 'CONSOLE'}</span>
-                      <h4 className="text-sm font-semibold text-white/80 mt-1 group-hover:text-white transition-colors">{product.name}</h4>
-                      <p className="text-xs text-white/35 mt-1 line-clamp-1">{product.display}</p>
+                      <span className="badge text-[9px]">{product.badge || 'CONSOLE'}</span>
+                      <h4 className="text-sm font-semibold text-[#4B4B4B] mt-1 group-hover:text-black transition-colors">{product.name}</h4>
+                      <p className="text-xs text-[#888888] mt-1">{product.display}</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-lg font-bold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                        <span className={`text-[10px] ${product.inStock ? 'text-green-400/70' : 'text-amber-400/70'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
+                        <span className="text-lg font-bold text-black">${product.price.toLocaleString()}</span>
+                        <span className={`text-[10px] ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
                       </div>
                     </div>
                   </div>
@@ -671,32 +632,29 @@ function GamingShowcase({ setSelectedProduct }) {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse" />
-              Gaming Gear
-            </h3>
+            <h3 className="text-lg font-semibold text-black mb-5">Gaming Gear</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {gear.slice(0, 2).map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-rose-400/20 transition-all duration-500 cursor-pointer">
-                    <div className="w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
+                  <div onClick={() => setSelectedProduct(product)} className="card-gray p-4 h-full flex items-center gap-4 group cursor-pointer">
+                    <div className="w-20 h-20 rounded-xl bg-[#F3F3F3] flex items-center justify-center overflow-hidden shrink-0">
                       {product.image ? (
                         <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       ) : (
-                        <Monitor size={24} className="text-rose-400/50" />
+                        <Monitor size={24} className="text-[#888888]" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">{product.name}</h4>
+                      <h4 className="text-sm font-medium text-[#4B4B4B] group-hover:text-black transition-colors">{product.name}</h4>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {getKeySpecs(product).slice(0, 2).map((spec, i) => (
-                          <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-white/40">{spec}</span>
+                          <span key={i} className="spec-pill">{spec}</span>
                         ))}
                       </div>
                       <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-sm font-semibold text-[#F1F5F9]">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-[10px] text-white/30 line-through">${product.originalPrice.toLocaleString()}</span>}
+                        <span className="text-sm font-semibold text-black">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-[10px] text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
                       </div>
                     </div>
                   </div>
@@ -707,7 +665,7 @@ function GamingShowcase({ setSelectedProduct }) {
         </div>
 
         <motion.div variants={fadeUp} className="text-center mt-12">
-          <a href="/gaming" className="btn-premium btn-premium--primary text-xs">
+          <a href="/gaming" className="btn-primary text-xs">
             Explore All Gaming <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -730,24 +688,21 @@ function PCShowcase({ setSelectedProduct }) {
 
   const getPerformanceColor = (label) => {
     switch (label) {
-      case 'Entry Level': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-      case 'Mid Range': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-      case 'High Performance': return 'bg-violet-500/10 text-violet-400 border-violet-500/20';
-      case 'Custom Build': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      default: return 'bg-white/5 text-white/40 border-white/10';
+      case 'Entry Level': return 'bg-emerald-50 text-emerald-600 border-emerald-200';
+      case 'Mid Range': return 'bg-blue-50 text-blue-600 border-blue-200';
+      case 'High Performance': return 'bg-violet-50 text-violet-600 border-violet-200';
+      case 'Custom Build': return 'bg-amber-50 text-amber-600 border-amber-200';
+      default: return 'bg-[#F3F3F3] text-[#888888] border-[#E5E5E5]';
     }
   };
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28 section-light">
+    <section className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#059669] to-[#10B981]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-zinc-400">Desktops</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-zinc-900">Performance PCs</h2>
-          <p className="text-sm text-zinc-400 mt-3 max-w-lg font-light">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Desktops</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Performance PCs</h2>
+          <p className="text-sm text-[#888888] mt-3 max-w-lg">
             From office-ready to high-performance workstations — built for what you do.
           </p>
         </motion.div>
@@ -760,58 +715,50 @@ function PCShowcase({ setSelectedProduct }) {
             return (
               <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                <div className={`h-full rounded-2xl p-6 relative overflow-hidden group transition-all duration-500 hover:shadow-xl ${
-                  isCustom
-                    ? 'bg-gradient-to-br from-amber-900/20 to-amber-950/30 border border-amber-500/20 hover:border-amber-400/30'
-                    : 'glass-card hover:border-[#059669]/20'
-                }`}>
-                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/[0.02] to-transparent" />
-
-                  <div className="flex items-start justify-between mb-4 relative z-10">
+                <div className={`card-gray h-full p-6 ${isCustom ? 'border-amber-200' : ''}`}>
+                  <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                        isCustom ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-[#059669]/10 border border-[#059669]/15'
-                      }`}>
-                        {isCustom ? <Wrench size={18} className="text-amber-400" /> : <Monitor size={18} className="text-[#059669]" />}
+                      <div className="w-10 h-10 rounded-xl bg-[#F3F3F3] flex items-center justify-center">
+                        {isCustom ? <Wrench size={18} className="text-[#888888]" /> : <Monitor size={18} className="text-[#888888]" />}
                       </div>
                       <div>
-                        <h3 className="text-base font-semibold text-zinc-900">{product.name}</h3>
-                        {product.badge && <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-zinc-400">{product.badge}</span>}
+                        <h3 className="text-base font-semibold text-black">{product.name}</h3>
+                        {product.badge && <span className="badge-light text-[9px]">{product.badge}</span>}
                       </div>
                     </div>
-                    <span className={`text-[9px] font-semibold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full border ${colorClass}`}>
+                    <span className={`text-[9px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full border ${colorClass}`}>
                       {label}
                     </span>
                   </div>
 
                   {!isCustom && getKeySpecs(product).length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4 relative z-10">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {getKeySpecs(product).map((spec, i) => (
-                        <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-600">{spec}</span>
+                        <span key={i} className="spec-pill">{spec}</span>
                       ))}
                     </div>
                   )}
 
                   {isCustom ? (
-                    <div className="relative z-10">
-                      <p className="text-sm text-zinc-600 font-light leading-relaxed mb-4">
+                    <div>
+                      <p className="text-sm text-[#888888] leading-relaxed mb-4">
                         We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.
                       </p>
                       <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%27d%20like%20to%20discuss%20a%20custom%20PC%20build."
                         target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.15em] uppercase px-5 py-3 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30 transition-all duration-500">
+                        className="btn-outline text-[10px] font-semibold tracking-wider px-5 py-3 inline-flex">
                         Start Your Build <ArrowRight size={14} />
                       </a>
                     </div>
                   ) : (
-                    <div className="relative z-10 mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
+                    <div className="pt-4 border-t border-[#E5E5E5] flex items-center justify-between">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-zinc-900">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-zinc-400 line-through">${product.originalPrice.toLocaleString()}</span>}
-                        {getSavings(product) > 10 && <span className="text-[10px] text-emerald-600 font-medium">Save $${getSavings(product)}</span>}
+                        <span className="text-xl font-bold text-black">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
+                        {getSavings(product) > 10 && <span className="text-[10px] text-emerald-600 font-medium">Save ${getSavings(product)}</span>}
                       </div>
                       <button onClick={() => setSelectedProduct(product)}
-                        className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#059669] hover:text-[#10B981] transition-colors flex items-center gap-1">
+                        className="text-[10px] font-semibold tracking-wider uppercase text-black hover:text-[#4B4B4B] transition-colors flex items-center gap-1">
                         View Details <ChevronRight size={12} />
                       </button>
                     </div>
@@ -823,7 +770,7 @@ function PCShowcase({ setSelectedProduct }) {
         </div>
 
         <motion.div variants={fadeUp} className="text-center mt-10">
-          <a href="/pcs" className="text-xs text-zinc-400 hover:text-zinc-800 transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
+          <a href="/pcs" className="text-xs text-[#888888] hover:text-black transition-colors font-semibold tracking-wider uppercase inline-flex items-center gap-2">
             View All PCs <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -840,14 +787,11 @@ function WhyChooseUs() {
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28">
+    <section className="px-6 py-24 md:py-28 bg-white">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Why Choose Us</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Why Core Tech Systems</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Why Choose Us</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Why Core Tech Systems</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -856,12 +800,12 @@ function WhyChooseUs() {
             return (
               <motion.div key={f.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                <div className="glass-card p-7 h-full text-center md:text-left">
-                  <div className="w-11 h-11 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/15 flex items-center justify-center mb-4 mx-auto md:mx-0">
-                    <Icon size={20} className="text-[#2563EB]" />
+                <div className="card-gray p-7 h-full text-center md:text-left">
+                  <div className="w-11 h-11 rounded-xl bg-[#F3F3F3] flex items-center justify-center mb-4 mx-auto md:mx-0">
+                    <Icon size={20} className="text-black" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white/90 mb-2">{f.title}</h3>
-                  <p className="text-sm text-white/35 font-light leading-relaxed">{f.desc}</p>
+                  <h3 className="text-lg font-semibold text-black mb-2">{f.title}</h3>
+                  <p className="text-sm text-[#888888] leading-relaxed">{f.desc}</p>
                 </div>
               </motion.div>
             );
@@ -898,35 +842,26 @@ function ProductShowcase({
   }, [addItem]);
 
   return (
-    <section id="products" className="relative z-10 px-6 py-24 md:py-32">
-      <div className="ambient-container" aria-hidden="true">
-        <div className="ambient-orb ambient-orb--primary" />
-        <div className="ambient-orb ambient-orb--secondary" />
-      </div>
-
+    <section id="products" className="px-6 py-24 md:py-32 bg-white">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
-          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
         >
           {notify}
         </motion.div>
       )}
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={fadeUp}
           className="mb-14"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Collection</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">All Premium Devices</h2>
-          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Collection</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">All Premium Devices</h2>
+          <p className="text-sm text-[#888888] mt-3 max-w-lg">
             Carefully selected devices, each chosen for exceptional build quality and performance.
           </p>
         </motion.div>
@@ -935,18 +870,18 @@ function ProductShowcase({
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="mb-10"
         >
-          <div className="glass-input max-w-md">
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+          <div className="input-premium max-w-md">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#888888]" size={16} />
               <input
                 type="text"
                 placeholder="Search devices, processors, storage..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 bg-transparent text-white text-sm placeholder:text-white/20 focus:outline-none"
+                className="w-full pl-11 pr-10 py-3 bg-transparent text-black text-sm placeholder:text-[#AAAAAA] focus:outline-none"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white/30 hover:text-white/60 transition-colors">
+                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#888888] hover:text-black transition-colors">
                   <X size={14} />
                 </button>
               )}
@@ -955,29 +890,28 @@ function ProductShowcase({
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Filters sidebar */}
-          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-[#0A1224]/95 p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
+          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-white p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
             <div className="sticky top-24">
-              <div className="glass-card p-6">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.04]">
+              <div className="card-gray p-6">
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E5E5]">
                   <div className="flex items-center gap-2">
-                    <SlidersHorizontal size={13} className="text-white/30" />
-                    <h3 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/50">Filters</h3>
+                    <SlidersHorizontal size={13} className="text-[#888888]" />
+                    <h3 className="text-[10px] font-semibold tracking-wider uppercase text-[#888888]">Filters</h3>
                   </div>
-                  {activeFilterCount > 0 && <span className="text-[10px] font-bold text-[#2563EB]">{activeFilterCount}</span>}
+                  {activeFilterCount > 0 && <span className="text-[10px] font-bold text-black">{activeFilterCount}</span>}
                 </div>
                 <div className="space-y-1">
                   {Object.entries(filterOptions).map(([filterName, values]) => {
                     const isOpen = expandedFilter === filterName;
                     const selectedInCategory = selectedFilters[filterName]?.length || 0;
                     return (
-                      <div key={filterName} className="border-b border-white/[0.04] last:border-b-0">
+                      <div key={filterName} className="border-b border-[#E5E5E5] last:border-b-0">
                         <button onClick={() => setExpandedFilter(isOpen ? null : filterName)}
-                          className="w-full flex items-center justify-between py-3 text-[10px] font-semibold tracking-[0.15em] uppercase text-white/30 hover:text-white/60 transition-colors">
+                          className="w-full flex items-center justify-between py-3 text-[10px] font-semibold tracking-wider uppercase text-[#888888] hover:text-black transition-colors">
                           <span>{filterName}</span>
                           <div className="flex items-center gap-2">
-                            {selectedInCategory > 0 && <span className="text-[10px] font-bold text-[#2563EB]">{selectedInCategory}</span>}
-                            <ChevronDown size={12} className={`text-white/20 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                            {selectedInCategory > 0 && <span className="text-[10px] font-bold text-black">{selectedInCategory}</span>}
+                            <ChevronDown size={12} className={`text-[#888888] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                           </div>
                         </button>
                         {isOpen && (
@@ -987,9 +921,8 @@ function ProductShowcase({
                               return (
                                 <label key={value} className="flex items-center gap-3 cursor-pointer group py-0.5">
                                   <input type="checkbox" checked={isChecked} onChange={() => toggleFilter(filterName, value)}
-                                    className="appearance-none w-4 h-4 rounded-md border border-white/20 bg-transparent checked:bg-[#2563EB] checked:border-[#2563EB] transition-all duration-300"
-                                    style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }} />
-                                  <span className={`text-xs transition-colors ${isChecked ? 'text-[#38BDF8]' : 'text-white/30 group-hover:text-white/50'}`}>{value}</span>
+                                    className="appearance-none w-4 h-4 rounded-md border border-[#E5E5E5] bg-white checked:bg-black checked:border-black transition-all duration-300" />
+                                  <span className={`text-xs transition-colors ${isChecked ? 'text-black font-medium' : 'text-[#888888] group-hover:text-black'}`}>{value}</span>
                                 </label>
                               );
                             })}
@@ -1002,7 +935,7 @@ function ProductShowcase({
               </div>
               {mobileFiltersOpen && (
                 <button onClick={() => setMobileFiltersOpen(false)}
-                  className="w-full mt-4 py-3 bg-white/10 text-white text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 hover:bg-white/20 transition-all duration-500">
+                  className="btn-outline w-full mt-4 py-3 text-[10px] font-semibold tracking-wider uppercase">
                   Close Filters
                 </button>
               )}
@@ -1011,12 +944,11 @@ function ProductShowcase({
 
           {!mobileFiltersOpen && (
             <button onClick={() => setMobileFiltersOpen(true)}
-              className="lg:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-5 py-3 glass-pill text-white text-[10px] font-semibold tracking-[0.15em] uppercase shadow-xl">
-              <SlidersHorizontal size={13} /> Filters{activeFilterCount > 0 && <span className="text-[#2563EB]">({activeFilterCount})</span>}
+              className="lg:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-5 py-3 btn-primary text-[10px] font-semibold tracking-wider uppercase shadow-xl">
+              <SlidersHorizontal size={13} /> Filters{activeFilterCount > 0 && <span>({activeFilterCount})</span>}
             </button>
           )}
 
-          {/* Products grid */}
           <div className="lg:col-span-4">
             {activeFilterCount > 0 && (
               <motion.div
@@ -1025,11 +957,11 @@ function ProductShowcase({
                 transition={{ duration: 0.3, ease }}
                 className="mb-6 overflow-hidden"
               >
-                <div className="flex items-center justify-between rounded-xl border border-white/[0.06] px-5 py-3 bg-[#0F1A2E]">
-                  <span className="text-xs text-white/40">
-                    <span className="text-white font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
+                <div className="flex items-center justify-between rounded-xl border border-[#E5E5E5] px-5 py-3 bg-[#F9F9F9]">
+                  <span className="text-xs text-[#888888]">
+                    <span className="text-black font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
                   </span>
-                  <button onClick={clearAllFilters} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-white/40 hover:text-[#2563EB] transition-all duration-300">
+                  <button onClick={clearAllFilters} className="text-[10px] font-semibold tracking-wider uppercase text-[#888888] hover:text-black transition-colors">
                     Clear All
                   </button>
                 </div>
@@ -1041,68 +973,68 @@ function ProductShowcase({
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product) => (
                   <motion.div key={product.id} variants={fadeUp}>
-                    <div className="product-card h-full flex flex-col group relative">
+                    <div className="card-gray h-full flex flex-col group relative">
                       <button onClick={() => toggleWishlist(product.id)}
-                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#0A1224]/70 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-[#2563EB]/30">
-                        <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
+                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 border border-[#E5E5E5] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-black/30">
+                        <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-[#888888]'}`} />
                       </button>
 
-                      <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden cursor-pointer"
+                      <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] overflow-hidden cursor-pointer rounded-t-[16px]"
                         style={{ aspectRatio: getAspectRatio(product) }}>
                         {product.image ? (
                           <img src={product.image} alt={product.name}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
                         ) : (
-                          <div className="w-24 h-32 rounded-xl border border-white/10 flex items-center justify-center text-white/20 text-xs bg-white/[0.02]">
+                          <div className="w-24 h-32 rounded-xl border border-[#E5E5E5] flex items-center justify-center text-[#888888] text-xs bg-white">
                             {product.name.split(' ').slice(0, 2).join(' ')}
                           </div>
                         )}
                         {product.badge && (
-                          <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>
+                          <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
                         )}
                       </div>
 
                       <div className="flex-1 flex flex-col p-5 space-y-2.5">
                         <div>
-                          <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.category}</span>
+                          <span className="text-[9px] font-semibold uppercase tracking-wider text-[#888888]">{product.category}</span>
                           <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                            <h3 className="text-sm font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
+                            <h3 className="text-sm font-medium text-[#4B4B4B] mt-1 leading-snug group-hover:text-black transition-colors duration-300">{product.name}</h3>
                           </div>
                         </div>
 
                         <div className="flex flex-wrap gap-1.5">
                           {getKeySpecs(product).slice(0, 3).map((spec, i) => (
-                            <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40 font-light">{spec}</span>
+                            <span key={i} className="spec-pill">{spec}</span>
                           ))}
                         </div>
 
                         <div className="flex items-center gap-1.5">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400/80 fill-amber-400/80' : 'text-white/10'} />
+                            <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
                           ))}
-                          <span className="text-[10px] text-white/30 ml-1">{product.rating}</span>
+                          <span className="text-[10px] text-[#888888] ml-1">{product.rating}</span>
                         </div>
 
-                        <div className="flex items-baseline justify-between pt-2.5 border-t border-white/[0.04]">
+                        <div className="flex items-baseline justify-between pt-2.5 border-t border-[#E5E5E5]">
                           <div className="flex items-baseline gap-3">
-                            <span className="text-lg font-semibold text-[#F1F5F9] tracking-tight">${product.price.toLocaleString()}</span>
-                            {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
-                            {getSavings(product) > 10 && <span className="text-[9px] text-emerald-400 font-medium">Save $${getSavings(product)}</span>}
+                            <span className="text-lg font-semibold text-black tracking-tight">${product.price.toLocaleString()}</span>
+                            {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
+                            {getSavings(product) > 10 && <span className="text-[9px] text-emerald-600 font-medium">Save ${getSavings(product)}</span>}
                           </div>
                           <div className="flex items-center gap-1.5">
-                            <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-400' : 'bg-amber-400'}`} />
-                            <span className={`text-[10px] ${product.inStock ? 'text-green-400/70' : 'text-amber-400/70'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
+                            <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-amber-500'}`} />
+                            <span className={`text-[10px] ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
                           </div>
                         </div>
 
                         <div className="flex gap-2 pt-1">
                           <button onClick={() => handleAdd(product)}
                             disabled={!product.inStock}
-                            className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] hover:shadow-[0_4px_20px_rgba(37,99,235,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                            className="btn-primary flex-1 py-2.5 text-[10px] font-semibold tracking-wider disabled:opacity-30 disabled:cursor-not-allowed justify-center">
                             Add to Cart
                           </button>
                           <button onClick={() => handleWhatsApp(product)}
-                            className="px-4 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500">
+                            className="btn-outline px-4 py-2.5 text-[10px] font-semibold tracking-wider">
                             Inquire
                           </button>
                         </div>
@@ -1112,10 +1044,10 @@ function ProductShowcase({
                 ))
               ) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="col-span-full">
-                  <div className="text-center py-20 rounded-2xl border border-white/[0.04] bg-[#0F1A2E]">
-                    <p className="text-white/40 text-sm mb-1">No products match your filters.</p>
-                    <p className="text-white/20 text-xs mb-4">Try adjusting your search or filter criteria.</p>
-                    <button onClick={clearAllFilters} className="btn-premium btn-premium--ghost text-[10px]">Clear all filters</button>
+                  <div className="text-center py-20 rounded-2xl border border-[#E5E5E5] bg-[#F9F9F9]">
+                    <p className="text-[#888888] text-sm mb-1">No products match your filters.</p>
+                    <p className="text-[#AAAAAA] text-xs mb-4">Try adjusting your search or filter criteria.</p>
+                    <button onClick={clearAllFilters} className="btn-outline text-[10px]">Clear all filters</button>
                   </div>
                 </motion.div>
               )}
@@ -1123,11 +1055,11 @@ function ProductShowcase({
 
             <motion.div
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              className="mt-10 pt-6 border-t border-white/[0.04] text-center"
+              className="mt-10 pt-6 border-t border-[#E5E5E5] text-center"
             >
-              <p className="text-xs text-white/20 tracking-wider">
-                Showing <span className="text-white font-medium">{filteredProducts.length}</span> of{' '}
-                <span className="text-white font-medium">{products.length}</span> devices
+              <p className="text-xs text-[#888888] tracking-wider">
+                Showing <span className="text-black font-medium">{filteredProducts.length}</span> of{' '}
+                <span className="text-black font-medium">{products.length}</span> devices
               </p>
             </motion.div>
           </div>
@@ -1148,15 +1080,12 @@ function RepairServices() {
   ];
 
   return (
-    <section id="repairs" className="relative z-10 px-6 py-24 md:py-28">
+    <section id="repairs" className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#059669] to-[#10B981]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Services</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Repair & Upgrade Center</h2>
-          <p className="text-sm text-white/30 mt-3 max-w-lg font-light">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Services</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Repair & Upgrade Center</h2>
+          <p className="text-sm text-[#888888] mt-3 max-w-lg">
             Professional repairs, upgrades, and maintenance for all your devices.
           </p>
         </motion.div>
@@ -1167,22 +1096,20 @@ function RepairServices() {
             return (
               <motion.div key={svc.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={scaleIn} transition={{ delay: i * 0.07 }}>
-                <div className="glass-card p-6 h-full flex flex-col group hover:border-[#059669]/20">
+                <div className="card-gray p-6 h-full flex flex-col group">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#059669]/10 border border-[#059669]/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                      <Icon size={18} className="text-[#059669]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#F3F3F3] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Icon size={18} className="text-black" />
                     </div>
                     {svc.badge && (
-                      <span className="text-[9px] px-2.5 py-1 rounded-full bg-[#059669]/10 text-[#059669] font-medium border border-[#059669]/15">
-                        {svc.badge}
-                      </span>
+                      <span className="badge-light text-[9px]">{svc.badge}</span>
                     )}
                   </div>
-                  <h3 className="text-sm font-semibold text-white/85 mb-1.5">{svc.title}</h3>
-                  <p className="text-xs text-white/35 font-light flex-1">{svc.desc}</p>
-                  <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-white/[0.04]">
-                    <Clock3 size={11} className="text-white/25" />
-                    <span className="text-[10px] text-white/30">{svc.time}</span>
+                  <h3 className="text-sm font-semibold text-black mb-1.5">{svc.title}</h3>
+                  <p className="text-xs text-[#888888] flex-1">{svc.desc}</p>
+                  <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#E5E5E5]">
+                    <Clock3 size={11} className="text-[#888888]" />
+                    <span className="text-[10px] text-[#888888]">{svc.time}</span>
                   </div>
                 </div>
               </motion.div>
@@ -1193,7 +1120,7 @@ function RepairServices() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mt-8 text-center">
           <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%20need%20a%20repair%20or%20upgrade%20service."
             target="_blank" rel="noopener noreferrer"
-            className="btn-premium btn-premium--secondary text-xs">
+            className="btn-outline text-xs">
             Book a Repair <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -1211,9 +1138,9 @@ function TrustStats() {
   ];
 
   return (
-    <section className="relative z-10 px-6 py-20">
+    <section className="px-6 py-20 bg-white">
       <div className="max-w-5xl mx-auto">
-        <div className="glass-card p-8 md:p-10">
+        <div className="card-gray p-8 md:p-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {stats.map((stat, i) => {
               const Icon = stat.icon;
@@ -1221,9 +1148,9 @@ function TrustStats() {
                 <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.12 }}
                   className="text-center">
-                  <Icon size={22} className="text-[#2563EB] mx-auto mb-3" />
-                  <p className="text-2xl md:text-3xl font-bold text-[#F1F5F9] tracking-tight">{stat.value}</p>
-                  <p className="text-xs text-white/35 mt-1">{stat.label}</p>
+                  <Icon size={22} className="text-black mx-auto mb-3" />
+                  <p className="text-2xl md:text-3xl font-bold text-black tracking-tight">{stat.value}</p>
+                  <p className="text-xs text-[#888888] mt-1">{stat.label}</p>
                 </motion.div>
               );
             })}
@@ -1242,32 +1169,29 @@ function Testimonials() {
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28">
+    <section className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Testimonials</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">What Our Customers Say</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Testimonials</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">What Our Customers Say</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {reviews.map((review, i) => (
             <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }}
               variants={scaleIn} transition={{ delay: i * 0.1 }}>
-              <div className="glass-card p-7 h-full flex flex-col">
+              <div className="card-gray p-7 h-full flex flex-col">
                 <div className="flex gap-0.5 mb-4">
                   {[...Array(5)].map((_, s) => (
-                    <Star key={s} size={13} className={s < review.rating ? 'text-amber-400/80 fill-amber-400/80' : 'text-white/10'} />
+                    <Star key={s} size={13} className={s < review.rating ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
                   ))}
                 </div>
-                <p className="text-sm text-white/55 font-light leading-relaxed flex-1 mb-5">
+                <p className="text-sm text-[#888888] leading-relaxed flex-1 mb-5">
                   &ldquo;{review.text}&rdquo;
                 </p>
-                <div className="pt-4 border-t border-white/[0.04]">
-                  <p className="text-sm font-medium text-white/80">{review.name}</p>
-                  <p className="text-[11px] text-white/30">{review.role}</p>
+                <div className="pt-4 border-t border-[#E5E5E5]">
+                  <p className="text-sm font-medium text-black">{review.name}</p>
+                  <p className="text-[11px] text-[#888888]">{review.role}</p>
                 </div>
               </div>
             </motion.div>
@@ -1289,24 +1213,21 @@ function FAQ() {
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28">
+    <section className="px-6 py-24 md:py-28 bg-white">
       <div className="max-w-3xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">FAQ</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-[#F1F5F9]">Frequently Asked Questions</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">FAQ</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black">Frequently Asked Questions</h2>
         </motion.div>
 
         <div className="space-y-2">
           {faqs.map((faq, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-              className="glass-card overflow-hidden">
+              className="card-gray overflow-hidden">
               <button onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-6 py-4 text-left text-sm font-medium text-white/70 hover:text-white transition-colors flex items-center justify-between gap-2">
+                className="w-full px-6 py-4 text-left text-sm font-medium text-[#4B4B4B] hover:text-black transition-colors flex items-center justify-between gap-2">
                 {faq.q}
-                <ChevronDown size={14} className={`text-white/20 shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
+                <ChevronDown size={14} className={`text-[#888888] shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {open === i && (
@@ -1317,7 +1238,7 @@ function FAQ() {
                     transition={{ duration: 0.3, ease }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-4 text-sm text-white/40 font-light leading-relaxed border-t border-white/[0.04] pt-3">
+                    <div className="px-6 pb-4 text-sm text-[#888888] leading-relaxed border-t border-[#E5E5E5] pt-3">
                       {faq.a}
                     </div>
                   </motion.div>
@@ -1335,28 +1256,20 @@ function NewsletterSection() {
   const [email, setEmail] = useState('');
 
   return (
-    <section className="relative z-10 px-6 py-20 md:py-28">
+    <section className="px-6 py-20 md:py-28 bg-[#F9F9F9]">
       <div className="max-w-4xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={scaleIn}
-          className="glass-card text-center relative overflow-hidden p-8 md:p-12">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#2563EB]/[0.03] to-transparent pointer-events-none" />
-          <div className="relative z-10 max-w-xl mx-auto">
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#38BDF8] mb-4 block">Stay Connected</span>
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tighter text-[#F1F5F9] mb-3">Stay Ahead of the Curve</h3>
-            <p className="text-sm text-white/35 font-light mb-8 max-w-md mx-auto">
-              New arrivals, exclusive offers, and limited editions — straight to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
-              <div className="glass-input flex-1 w-full">
-                <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-transparent text-white text-sm placeholder:text-white/20 focus:outline-none" />
-              </div>
-              <button onClick={() => { if (email) setEmail(''); }}
-                className="btn-premium btn-premium--primary text-[10px] whitespace-nowrap w-full sm:w-auto justify-center">
-                Subscribe <ArrowRight size={12} />
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <div className="card-gray text-center p-8 md:p-12">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-4">Stay Connected</p>
+            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-black mb-4">Join Our Newsletter</h2>
+            <p className="text-sm text-[#888888] mb-8 max-w-md mx-auto">Get early access to new arrivals, exclusive deals, and tech tips delivered to your inbox.</p>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)}
+                className="input-premium flex-1 px-5 py-3.5 text-center sm:text-left" />
+              <button className="btn-primary text-[10px] whitespace-nowrap w-full sm:w-auto justify-center">
+                Subscribe
               </button>
             </div>
-            <p className="text-[10px] text-white/20 mt-4">No spam. Unsubscribe at any time.</p>
           </div>
         </motion.div>
       </div>
@@ -1365,52 +1278,46 @@ function NewsletterSection() {
 }
 
 function InfoSection() {
-  const infoItems = [
-    { icon: MapPin, title: 'Location', accent: 'Harare, Zimbabwe', lines: ['Corner Speke & Mbuya Nehanda', 'Sirus Mall, 1st Floor'] },
-    { icon: Clock, title: 'Hours', accent: 'Same-Day Delivery', lines: ['Monday — Saturday', '08:30 — 17:00'] },
-    { icon: Package, title: 'Shipping', accent: 'Fast & Reliable', lines: ['Same-day within Harare', 'Nationwide across Zimbabwe'] },
+  const items = [
+    { icon: MapPin, title: 'Visit Us', desc: 'Sirus Mall, 1st Floor\nHarare, Zimbabwe', accent: 'Mon – Sat: 08:30 – 17:00' },
+    { icon: Phone, title: 'Call Us', desc: '+263 780 579 633\n+263 708 463 628', accent: 'Same-day delivery available' },
+    { icon: MessageCircle, title: 'WhatsApp', desc: 'Fastest response via WhatsApp', accent: 'Typically replies in 5 min' },
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 border-t border-white/[0.04]">
-      <div className="max-w-6xl mx-auto">
+    <section className="px-6 py-24 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Showroom</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Visit Us</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Connect</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Get In Touch</h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {infoItems.map((item, i) => {
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {items.map((item, i) => {
             const Icon = item.icon;
             return (
-              <motion.div key={item.title} variants={fadeUp} transition={{ delay: i * 0.1 }}
-                className="glass-card p-6 md:p-7">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-9 h-9 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/15 flex items-center justify-center">
-                    <Icon size={16} className="text-[#2563EB]" />
+              <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                variants={scaleIn} transition={{ delay: i * 0.1 }}>
+                <div className="card-gray p-6 md:p-7">
+                  <div className="w-9 h-9 rounded-xl bg-[#F3F3F3] flex items-center justify-center">
+                    <Icon size={16} className="text-black" />
                   </div>
-                  <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">{item.title}</span>
+                  <h3 className="text-sm font-semibold text-black mt-4 mb-1">{item.title}</h3>
+                  <p className="text-sm text-[#888888] whitespace-pre-line leading-relaxed">{item.desc}</p>
+                  <p className="text-sm font-medium text-black mt-4">{item.accent}</p>
                 </div>
-                {item.lines.map((line, j) => (
-                  <p key={j} className={`${j === 0 ? 'text-sm text-white/70 font-medium' : 'text-sm text-white/40 leading-relaxed mt-1'}`}>{line}</p>
-                ))}
-                <p className="text-sm font-medium text-[#38BDF8] mt-4">{item.accent}</p>
               </motion.div>
             );
           })}
         </div>
 
-        <motion.div variants={fadeUp} className="mt-6 glass-card p-8 text-center">
-          <h3 className="text-lg font-bold tracking-tight text-white/80">Stay Updated</h3>
-          <p className="text-sm text-white/30 max-w-lg mx-auto mt-2 leading-relaxed font-light">
-            Join our WhatsApp channel for daily stock updates and exclusive product arrivals.
+        <motion.div variants={fadeUp} className="card-gray p-8 text-center mt-6">
+          <p className="text-sm text-[#888888]">
+            Free delivery within Harare. Nationwide shipping across Zimbabwe. All prices in USD.
           </p>
-          <a href="https://whatsapp.com/channel/0029Vb6hJE6F1YlVNfnyBk21" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-6 btn-premium btn-premium--secondary text-[10px]">
-            Join Channel <ArrowRight size={12} />
+          <a href="https://wa.me/263780579633" target="_blank" rel="noopener noreferrer"
+            className="btn-outline text-[10px] mt-6 inline-flex">
+            <MessageCircle size={14} /> Chat with Us
           </a>
         </motion.div>
       </div>
