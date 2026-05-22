@@ -23,7 +23,7 @@ export default function SupportPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) return;
-    const body = `Hi Tech Store, I have a support question:\n\nEmail: ${email}\nMessage: ${msg}\n\nPlease get back to me.`;
+    const body = `Hi Core Tech Systems, I have a support question:\n\nEmail: ${email}\nMessage: ${msg}\n\nPlease get back to me.`;
     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(body)}`, '_blank');
   };
 

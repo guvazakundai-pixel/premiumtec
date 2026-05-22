@@ -12,14 +12,14 @@ export default function AboutPage() {
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
             <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">About</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-4">About Tech Store</h1>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-4">About Core Tech Systems</h1>
           <p className="text-sm text-white/30 font-light max-w-lg mb-12">Harare&apos;s premier destination for premium technology, repairs, and gaming.</p>
         </motion.div>
 
         <div className="glass-card p-8 md:p-10 mb-8">
           <h2 className="text-lg font-semibold text-white/85 mb-4">Our Story</h2>
           <p className="text-sm text-white/40 font-light leading-relaxed mb-4">
-            Founded in Harare, Tech Store was built with a single mission: to bring Zimbabwe&apos;s most discerning
+            Founded in Harare, Core Tech Systems was built with a single mission: to bring Zimbabwe&apos;s most discerning
             technology enthusiasts access to premium devices, expert repairs, and exceptional service.
           </p>
           <p className="text-sm text-white/40 font-light leading-relaxed">

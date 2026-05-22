@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://premiumtec.vercel.app/sitemap.xml
+Sitemap: https://coretechsystems.vercel.app/sitemap.xml

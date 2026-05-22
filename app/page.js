@@ -126,7 +126,7 @@ function Hero({ onShop, onRepairs }) {
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/[0.06] text-[11px] font-medium tracking-[0.12em] uppercase text-[#38BDF8]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-            Premium Tech Store — Harare, Zimbabwe
+            Core Tech Systems — Harare, Zimbabwe
           </span>
         </motion.div>
 
@@ -556,7 +556,7 @@ function PhonesSection({ setSelectedProduct }) {
                   </div>
                 <button
                   onClick={() => {
-                    const msg = `Hi Tech Store, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
+                    const msg = `Hi Core Tech Systems, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
                     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
                   }}
                   className="w-full mt-3 py-2.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all duration-500"
@@ -851,7 +851,7 @@ function WhyChooseUs() {
             <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
             <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Why Choose Us</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Why Tech Store</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Why Core Tech Systems</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -1242,7 +1242,7 @@ function Testimonials() {
   const reviews = [
     { name: 'Sarah M.', role: 'Verified Buyer', text: 'Absolutely exceptional service. My MacBook Pro arrived within 24 hours, perfectly packaged. The price was unbeatable for a brand-new device.', rating: 5 },
     { name: 'James K.', role: 'Verified Buyer', text: 'The attention to detail sets them apart. From the unboxing experience to the post-purchase support — truly a premium experience.', rating: 5 },
-    { name: 'Tatenda R.', role: 'Verified Buyer', text: 'I have bought three devices from Tech Store now. The authenticity guarantee gives me complete peace of mind. Highly recommend.', rating: 5 },
+    { name: 'Tatenda R.', role: 'Verified Buyer', text: 'I have bought three devices from Core Tech Systems now. The authenticity guarantee gives me complete peace of mind. Highly recommend.', rating: 5 },
   ];
 
   return (
@@ -1422,7 +1422,7 @@ function InfoSection() {
   );
 }
 
-export default function TechStore() {
+export default function CoreTechSystems() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -1458,7 +1458,7 @@ export default function TechStore() {
   }, [searchQuery, selectedFilters]);
 
   const handleWhatsApp = useCallback((product) => {
-    const message = `Hi Tech Store, I'd like to inquire about:\n\nProduct: ${product.name}\nSpecs: ${product.processor} | ${product.storage} | ${product.display}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability.`;
+    const message = `Hi Core Tech Systems, I'd like to inquire about:\n\nProduct: ${product.name}\nSpecs: ${product.processor} | ${product.storage} | ${product.display}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability.`;
     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(message)}`, '_blank');
   }, []);
 

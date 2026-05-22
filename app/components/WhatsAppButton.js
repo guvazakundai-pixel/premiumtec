@@ -34,19 +34,19 @@ export default function WhatsAppButton() {
               </button>
             </div>
             <div className="p-4 space-y-2">
-              <button onClick={() => handleChat("Hi Tech Store, I'd like to inquire about your latest laptops.")}
+              <button onClick={() => handleChat("Hi Core Tech Systems, I'd like to inquire about your latest laptops.")}
                 className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
                 💻 Inquire about laptops
               </button>
-              <button onClick={() => handleChat("Hi Tech Store, I'd like to inquire about gaming setups.")}
+              <button onClick={() => handleChat("Hi Core Tech Systems, I'd like to inquire about gaming setups.")}
                 className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
                 🎮 Gaming setups
               </button>
-              <button onClick={() => handleChat("Hi Tech Store, I need a repair/service for my device.")}
+              <button onClick={() => handleChat("Hi Core Tech Systems, I need a repair/service for my device.")}
                 className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
                 🔧 Repairs & service
               </button>
-              <button onClick={() => handleChat("Hi Tech Store, I have a general question.")}
+              <button onClick={() => handleChat("Hi Core Tech Systems, I have a general question.")}
                 className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
                 ❓ General inquiry
               </button>

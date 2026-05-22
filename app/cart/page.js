@@ -14,7 +14,7 @@ export default function CartPage() {
 
   const handleCheckout = () => {
     const msg = items.map(i => `${i.name} x${i.qty} — $${(i.price * i.qty).toLocaleString()}`).join('\n');
-    const total = `\n\nTotal: $${totalPrice.toLocaleString()}\n\nHi Tech Store, I'd like to order the items above. Please confirm availability and payment options.`;
+    const total = `\n\nTotal: $${totalPrice.toLocaleString()}\n\nHi Core Tech Systems, I'd like to order the items above. Please confirm availability and payment options.`;
     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg + total)}`, '_blank');
   };
 

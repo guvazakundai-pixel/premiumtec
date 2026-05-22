@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-2">
             <Link href="/" className="flex items-center mb-4">
               <Image
-                src="/images/techstore-logo.png"
+                src="/images/coretechsystems-logo.png"
                 alt="Core Tech Systems"
                 width={280}
                 height={133}
@@ -99,7 +99,7 @@ export default function Footer() {
 
         <div className="border-t border-white/[0.04] pt-6 mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/20">
-            &copy; {new Date().getFullYear()} Tech Store. All rights reserved.
+            &copy; {new Date().getFullYear()} Core Tech Systems. All rights reserved.
           </p>
           <p className="text-[10px] text-white/10 tracking-[0.15em] uppercase">
             Premium Tech &bull; Harare, Zimbabwe

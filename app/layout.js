@@ -14,16 +14,16 @@ import WhatsAppButton from "@/app/components/WhatsAppButton";
 import { CartProvider } from "@/app/context/CartContext";
 
 export const metadata = {
-  title: "Tech Store — Premium Technology, Curated for You",
+  title: "Core Tech Systems — Premium Technology, Curated for You",
   description:
     "High-performance laptops, gaming setups, repairs, and premium accessories in Harare, Zimbabwe. Discover the best in tech.",
-  keywords: "Tech Store, premium laptops, gaming, tech repairs, Harare, Zimbabwe, technology store",
+  keywords: "Core Tech Systems, premium laptops, gaming, tech repairs, Harare, Zimbabwe, technology store",
   openGraph: {
-    title: "Tech Store — Premium Technology, Curated for You",
+    title: "Core Tech Systems — Premium Technology, Curated for You",
     description:
       "High-performance laptops, gaming setups, repairs, and premium accessories in Harare, Zimbabwe.",
     type: "website",
-    siteName: "Tech Store",
+    siteName: "Core Tech Systems",
     locale: "en_US",
   },
 };
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Store",
-              name: "Tech Store",
+              name: "Core Tech Systems",
               description: "Premium technology — laptops, gaming, repairs, and accessories in Harare, Zimbabwe.",
               url: "https://coretechsystems.vercel.app",
               telephone: "+263780579633",

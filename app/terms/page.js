@@ -17,7 +17,7 @@ export default function TermsPage() {
 
         <div className="glass-card p-8 md:p-10 space-y-8">
           <Section title="1. Acceptance of Terms">
-            <p>By accessing and using Tech Store (&ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our&rdquo;), you agree to be bound by these Terms of Service. If you do not agree, please do not use our website or services.</p>
+            <p>By accessing and using Core Tech Systems (&ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our&rdquo;), you agree to be bound by these Terms of Service. If you do not agree, please do not use our website or services.</p>
           </Section>
 
           <Section title="2. Products and Pricing">
@@ -44,7 +44,7 @@ export default function TermsPage() {
           </Section>
 
           <Section title="7. Limitation of Liability">
-            <p>Tech Store shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our website or products. Our total liability is limited to the amount paid for the product in question.</p>
+            <p>Core Tech Systems shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our website or products. Our total liability is limited to the amount paid for the product in question.</p>
           </Section>
 
           <Section title="8. Contact">

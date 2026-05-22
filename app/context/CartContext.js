@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('techstore_cart');
+      const saved = localStorage.getItem('coretechsystems_cart');
       if (saved) setItems(JSON.parse(saved));
     } catch {}
     setLoaded(true);
@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     if (loaded) {
-      localStorage.setItem('techstore_cart', JSON.stringify(items));
+      localStorage.setItem('coretechsystems_cart', JSON.stringify(items));
     }
   }, [items, loaded]);
 
