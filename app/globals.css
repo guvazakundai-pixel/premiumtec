@@ -25,9 +25,9 @@
   --color-surface: var(--card-bg);
   --color-muted: var(--text-tertiary);
   --color-accent: var(--accent-blue);
-  --font-sans: "Syne", system-ui, -apple-system, sans-serif;
-  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "DM Sans", monospace;
+  --font-sans: var(--font-syne), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-dm-sans), monospace;
 }
 
 * {
