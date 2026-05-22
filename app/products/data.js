@@ -688,6 +688,152 @@ export const products = [
     description: 'Custom PC build service. We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.',
     features: ['Custom Configuration', 'Professional Assembly', 'Cable Management', 'Thermal Optimization', 'Stress Tested', 'Warranty Included'],
   },
+
+  // ─── INTERACTIVE DISPLAYS ───
+  {
+    id: 75, name: 'Interactive Flat Panel 86 inch', category: 'Displays',
+    slug: 'interactive-flat-panel-86',
+    processor: 'N/A', storage: '32GB (Upgradable)',
+    display: '86 inch Interactive Touchscreen', price: 1950, originalPrice: null,
+    badge: 'PREMIUM', inStock: true, rating: 4.9, reviews: 1,
+    image: 'https://ibb.co/8DP07L1Y',
+    description: 'Interactive Flat Panel 86 inch designed for seamless communication and high-impact presentations. Massive 86" display with crystal clear visuals, powerful 4GB RAM + 32GB upgradable performance, intelligent AI camera for high-definition video conferencing, wireless screen sharing, and precision touchscreen interface.',
+    features: ['86" Crystal Clear Display', '4GB RAM + 32GB (Upgradable)', 'Intelligent AI Camera', 'Wireless Screen Sharing', 'Precision Touchscreen', 'Video Conferencing Ready'],
+  },
+
+  // ─── SMARTPHONES (NEW) ───
+  {
+    id: 76, name: 'Samsung Galaxy S26 Ultra 256GB', category: 'Phones',
+    slug: 'samsung-galaxy-s26-ultra-256',
+    processor: 'Snapdragon 8 Gen 5', storage: '256GB',
+    display: '6.9" AMOLED 120Hz', price: 1300, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 0,
+    image: 'https://ibb.co/YBrnkxkc',
+    description: 'Samsung Galaxy S26 Ultra with 256GB storage. The latest flagship smartphone with cutting-edge camera technology, S Pen support, and premium titanium design.',
+    features: ['Snapdragon 8 Gen 5', '256GB Storage', '6.9" AMOLED 120Hz', 'S Pen', '200MP Camera', 'Titanium Design', 'Android 16'],
+  },
+  {
+    id: 77, name: 'iPhone 17 Pro Max', category: 'Phones',
+    slug: 'iphone-17-pro-max',
+    processor: 'A19 Pro', storage: '256GB',
+    display: '6.9" OLED 120Hz', price: 1750, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 0,
+    image: 'https://ibb.co/JZMdjZ7',
+    description: 'Apple iPhone 17 Pro Max with A19 Pro chip, 256GB storage, 6.9" OLED ProMotion display, and titanium design. The ultimate iPhone experience.',
+    features: ['A19 Pro Chip', '256GB Storage', '6.9" OLED 120Hz ProMotion', 'Titanium Design', '48MP Camera System', 'iOS 20'],
+  },
+
+  // ─── HP PROBOOK & HP 15 (NEW) ───
+  {
+    id: 78, name: 'HP ProBook 450 G10 Core i7 8GB', category: 'Laptops',
+    slug: 'hp-probook-450-g10-i7-8gb',
+    processor: 'Core i7-13th Gen', storage: '512GB SSD',
+    display: '15.6" FHD', price: 870, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.6, reviews: 0,
+    image: 'https://ibb.co/67btByW1',
+    description: 'HP ProBook 450 G10 with Intel Core i7 13th Gen, 8GB RAM, 512GB SSD, and 15.6" display. Professional business laptop with premium build quality.',
+    features: ['Core i7 13th Generation', '8GB RAM', '512GB SSD', '15.6" FHD Display', 'Windows 11 Pro', 'Business Grade'],
+  },
+  {
+    id: 79, name: 'HP ProBook 450 G10 Core i7 16GB', category: 'Laptops',
+    slug: 'hp-probook-450-g10-i7-16gb',
+    processor: 'Core i7-13th Gen', storage: '512GB SSD',
+    display: '15.6" FHD', price: 950, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.7, reviews: 0,
+    image: 'https://ibb.co/twgQn8Jm',
+    description: 'HP ProBook 450 G10 with Intel Core i7 13th Gen, 16GB RAM, 512GB SSD, and 15.6" display. Upgraded memory for demanding multitasking.',
+    features: ['Core i7 13th Generation', '16GB RAM', '512GB SSD', '15.6" FHD Display', 'Windows 11 Pro', 'Business Grade'],
+  },
+  {
+    id: 80, name: 'HP ProBook 440 G10 Core i5 8GB', category: 'Laptops',
+    slug: 'hp-probook-440-g10-i5-8gb',
+    processor: 'Core i5-13th Gen', storage: '512GB SSD',
+    display: '14" FHD', price: 790, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.5, reviews: 0,
+    image: 'https://ibb.co/k2Spx2j7',
+    description: 'HP ProBook 440 G10 with Intel Core i5 13th Gen, 8GB RAM, 512GB SSD, and 14" display. Compact business laptop with great performance.',
+    features: ['Core i5 13th Generation', '8GB RAM', '512GB SSD', '14" FHD Display', 'Windows 11 Pro', 'Compact Design'],
+  },
+  {
+    id: 81, name: 'HP ProBook 440 G11 Core Ultra 7 8GB + Bag', category: 'Laptops',
+    slug: 'hp-probook-440-g11-ultra7-8gb',
+    processor: 'Core Ultra 7 Series 1', storage: '512GB SSD',
+    display: '14" FHD', price: 970, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.7, reviews: 0,
+    image: 'https://ibb.co/1Gyn9385',
+    description: 'HP ProBook 440 G11 with Intel Core Ultra 7 Series 1, 8GB DDR5 RAM, 512GB SSD, 14" display. Includes complimentary laptop bag.',
+    features: ['Core Ultra 7 Series 1', '8GB DDR5 RAM', '512GB SSD', '14" FHD Display', 'Laptop Bag Included', 'Windows 11'],
+  },
+  {
+    id: 82, name: 'HP ProBook 460 G11 Core Ultra 5 8GB', category: 'Laptops',
+    slug: 'hp-probook-460-g11-ultra5-8gb',
+    processor: 'Core Ultra 5 125U Series 1', storage: '512GB SSD',
+    display: '16" FHD', price: 850, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.5, reviews: 0,
+    image: 'https://ibb.co/Hw6924r',
+    description: 'HP ProBook 460 G11 with Intel Core Ultra 5 125U Series 1, 8GB DDR5 RAM, 512GB SSD, and 16" display. Large screen for maximum productivity.',
+    features: ['Core Ultra 5 125U Series 1', '8GB DDR5 RAM', '512GB SSD', '16" FHD Display', 'Windows 11', 'Large Screen'],
+  },
+  {
+    id: 83, name: 'HP ProBook 460 G11 Core Ultra 7 16GB 1TB', category: 'Laptops',
+    slug: 'hp-probook-460-g11-ultra7-16gb',
+    processor: 'Core Ultra 7 14th Gen', storage: '1TB SSD',
+    display: '16" FHD', price: 1050, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.8, reviews: 0,
+    image: 'https://ibb.co/3Y17LRR6',
+    description: 'HP ProBook 460 G11 with Intel Core Ultra 7 14th Gen, 16GB RAM, 1TB SSD, and 16" display. High-performance business laptop with massive storage.',
+    features: ['Core Ultra 7 14th Generation', '16GB RAM', '1TB SSD', '16" FHD Display', 'Windows 11', 'High Performance'],
+  },
+  {
+    id: 84, name: 'HP 15-FD0460NIA Core i3 4GB 256GB', category: 'Laptops',
+    slug: 'hp-15-fd0460nia-i3-4gb',
+    processor: 'Core i3-1215U 12th Gen', storage: '256GB SSD',
+    display: '15.6" HD', price: 450, originalPrice: null,
+    badge: 'BUDGET', inStock: true, rating: 4.1, reviews: 0,
+    image: 'https://ibb.co/CKt4TFWF',
+    description: 'HP 15-FD0460NIA with Intel Core i3-1215U 12th Gen, 4GB RAM, 256GB SSD, and 15.6" display. Budget-friendly for everyday computing.',
+    features: ['Core i3-1215U 12th Generation', '4GB RAM', '256GB SSD', '15.6" HD Display', 'Windows 11', 'Budget-Friendly'],
+  },
+  {
+    id: 85, name: 'HP 15 Core i3 12th Gen 8GB Fingerprint', category: 'Laptops',
+    slug: 'hp-15-i3-12th-8gb-fingerprint',
+    processor: 'Core i3 12th Gen', storage: '512GB SSD',
+    display: '15.6" HD', price: 500, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.3, reviews: 0,
+    image: 'https://ibb.co/bh7jDqt',
+    description: 'HP 15 with Intel Core i3 12th Gen, 8GB RAM, 512GB SSD, 15.6" display, and fingerprint reader. Great value with biometric security.',
+    features: ['Core i3 12th Generation', '8GB RAM', '512GB SSD', '15.6" HD Display', 'Fingerprint Reader', 'Windows 11'],
+  },
+  {
+    id: 86, name: 'HP 15-FD0154WM Core i5 Touchscreen', category: 'Laptops',
+    slug: 'hp-15-fd0154wm-i5-touchscreen',
+    processor: 'Core i5 13th Gen', storage: '512GB SSD',
+    display: '15.6" HD Touchscreen', price: 640, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.5, reviews: 0,
+    image: 'https://ibb.co/7dQRSzsk',
+    description: 'HP 15-FD0154WM with Intel Core i5 13th Gen, 8GB RAM, 512GB SSD, and 15.6" touchscreen display. Touch-enabled productivity.',
+    features: ['Core i5 13th Generation', '8GB RAM', '512GB SSD', '15.6" Touchscreen', 'Windows 11', 'Touch Input'],
+  },
+  {
+    id: 87, name: 'HP 15 Core 5 120U 8GB Touchscreen', category: 'Laptops',
+    slug: 'hp-15-core5-120u-8gb-touchscreen',
+    processor: 'Core 5 120U 14th Gen', storage: '512GB SSD',
+    display: '15.6" HD Touchscreen', price: 670, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.5, reviews: 0,
+    image: 'https://ibb.co/r2fYFHxq',
+    description: 'HP 15 with Intel Core 5 120U 14th Gen, 8GB RAM, 512GB SSD, and 15.6" touchscreen. Modern performance with touch capability.',
+    features: ['Core 5 120U 14th Generation', '8GB RAM', '512GB SSD', '15.6" Touchscreen', 'Windows 11', 'Touch Input'],
+  },
+  {
+    id: 88, name: 'HP 15-FD0215 Core 5 120U 16GB Touchscreen', category: 'Laptops',
+    slug: 'hp-15-fd0215-core5-16gb-touchscreen',
+    processor: 'Core 5 120U 14th Gen', storage: '512GB SSD',
+    display: '15.6" HD Touchscreen', price: 700, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.6, reviews: 0,
+    image: 'https://ibb.co/YBRpy9TZ',
+    description: 'HP 15-FD0215 with Intel Core 5 120U 14th Gen, 16GB RAM, 512GB SSD, and 15.6" touchscreen. Upgraded memory for smooth multitasking with touch.',
+    features: ['Core 5 120U 14th Generation', '16GB RAM', '512GB SSD', '15.6" Touchscreen', 'Windows 11', 'Touch Input', 'Upgraded Memory'],
+  },
 ];
 
 export function getProductBySlug(slug) {
@@ -709,13 +855,16 @@ export function getBrand(product) {
   if (name.includes('proline')) return 'Proline';
   if (name.includes('playstation') || name.includes('xbox')) return 'Sony/Microsoft';
   if (name.includes('sceptre')) return 'Sceptre';
+  if (name.includes('iphone')) return 'Apple';
+  if (name.includes('samsung') || name.includes('galaxy')) return 'Samsung';
+  if (name.includes('interactive flat panel')) return 'Display';
   return 'Other';
 }
 
 export function getUsageType(product) {
   const name = product.name.toLowerCase();
   if (name.includes('gaming') || product.badge === 'GAMING') return 'Gaming';
-  if (name.includes('omnibook') || name.includes('zenbook') || name.includes('spectre') || name.includes('elitebook')) return 'Premium';
+  if (name.includes('omnibook') || name.includes('zenbook') || name.includes('spectre') || name.includes('elitebook') || name.includes('probook')) return 'Premium';
   if (product.price < 200) return 'Budget';
   if (product.price < 500) return 'Value';
   return 'Performance';
@@ -736,6 +885,8 @@ export function getSubcategory(product) {
   if (name.includes('playstation')) return 'PlayStation';
   if (name.includes('xbox')) return 'Xbox';
   if (name.includes('desktop')) return 'Desktop';
+  if (name.includes('probook')) return 'ProBook';
+  if (name.includes('interactive flat panel')) return 'Interactive Panel';
   return null;
 }
 
@@ -750,14 +901,15 @@ export function getAspectRatio(product) {
   }
   if (cat === 'accessories') return '1/1';
   if (cat === 'pcs') return '4/3';
-  // Laptops and everything else
+  if (cat === 'displays') return '16/9';
   return '4/3';
 }
 
 export const categories = [
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 38, desc: 'Professional computing power' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 50, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 16, desc: 'Consoles, desktops & gaming laptops' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
-  { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 8, desc: 'Latest smartphones & deals' },
+  { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 10, desc: 'Latest smartphones & deals' },
   { slug: 'pcs', name: 'PCs', icon: 'Monitor', count: 4, desc: 'Desktops & workstations' },
+  { slug: 'displays', name: 'Displays', icon: 'Monitor', count: 1, desc: 'Interactive panels & screens' },
 ];

@@ -197,6 +197,7 @@ function CategoryGateway() {
     { icon: Smartphone, name: 'Smartphones', href: '/phones' },
     { icon: Laptop, name: 'Laptops', href: '/laptops' },
     { icon: Monitor, name: 'PCs & Desktops', href: '/pcs' },
+    { icon: Tv, name: 'Displays', href: '/displays' },
     { icon: Package, name: 'Accessories', href: '/accessories' },
     { icon: Wrench, name: 'Repairs', href: '/repairs' },
     { icon: Award, name: 'Deals', href: '/laptops?deals=true' },
