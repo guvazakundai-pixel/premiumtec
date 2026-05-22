@@ -118,6 +118,78 @@ export const products = [
     features: ['Core Ultra 9 275HX Series 2 Hyper X', '32GB DDR5 RAM', '1TB SSD', 'NVIDIA GeForce RTX 5060 8GB GDDR7', '16" FHD Display', 'Legion ColdFront Thermal', 'Hyper X AI Engine', 'Windows 11', 'Backlit Keyboard'],
   },
 
+  // ─── PLAYSTATION CONSOLES ───
+  {
+    id: 67, name: 'PlayStation 4 Slim', category: 'Gaming',
+    slug: 'playstation-4-slim',
+    processor: 'Custom AMD Jaguar', storage: '500GB',
+    display: '1080p', price: 300, originalPrice: null,
+    badge: 'CONSOLE', inStock: true, rating: 4.5, reviews: 0,
+    image: '/images/playstation-4-slim.jpg',
+    description: 'PlayStation 4 Slim console. Slimmer, quieter design with 500GB storage. Access to thousands of PS4 games with online multiplayer, streaming, and PlayStation exclusives.',
+    features: ['500GB Storage', '1080p Gaming', 'Slim Design', 'DualShock 4 Controller', 'PS4 Game Library', 'Online Multiplayer'],
+  },
+  {
+    id: 68, name: 'PlayStation 4 Pro', category: 'Gaming',
+    slug: 'playstation-4-pro',
+    processor: 'Custom AMD Jaguar Enhanced', storage: '1TB',
+    display: '4K / HDR', price: 400, originalPrice: null,
+    badge: 'CONSOLE', inStock: true, rating: 4.6, reviews: 0,
+    image: '/images/playstation-4-pro.jpg',
+    description: 'PlayStation 4 Pro console with 1TB storage. Enhanced performance with 4K HDR gaming support, boosted frame rates, and superior graphics. Backward compatible with all PS4 games.',
+    features: ['1TB Storage', '4K HDR Gaming', 'Enhanced Performance', 'DualShock 4 Controller', 'PS4 Game Library', 'Boost Mode'],
+  },
+  {
+    id: 69, name: 'PS4 Gaming Disk Bundle', category: 'Gaming',
+    slug: 'ps4-gaming-disk-bundle',
+    processor: 'N/A', storage: 'N/A',
+    display: 'N/A', price: 50, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.3, reviews: 0,
+    image: '/images/ps4-gaming-disks.jpg',
+    description: 'Bundle of popular PS4 gaming disks. Great value for expanding your PlayStation 4 game library with top titles.',
+    features: ['PS4 Game Disks', 'Bundle Deal', 'Various Genres', 'Great Value'],
+  },
+  {
+    id: 70, name: 'PS5 Gaming Disk Bundle', category: 'Gaming',
+    slug: 'ps5-gaming-disk-bundle',
+    processor: 'N/A', storage: 'N/A',
+    display: 'N/A', price: 80, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.4, reviews: 0,
+    image: '/images/ps5-gaming-disks.jpg',
+    description: 'Bundle of popular PS5 gaming disks. Expand your PlayStation 5 game collection with top titles at a great value.',
+    features: ['PS5 Game Disks', 'Bundle Deal', 'Various Genres', 'Great Value'],
+  },
+  {
+    id: 71, name: 'PlayStation 5 Slim Digital', category: 'Gaming',
+    slug: 'playstation-5-slim-digital',
+    processor: 'Custom AMD Zen 2', storage: '1TB SSD',
+    display: '4K / 120Hz', price: 650, originalPrice: null,
+    badge: 'CONSOLE', inStock: true, rating: 4.8, reviews: 0,
+    image: '/images/playstation-5-slim-digital.jpg',
+    description: 'PlayStation 5 Slim Digital Edition. All-digital next-gen gaming with lightning-fast SSD, haptic feedback, adaptive triggers, and stunning 4K graphics. Slimmer design.',
+    features: ['1TB Custom SSD', '4K / 120Hz Output', 'Digital Only', 'DualSense Controller', 'Slim Design', 'Ray Tracing'],
+  },
+  {
+    id: 72, name: 'PlayStation 5 Slim Disc', category: 'Gaming',
+    slug: 'playstation-5-slim-disc',
+    processor: 'Custom AMD Zen 2', storage: '1TB SSD',
+    display: '4K / 120Hz', price: 750, originalPrice: null,
+    badge: 'CONSOLE', inStock: true, rating: 4.9, reviews: 0,
+    image: '/images/playstation-5-slim-disc.jpg',
+    description: 'PlayStation 5 Slim Disc Edition. Play physical and digital games with lightning-fast SSD, haptic feedback, adaptive triggers, and 4K graphics. Slimmer design with 4K Blu-ray drive.',
+    features: ['1TB Custom SSD', '4K / 120Hz Output', '4K Blu-ray Disc Drive', 'DualSense Controller', 'Slim Design', 'Ray Tracing'],
+  },
+  {
+    id: 73, name: 'PlayStation 5 Phat Disc', category: 'Gaming',
+    slug: 'playstation-5-phat-disc',
+    processor: 'Custom AMD Zen 2', storage: '825GB SSD',
+    display: '4K / 120Hz', price: 650, originalPrice: null,
+    badge: 'CONSOLE', inStock: true, rating: 4.7, reviews: 0,
+    image: '/images/playstation-5-phat-disc.jpg',
+    description: 'Original PlayStation 5 Phat Disc Edition with 825GB SSD. The flagship next-gen console with 4K Blu-ray drive, haptic feedback, adaptive triggers, and stunning 4K graphics.',
+    features: ['825GB Custom SSD', '4K / 120Hz Output', '4K Blu-ray Disc Drive', 'DualSense Controller', 'Original Design', 'Ray Tracing'],
+  },
+
   // ─── VALUE LAPTOPS ───
   {
     id: 9, name: 'HP 820 Elitebook G3', category: 'Laptops',
@@ -491,6 +563,26 @@ export const products = [
     description: 'HP 250 G10 laptop with Intel Core i3-1315U 13th Gen, 8GB RAM, 512GB SSD, and 15.6" HD display. Reliable everyday performance for work and study.',
     features: ['Core i3-1315U 13th Generation', '8GB RAM', '512GB SSD', '15.6" HD Display', 'Windows 11', 'Reliable Performance'],
   },
+  {
+    id: 65, name: 'HP Omnibook Ultra Flip 14-FH0033DX', category: 'Laptops',
+    slug: 'hp-omnibook-ultra-flip-14-fh0033dx',
+    processor: 'Core Ultra 9 258V Series 2', storage: '2TB SSD',
+    display: '14" Touchscreen', price: 1950, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.9, reviews: 0,
+    image: '/images/hp-omnibook-14-fh0033dx.jpg',
+    description: 'HP Omnibook Ultra Flip 14-FH0033DX with Intel Core Ultra 9 258V Series 2, 32GB RAM, 2TB SSD, 14" touchscreen, and fingerprint reader. Premium convertible ultrabook with flagship performance.',
+    features: ['Core Ultra 9 258V Series 2', '32GB RAM', '2TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'Convertible Design', 'HP Pen Support', 'Windows 11'],
+  },
+  {
+    id: 66, name: 'HP Omnibook Ultra Flip 14-FH000', category: 'Laptops',
+    slug: 'hp-omnibook-ultra-flip-14-fh000',
+    processor: 'Core Ultra 7 258V Series 2', storage: '1TB SSD',
+    display: '14" Touchscreen', price: 1600, originalPrice: null,
+    badge: 'FLAGSHIP', inStock: true, rating: 4.8, reviews: 0,
+    image: '/images/hp-omnibook-14-fh000.jpg',
+    description: 'HP Omnibook Ultra Flip 14-FH000 with Intel Core Ultra 7 258V Series 2, 32GB RAM, 1TB SSD, 14" touchscreen, fingerprint reader, and HP Pen included. Premium convertible ultrabook.',
+    features: ['Core Ultra 7 258V Series 2', '32GB RAM', '1TB SSD', '14" Touchscreen', 'Fingerprint Reader', 'HP Pen Included', 'Convertible Design', 'Windows 11'],
+  },
 
   // ─── SMARTPHONES ───
   {
@@ -653,8 +745,8 @@ export function getAspectRatio(product) {
 }
 
 export const categories = [
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 36, desc: 'Professional computing power' },
-  { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 9, desc: 'Consoles, desktops & gaming laptops' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 38, desc: 'Professional computing power' },
+  { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 16, desc: 'Consoles, desktops & gaming laptops' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
   { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 8, desc: 'Latest smartphones & deals' },
   { slug: 'pcs', name: 'PCs', icon: 'Monitor', count: 4, desc: 'Desktops & workstations' },
