@@ -17,17 +17,26 @@ import ProductModal from '@/app/components/ProductModal';
 
 const ease = [0.16, 1, 0.3, 1];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } }
-};
-
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.92 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease } }
 };
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+const fadeUpHero = {
+  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0)', transition: { duration: 0.6, ease: "easeOut" } }
+};
+
 const stagger = {
+  visible: { transition: { staggerChildren: 0.07 } }
+};
+
+const staggerContainer = {
   visible: { transition: { staggerChildren: 0.07 } }
 };
 
@@ -98,97 +107,84 @@ function Particles({ count = 20 }) {
 
 function Hero({ onShop, onRepairs }) {
   return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden">
-      {/* Cinematic gradient background layers */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A1224] via-[#0F1A2E] to-[#0A1224]" />
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-[#2563EB]/[0.08] to-transparent blur-[100px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-gradient-to-bl from-[#38BDF8]/[0.05] to-transparent blur-[100px]" />
-        <div className="absolute top-[40%] left-[30%] w-96 h-96 rounded-full bg-gradient-to-r from-[#2563EB]/[0.04] to-[#38BDF8]/[0.04] blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#0A1224] to-transparent" />
-      </div>
-
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-        backgroundSize: '60px 60px'
+    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden bg-[#0A0A0A]">
+      <div className="hero-glow absolute inset-0 pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
+        backgroundRepeat: 'repeat', backgroundSize: '256px 256px',
       }} />
-
-      <Particles count={24} />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#2563EB]/[0.03] via-transparent to-[#0A1224] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto w-full text-center relative">
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.7, ease }}
+          initial="hidden" animate="visible" variants={fadeUpHero}
           className="mb-6"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/[0.06] text-[11px] font-medium tracking-[0.12em] uppercase text-[#38BDF8]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-            Core Tech Systems — Harare, Zimbabwe
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-[11px] font-medium uppercase tracking-widest text-neutral-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse" />
+            Harare&apos;s Premium Tech Store
           </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 1, ease }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-5"
+          initial="hidden" animate="visible" variants={fadeUpHero}
+          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6 text-white"
         >
-          <span className="text-[#F1F5F9]">Next-Level</span>
-          <br />
-          <span className="gradient-text">Tech Starts Here</span>
+          Next-Level Tech<br />Starts Here.
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.7, ease }}
-          className="text-sm md:text-base text-white/40 max-w-xl mx-auto leading-relaxed mb-10 font-light"
+          initial="hidden" animate="visible" variants={fadeUpHero}
+          className="text-base md:text-lg text-neutral-400 max-w-xl mx-auto leading-relaxed mb-10"
         >
           High-performance laptops, gaming setups, repairs, and premium accessories — curated for those who demand the best.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.3, duration: 0.7, ease }}
+          initial="hidden" animate="visible" variants={fadeUpHero}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <button onClick={onShop} className="btn-premium btn-premium--primary text-xs px-8 py-3.5">
+          <button onClick={onShop} className="btn-primary text-sm px-8 py-3.5">
             Browse Devices
-            <ArrowRight size={14} />
+            <ArrowRight size={16} />
           </button>
-          <button onClick={onRepairs} className="btn-premium btn-premium--secondary text-xs px-8 py-3.5">
+          <button onClick={onRepairs} className="btn-outline text-sm px-8 py-3.5 text-white border-white/20 hover:border-white hover:text-white">
             Book Repairs
-            <Wrench size={14} />
+            <Wrench size={16} />
           </button>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.7, duration: 0.7, ease }}
+          initial="hidden" animate="visible" variants={fadeUpHero}
           className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto"
         >
           {[
-            { icon: Shield, label: 'Official', sub: 'Warranty' },
-            { icon: Truck, label: 'Fast', sub: 'Delivery' },
-            { icon: HeadphonesIcon, label: 'Premium', sub: 'Support' },
-            { icon: CreditCard, label: 'Secure', sub: 'Payments' },
+            { icon: Shield, label: 'Official Warranty', sub: '100% Authentic' },
+            { icon: Truck, label: 'Fast Delivery', sub: 'Same-day in Harare' },
+            { icon: HeadphonesIcon, label: 'Premium Support', sub: 'Expert assistance' },
+            { icon: CreditCard, label: 'Secure Payments', sub: 'EcoCash, Visa & more' },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <div key={i} className="flex items-center justify-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.04] bg-white/[0.015]">
-                <Icon size={15} className="text-[#2563EB]" />
+              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/10">
+                <Icon size={14} className="text-neutral-400 shrink-0" />
                 <div className="text-left">
                   <p className="text-[11px] font-medium text-white/80 leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-white/35 leading-tight">{item.sub}</p>
+                  <p className="text-[10px] text-neutral-500 leading-tight">{item.sub}</p>
                 </div>
               </div>
             );
           })}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <div className="animate-scroll">
+            <ChevronDown size={20} className="text-neutral-500" />
+          </div>
         </motion.div>
       </div>
     </section>
@@ -197,27 +193,24 @@ function Hero({ onShop, onRepairs }) {
 
 function CategoryGateway() {
   const cats = [
-    { icon: Gamepad2, name: 'Gaming Consoles', href: '/gaming', bg: 'from-violet-600/40 to-violet-900/60' },
-    { icon: Smartphone, name: 'Smartphones', href: '/phones', bg: 'from-blue-600/40 to-blue-900/60' },
-    { icon: Laptop, name: 'Laptops', href: '/laptops', bg: 'from-cyan-600/40 to-cyan-900/60' },
-    { icon: Monitor, name: 'PCs', href: '/pcs', bg: 'from-emerald-600/40 to-emerald-900/60' },
-    { icon: Package, name: 'Accessories', href: '/accessories', bg: 'from-amber-600/40 to-amber-900/60' },
-    { icon: Wrench, name: 'Repairs', href: '/repairs', bg: 'from-green-600/40 to-green-900/60' },
-    { icon: Award, name: 'Deals', href: '/laptops?deals=true', bg: 'from-rose-600/40 to-rose-900/60' },
+    { icon: Gamepad2, name: 'Gaming Consoles', href: '/gaming' },
+    { icon: Smartphone, name: 'Smartphones', href: '/phones' },
+    { icon: Laptop, name: 'Laptops', href: '/laptops' },
+    { icon: Monitor, name: 'PCs & Desktops', href: '/pcs' },
+    { icon: Package, name: 'Accessories', href: '/accessories' },
+    { icon: Wrench, name: 'Repairs', href: '/repairs' },
+    { icon: Award, name: 'Deals', href: '/laptops?deals=true' },
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 md:py-28 bg-[#0A1224]">
+    <section className="px-6 py-20 md:py-28 bg-white">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Categories</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9]">Shop by Category</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Categories</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-black">Shop by Category</h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {cats.map((cat, i) => {
             const Icon = cat.icon;
             return (
@@ -225,22 +218,24 @@ function CategoryGateway() {
                 key={cat.name}
                 href={cat.href}
                 initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.07 }}
-                className="group block h-48"
+                variants={fadeUp} transition={{ delay: i * 0.05 }}
+                className="group block"
               >
-                <div className={`h-full rounded-2xl overflow-hidden relative flex flex-col items-center justify-center text-center p-5 bg-gradient-to-br ${cat.bg} transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl`}>
-                  <div className="absolute inset-0 bg-black/30 pointer-events-none" />
-                  <Icon size={36} className="text-white/80 relative z-10 mb-3 group-hover:scale-110 transition-transform duration-500" />
-                  <h3 className="text-lg font-bold text-white relative z-10">{cat.name}</h3>
-                  <span className="text-xs text-white/60 mt-2 relative z-10 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-500">
-                    Browse <ChevronRight size={12} />
-                  </span>
+                <div className="card-gray p-6 flex flex-col items-start gap-3">
+                  <Icon size={28} className="text-black group-hover:scale-110 transition-transform duration-200" />
+                  <div>
+                    <h3 className="text-base font-semibold text-black">{cat.name}</h3>
+                    <span className="text-sm text-[#888888] mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-200">
+                      Browse &rarr;
+                    </span>
+                  </div>
                 </div>
               </motion.a>
             );
           })}
         </div>
       </div>
+      <div className="separator mt-20 md:mt-28" />
     </section>
   );
 }

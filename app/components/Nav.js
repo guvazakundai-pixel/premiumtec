@@ -56,6 +56,11 @@ const navItems = [
   { href: '/contact', label: 'Contact' },
 ];
 
+const staggerItem = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -65,7 +70,7 @@ export default function Nav() {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -80,179 +85,171 @@ export default function Nav() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
   const isActive = (href) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-[#0A1224]/80 backdrop-blur-xl border-b border-white/[0.04] h-14' : 'bg-transparent h-16'
-      }`}
-      style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
-    >
-      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between" ref={dropdownRef}>
-        <Link href="/" className="flex items-center shrink-0">
-          <Image
-            src="/logo.png"
-            alt="Core Tech Systems"
-            width={320}
-            height={152}
-            className="h-10 w-auto object-contain"
-            priority
-            quality={100}
-          />
-        </Link>
+    <>
+      <motion.nav
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${
+          scrolled ? 'nav-scrolled' : 'nav-base'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between" ref={dropdownRef}>
+          <Link href="/" className="flex items-center shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Core Tech Systems"
+              width={320}
+              height={152}
+              className="h-10 w-auto object-contain"
+              priority
+              quality={100}
+            />
+          </Link>
 
-        <div className="hidden md:flex items-center gap-1">
-          {navItems.map((item) => {
-            if (item.dropdown) {
-              const isOpen = openDropdown === item.label;
-              return (
-                <div key={item.label} className="relative"
-                  onMouseEnter={() => setOpenDropdown(item.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                >
-                  <button
-                    onClick={() => setOpenDropdown(isOpen ? null : item.label)}
-                    className={`flex items-center gap-1 px-3 py-2 text-[11px] font-medium tracking-[0.12em] uppercase transition-colors duration-300 rounded-xl ${
-                      isActive(item.href) ? 'text-white' : 'text-white/40 hover:text-white/70'
-                    }`}
+          <div className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => {
+              if (item.dropdown) {
+                const isOpen = openDropdown === item.label;
+                const textColor = scrolled ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white';
+                return (
+                  <div key={item.label} className="relative"
+                    onMouseEnter={() => setOpenDropdown(item.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    {item.label}
-                    <ChevronDown size={10} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute top-full left-0 mt-2 w-56 p-2 rounded-2xl border border-white/[0.06] bg-[#0A1224]/95 backdrop-blur-xl shadow-2xl"
-                      >
-                        {item.dropdown.map((sub) => {
-                          const SubIcon = sub.icon;
-                          return (
-                            <Link
-                              key={sub.label}
-                              href={sub.href}
-                              onClick={() => setOpenDropdown(null)}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs text-white/50 hover:text-white hover:bg-white/[0.04] transition-all duration-200"
-                            >
-                              <SubIcon size={14} className="text-white/30 shrink-0" />
-                              {sub.label}
-                            </Link>
-                          );
-                        })}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                    <button
+                      onClick={() => setOpenDropdown(isOpen ? null : item.label)}
+                      className={`flex items-center gap-1 text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-black' : 'text-white'}`}
+                    >
+                      {item.label}
+                      <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 rounded-xl bg-white shadow-lg border border-[#E5E5E5]"
+                        >
+                          {item.dropdown.map((sub) => {
+                            const SubIcon = sub.icon;
+                            return (
+                              <Link
+                                key={sub.label}
+                                href={sub.href}
+                                onClick={() => setOpenDropdown(null)}
+                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#4B4B4B] hover:text-black hover:bg-[#F5F5F5] transition-all duration-200"
+                              >
+                                <SubIcon size={14} className="text-[#888888] shrink-0" />
+                                {sub.label}
+                              </Link>
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-black' : 'text-white'}`}
+                >
+                  {item.label}
+                </Link>
               );
-            }
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative px-3 py-2 text-[11px] font-medium tracking-[0.12em] uppercase transition-colors duration-300 rounded-xl ${
-                  isActive(item.href) ? 'text-white' : 'text-white/40 hover:text-white/70'
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          <Link href="/cart" className="relative p-2 ml-2 text-white/40 hover:text-white/70 transition-colors">
-            <ShoppingBag size={17} />
-            {totalItems > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#2563EB] text-[9px] font-bold text-white flex items-center justify-center shadow-lg shadow-[#2563EB]/30">
-                {totalItems}
-              </span>
-            )}
-          </Link>
-        </div>
+            })}
+            <Link
+              href="/cart"
+              className="relative bg-black text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-neutral-800 transition-colors flex items-center gap-2"
+            >
+              <ShoppingBag size={15} />
+              Cart
+              {totalItems > 0 && (
+                <span className="w-5 h-5 rounded-full bg-white text-black text-[10px] font-bold flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <Link href="/cart" className="relative p-2 text-white/60 hover:text-white transition-colors">
-            <ShoppingBag size={19} />
-            {totalItems > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#2563EB] text-[9px] font-bold text-white flex items-center justify-center">
-                {totalItems}
-              </span>
-            )}
-          </Link>
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 text-white/60 hover:text-white transition-colors"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <Link href="/cart" className={`relative p-2 transition-colors ${scrolled ? 'text-black' : 'text-white'}`}>
+              <ShoppingBag size={19} />
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-black text-white text-[9px] font-bold flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className={`p-2 transition-colors ${scrolled ? 'text-black' : 'text-white'}`}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
-      </div>
+      </motion.nav>
 
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden mx-4 mt-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center"
           >
-            <div className="p-4 space-y-1 rounded-2xl border border-white/[0.06] bg-[#0A1224]/95 backdrop-blur-xl shadow-2xl max-h-[70vh] overflow-y-auto">
-              {navItems.map((item) => {
-                if (item.dropdown) {
-                  return (
-                    <div key={item.label}>
-                      <Link
-                        href={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        className={`block px-4 py-2.5 rounded-xl text-sm transition-all ${
-                          isActive(item.href)
-                            ? 'text-white bg-[#2563EB]/10 border border-[#2563EB]/15'
-                            : 'text-white/60 hover:text-white hover:bg-white/[0.04]'
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                      <div className="ml-4 mt-1 mb-2 space-y-0.5 border-l border-white/[0.06] pl-3">
-                        {item.dropdown.map((sub) => (
-                          <Link
-                            key={sub.label}
-                            href={sub.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-white/40 hover:text-white hover:bg-white/[0.04] transition-all"
-                          >
-                            <sub.icon size={13} className="text-white/20" />
-                            {sub.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                }
-                return (
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="absolute top-5 right-6 text-white/70 hover:text-white transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+              className="flex flex-col items-center gap-4"
+            >
+              {navItems.map((item) => (
+                <motion.div key={item.label} variants={staggerItem}>
                   <Link
-                    key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`block px-4 py-2.5 rounded-xl text-sm transition-all ${
-                      isActive(item.href)
-                        ? 'text-white bg-[#2563EB]/10 border border-[#2563EB]/15'
-                        : 'text-white/60 hover:text-white hover:bg-white/[0.04]'
-                    }`}
+                    className="text-2xl font-medium text-white/80 hover:text-white transition-colors"
                   >
                     {item.label}
                   </Link>
-                );
-              })}
-            </div>
+                </motion.div>
+              ))}
+              <motion.div variants={staggerItem} className="mt-4">
+                <Link
+                  href="/cart"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-2xl font-medium text-white/80 hover:text-white transition-colors"
+                >
+                  Cart {totalItems > 0 && `(${totalItems})`}
+                </Link>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 }

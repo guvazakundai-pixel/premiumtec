@@ -2,106 +2,97 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-white/[0.04] bg-[#0A1224]">
-      <div className="max-w-7xl mx-auto px-6 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-10">
+    <footer className="bg-[#0A0A0A] border-t border-[#1F1F1F]">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-2">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center mb-4">
               <Image
                 src="/images/coretechsystems-logo.png"
                 alt="Core Tech Systems"
                 width={280}
                 height={133}
-                className="h-14 w-auto object-contain"
+                className="h-10 w-auto object-contain brightness-0 invert"
               />
             </Link>
-            <p className="text-sm text-white/30 font-light leading-relaxed max-w-xs">
+            <p className="text-sm text-neutral-400 leading-relaxed max-w-xs">
               High-performance laptops, gaming setups, repairs, and premium accessories. Your trusted technology partner in Harare.
             </p>
           </div>
 
           {/* Shop */}
           <div>
-            <h4 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">Shop</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-4">Shop</h4>
             <div className="space-y-2.5">
-              <Link href="/laptops" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Laptops</Link>
-              <Link href="/gaming" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Gaming</Link>
-              <Link href="/accessories" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Accessories</Link>
-              <Link href="/cart" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Cart</Link>
+              {['Laptops', 'Gaming', 'Phones', 'PCs', 'Accessories'].map((item) => (
+                <Link key={item} href={`/${item.toLowerCase()}`} className="block text-sm text-neutral-400 hover:text-white transition-colors">
+                  {item}
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">Services</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-4">Services</h4>
             <div className="space-y-2.5">
-              <Link href="/repairs" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Repairs</Link>
-              <Link href="/support" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Support</Link>
-              <Link href="/shipping" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Shipping</Link>
-              <Link href="/returns" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Returns</Link>
+              {[
+                { label: 'Repairs', href: '/repairs' },
+                { label: 'Support', href: '/support' },
+                { label: 'Shipping', href: '/shipping' },
+                { label: 'Returns', href: '/returns' },
+              ].map((item) => (
+                <Link key={item.href} href={item.href} className="block text-sm text-neutral-400 hover:text-white transition-colors">
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">Company</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-4">Company</h4>
             <div className="space-y-2.5">
-              <Link href="/about" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">About</Link>
-              <Link href="/contact" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Contact</Link>
-              <Link href="/privacy" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Privacy</Link>
-              <Link href="/terms" className="block text-sm text-white/30 hover:text-white/60 transition-colors duration-300">Terms</Link>
-            </div>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-4">Contact</h4>
-            <div className="space-y-2.5 text-sm text-white/30">
-              <p>Sirus Mall, 1st Floor</p>
-              <p>Harare, Zimbabwe</p>
-              <p className="pt-1">Mon – Sat: 08:30 – 17:00</p>
-              <p className="pt-1">
-                <a href="tel:+263780579633" className="hover:text-white/60 transition-colors">+263 780 579 633</a>
-              </p>
-              <p>
-                <a href="tel:+263708463628" className="hover:text-white/60 transition-colors">+263 708 463 628</a>
-              </p>
-              <p className="pt-1">
-                <a href="https://wa.me/263780579633" target="_blank" rel="noopener noreferrer" className="text-[#2563EB] hover:text-white transition-colors">
-                  WhatsApp Us
-                </a>
-              </p>
+              {[
+                { label: 'About', href: '/about' },
+                { label: 'Contact', href: '/contact' },
+                { label: 'Privacy', href: '/privacy' },
+                { label: 'Terms', href: '/terms' },
+              ].map((item) => (
+                <Link key={item.href} href={item.href} className="block text-sm text-neutral-400 hover:text-white transition-colors">
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/[0.04] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-            <span className="text-[10px] text-white/20 uppercase tracking-wider">We accept:</span>
-            <span className="text-[10px] px-3 py-1.5 rounded-full border border-white/10 text-white/30 bg-white/[0.02]">EcoCash</span>
-            <span className="text-[10px] px-3 py-1.5 rounded-full border border-white/10 text-white/30 bg-white/[0.02]">Innbucks</span>
-            <span className="text-[10px] px-3 py-1.5 rounded-full border border-white/10 text-white/30 bg-white/[0.02]">Visa</span>
-            <span className="text-[10px] px-3 py-1.5 rounded-full border border-white/10 text-white/30 bg-white/[0.02]">Mastercard</span>
-            <span className="text-[10px] px-3 py-1.5 rounded-full border border-white/10 text-white/30 bg-white/[0.02]">ZIPIT</span>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[#1F1F1F]">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+            <span className="text-xs text-neutral-500 mr-1">We accept:</span>
+            {['EcoCash', 'Innbucks', 'Visa', 'Mastercard', 'ZIPIT'].map((p) => (
+              <span key={p} className="text-xs px-3 py-1 rounded-full bg-[#111] text-neutral-400 border border-[#1F1F1F]">
+                {p}
+              </span>
+            ))}
           </div>
-          <div className="flex items-center gap-4 text-[10px] text-white/20">
-            <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-green-400" /> Authentic</span>
-            <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-green-400" /> Free Delivery*</span>
-            <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-green-400" /> Secure</span>
+          <div className="flex items-center gap-4 text-xs text-neutral-500">
+            <span>Authentic</span>
+            <span>Free Delivery*</span>
+            <span>Secure</span>
           </div>
         </div>
 
-        <div className="border-t border-white/[0.04] pt-6 mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/20">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-6 pt-6 border-t border-[#1F1F1F]">
+          <p className="text-xs text-neutral-500">
             &copy; {new Date().getFullYear()} Core Tech Systems. All rights reserved.
           </p>
-          <p className="text-[10px] text-white/10 tracking-[0.15em] uppercase">
+          <p className="text-xs text-neutral-600">
             Premium Tech &bull; Harare, Zimbabwe
           </p>
         </div>
