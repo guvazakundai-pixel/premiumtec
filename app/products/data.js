@@ -66,6 +66,28 @@ export const products = [
     features: ['24" FHD 1920x1080', '75Hz Refresh Rate', 'Brand New', 'Slim Bezel Design', 'VESA Mount Compatible'],
   },
 
+  // ─── GAMING LAPTOPS ───
+  {
+    id: 56, name: 'Victus by HP Gaming Laptop 15-FA2082', category: 'Gaming',
+    slug: 'victus-hp-15-fa2082',
+    processor: 'Core i5 13th Gen', storage: '512GB SSD',
+    display: '15.6" FHD', price: 850, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.6, reviews: 0,
+    image: '/images/victus-hp-15-fa2082.jpg',
+    description: 'Victus by HP 15-FA2082 gaming laptop with Intel Core i5 13th Gen, 16GB DDR4 RAM, 512GB SSD, and NVIDIA GeForce RTX 3050 6GB graphics. 15.6" FHD display, backlit keyboard, and premium thermal design. Ready for esports and modern gaming.',
+    features: ['Core i5 13th Generation', '16GB DDR4 RAM', '512GB SSD', 'NVIDIA GeForce RTX 3050 6GB', '15.6" FHD Display', 'Backlit Keyboard', 'Windows 11', 'Premium Thermal Design'],
+  },
+  {
+    id: 57, name: 'Victus by HP Gaming Laptop 15-FA2093', category: 'Gaming',
+    slug: 'victus-hp-15-fa2093',
+    processor: 'Core i7 13th Gen', storage: '1TB SSD',
+    display: '15.6" FHD', price: 1450, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.7, reviews: 0,
+    image: '/images/victus-hp-15-fa2093.jpg',
+    description: 'Victus by HP 15-FA2093 gaming laptop with Intel Core i7 13th Gen, 16GB DDR4 RAM, 1TB SSD, and NVIDIA GeForce RTX 3050 6GB graphics. 15.6" FHD display, backlit keyboard, and advanced cooling system. High-performance gaming machine.',
+    features: ['Core i7 13th Generation', '16GB DDR4 RAM', '1TB SSD', 'NVIDIA GeForce RTX 3050 6GB', '15.6" FHD Display', 'Backlit Keyboard', 'Windows 11', 'Advanced Cooling System'],
+  },
+
   // ─── VALUE LAPTOPS ───
   {
     id: 9, name: 'HP 820 Elitebook G3', category: 'Laptops',
@@ -506,7 +528,7 @@ export function getProductsByCategory(category) {
 
 export function getBrand(product) {
   const name = product.name.toLowerCase();
-  if (name.includes('hp ')) return 'HP';
+  if (name.includes('hp ') || name.includes('victus')) return 'HP';
   if (name.includes('dell')) return 'Dell';
   if (name.includes('asus')) return 'ASUS';
   if (name.includes('apple') || name.includes('macbook')) return 'Apple';
@@ -561,7 +583,7 @@ export function getAspectRatio(product) {
 
 export const categories = [
   { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 32, desc: 'Professional computing power' },
-  { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 5, desc: 'Consoles, desktops & monitors' },
+  { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 7, desc: 'Consoles, desktops & gaming laptops' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
   { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 8, desc: 'Latest smartphones & deals' },
   { slug: 'pcs', name: 'PCs', icon: 'Monitor', count: 4, desc: 'Desktops & workstations' },
