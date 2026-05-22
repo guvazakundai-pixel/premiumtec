@@ -68,7 +68,7 @@ export default function ProductModal({ product, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <motion.div
@@ -76,170 +76,153 @@ export default function ProductModal({ product, onClose }) {
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 30, stiffness: 300, ease }}
-        className="relative w-full max-w-lg max-h-[95vh] bg-zinc-900 rounded-t-3xl overflow-hidden flex flex-col"
+        className="relative w-full max-w-lg max-h-[95vh] bg-white rounded-t-3xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Drag handle */}
         <div className="flex items-center justify-between px-5 pt-4 pb-2 shrink-0">
-          <div className="w-10 h-1 rounded-full bg-zinc-600 mx-auto absolute left-1/2 -translate-x-1/2 top-2" />
-          <button onClick={onClose} className="ml-auto p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors z-10">
-            <X size={16} className="text-zinc-400" />
+          <div className="w-10 h-1 rounded-full bg-[#E5E5E5] mx-auto absolute left-1/2 -translate-x-1/2 top-2" />
+          <button onClick={onClose} className="ml-auto p-2 rounded-full bg-[#F5F5F5] hover:bg-[#E5E5E5] transition-colors z-10">
+            <X size={16} className="text-[#888888]" />
           </button>
         </div>
 
-        {/* Scrollable content */}
         <div className="overflow-y-auto px-5 pb-6 space-y-5">
-          {/* Image - object-contain so full product visible */}
-          <div className="relative w-full overflow-hidden rounded-xl bg-zinc-800"
+          <div className="relative w-full overflow-hidden rounded-xl bg-[#F5F5F5]"
             style={{ aspectRatio: aspectRatio }}
           >
             {allImages.length > 0 ? (
               <img src={allImages[activeImage]} alt={product.name}
                 className="w-full h-full object-contain p-4" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-zinc-500">
+              <div className="w-full h-full flex items-center justify-center text-[#888888]">
                 <Monitor size={48} />
               </div>
             )}
             {product.badge && (
-              <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full bg-blue-600 text-white shadow-lg">
+              <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-semibold tracking-wider uppercase rounded-full bg-black text-white shadow-lg">
                 {product.badge}
               </span>
             )}
             {product.originalPrice && (product.originalPrice - product.price) > 10 && (
-              <span className="absolute top-3 right-3 px-2.5 py-1 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full bg-emerald-600 text-white shadow-lg flex items-center gap-1">
+              <span className="absolute top-3 right-3 px-2.5 py-1 text-[9px] font-semibold tracking-wider uppercase rounded-full bg-emerald-600 text-white shadow-lg flex items-center gap-1">
                 <Zap size={10} /> Save ${(product.originalPrice - product.price).toLocaleString()}
               </span>
             )}
           </div>
 
-          {/* Gallery dots */}
           {allImages.length > 1 && (
             <div className="flex gap-2 justify-center -mt-2">
               {allImages.map((_, i) => (
                 <button key={i} onClick={() => setActiveImage(i)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    activeImage === i ? 'bg-blue-500 w-4' : 'bg-zinc-600'
+                    activeImage === i ? 'bg-black w-4' : 'bg-[#E5E5E5]'
                   }`} />
               ))}
             </div>
           )}
 
-          {/* Product name + badges */}
           <div className="space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-medium border border-zinc-700">
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#F3F3F3] text-[#555555] font-medium border border-[#E5E5E5]">
                 {product.category}
               </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-blue-900/50 text-blue-300 font-medium">
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-black text-white font-medium">
                 {brand}
               </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-900/50 text-emerald-300 font-medium">
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#F3F3F3] text-[#555555] font-medium">
                 {usageType}
               </span>
             </div>
-            <h2 className="text-xl font-bold text-white leading-tight">{product.name}</h2>
+            <h2 className="text-xl font-bold text-black leading-tight">{product.name}</h2>
           </div>
 
-          {/* Price + Stock */}
           <div className="flex items-end justify-between">
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-white">${product.price.toLocaleString()}</span>
+              <span className="text-3xl font-bold text-black">${product.price.toLocaleString()}</span>
               {product.originalPrice && (
-                <span className="text-base text-zinc-500 line-through">${product.originalPrice.toLocaleString()}</span>
+                <span className="text-base text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>
               )}
             </div>
-            <span className={`flex items-center gap-1.5 text-xs ${product.inStock ? 'text-emerald-400' : 'text-amber-400'}`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+            <span className={`flex items-center gap-1.5 text-xs ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-amber-500'}`} />
               {product.inStock ? 'In Stock' : 'Low Stock'}
             </span>
           </div>
 
-          {/* Rating */}
           <div className="flex items-center gap-1.5">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={13} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-zinc-600'} />
+              <Star key={i} size={13} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
             ))}
-            <span className="text-xs text-zinc-400 ml-1">{product.rating} ({product.reviews} reviews)</span>
+            <span className="text-xs text-[#888888] ml-1">{product.rating} ({product.reviews} reviews)</span>
           </div>
 
-          {/* Spec chips */}
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
+          <div className="flex gap-2 overflow-x-auto pb-1">
             {[product.processor, product.storage, product.display].filter(s => s && s !== 'N/A').map((spec, i) => (
-              <span key={i} className="whitespace-nowrap text-[10px] px-3 py-1.5 rounded-full bg-zinc-800 text-zinc-300 font-medium border border-zinc-700 shrink-0">
-                {spec}
-              </span>
+              <span key={i} className="spec-pill whitespace-nowrap shrink-0">{spec}</span>
             ))}
           </div>
 
-          {/* Full Specs Grid - flat alternating rows like a table */}
           <div>
-            <h3 className="text-sm font-semibold text-zinc-300 flex items-center gap-2 mb-3">
-              <Cpu size={14} className="text-blue-400" /> Specifications
+            <h3 className="text-sm font-semibold text-black flex items-center gap-2 mb-3">
+              <Cpu size={14} className="text-black" /> Specifications
             </h3>
-            <div className="rounded-xl overflow-hidden border border-zinc-700">
+            <div className="rounded-xl overflow-hidden border border-[#E5E5E5]">
               {specs.map((spec, i) => (
-                <div key={spec.label} className={`flex items-center justify-between px-4 py-3 ${i % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-900'}`}>
-                  <span className="text-xs text-zinc-400">{spec.label}</span>
-                  <span className="text-xs text-zinc-200 font-medium text-right max-w-[60%]">{spec.value}</span>
+                <div key={spec.label} className={`flex items-center justify-between px-4 py-3 ${i % 2 === 0 ? 'bg-[#F9F9F9]' : 'bg-white'}`}>
+                  <span className="text-xs text-[#888888]">{spec.label}</span>
+                  <span className="text-xs text-black font-medium text-right max-w-[60%]">{spec.value}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-zinc-300">About This Device</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">{product.description}</p>
+            <h3 className="text-sm font-semibold text-black">About This Device</h3>
+            <p className="text-xs text-[#888888] leading-relaxed">{product.description}</p>
           </div>
 
-          {/* Performance Tags */}
           {performanceTags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {performanceTags.map((tag, i) => (
-                <span key={i} className="text-[9px] px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300 font-medium border border-zinc-700">
-                  {tag}
-                </span>
+                <span key={i} className="badge-light text-[9px]">{tag}</span>
               ))}
             </div>
           )}
 
-          {/* Action Buttons */}
           <div className="space-y-2.5 pt-1">
             <button onClick={handleAdd}
               disabled={!product.inStock}
-              className="w-full py-3.5 text-xs font-semibold tracking-[0.15em] uppercase rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+              className="btn-primary w-full py-3.5 text-xs font-semibold tracking-wider justify-center disabled:opacity-30 disabled:cursor-not-allowed">
               <ShoppingBag size={15} /> {added ? 'Added to Cart!' : 'Add to Cart'}
             </button>
             <button onClick={handleWhatsApp}
-              className="w-full py-3.5 text-xs font-semibold tracking-[0.15em] uppercase rounded-xl bg-emerald-600 text-white hover:bg-emerald-500 transition-all duration-300 flex items-center justify-center gap-2">
+              className="btn-whatsapp w-full py-3.5 text-xs font-semibold tracking-wider justify-center">
               <MessageCircle size={15} /> Inquire on WhatsApp
             </button>
             <button onClick={onClose}
-              className="w-full py-3 text-xs font-semibold tracking-[0.15em] uppercase rounded-xl border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 transition-all duration-300">
+              className="btn-outline w-full py-3 text-xs font-semibold tracking-wider justify-center">
               Close
             </button>
           </div>
 
-          {/* Related Products */}
           {related.length > 0 && (
-            <div className="space-y-3 pt-2 border-t border-zinc-800">
-              <h3 className="text-sm font-semibold text-zinc-300">You Might Also Like</h3>
-              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
+            <div className="space-y-3 pt-2 border-t border-[#E5E5E5]">
+              <h3 className="text-sm font-semibold text-black">You Might Also Like</h3>
+              <div className="flex gap-3 overflow-x-auto pb-2">
                 {related.map(p => (
                   <button key={p.id} onClick={() => { onClose(); setTimeout(() => window.__openProductModal?.(p), 100); }}
                     className="w-32 flex-shrink-0 group text-left">
-                    <div className="aspect-[4/3] rounded-lg bg-zinc-800 overflow-hidden mb-2">
+                    <div className="aspect-[4/3] rounded-lg bg-[#F5F5F5] overflow-hidden mb-2">
                       {p.image ? (
                         <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-zinc-600">
+                        <div className="w-full h-full flex items-center justify-center text-[#888888]">
                           <Monitor size={20} />
                         </div>
                       )}
                     </div>
-                    <h4 className="text-[11px] text-zinc-300 font-medium leading-snug line-clamp-2">{p.name}</h4>
-                    <span className="text-xs text-white font-semibold">${p.price.toLocaleString()}</span>
+                    <h4 className="text-[11px] text-[#4B4B4B] font-medium leading-snug line-clamp-2">{p.name}</h4>
+                    <span className="text-xs text-black font-semibold">${p.price.toLocaleString()}</span>
                   </button>
                 ))}
               </div>

@@ -68,13 +68,12 @@ export default function CategoryPage({ category, title, description }) {
     'Printers, chargers, keyboards, and repair services.');
 
   return (
-    <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">
+    <main className="min-h-screen bg-white pt-24 pb-20">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#2563EB]/20"
-          style={{ background: 'rgba(37, 99, 235, 0.12)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
         >
           {notify}
         </motion.div>
@@ -82,25 +81,25 @@ export default function CategoryPage({ category, title, description }) {
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center gap-3 mb-2">
-          <Link href="/" className="text-[11px] text-white/30 hover:text-white/60 transition-colors">Home</Link>
-          <span className="text-white/10">/</span>
-          <span className="text-[11px] text-white/60">{pageTitle}</span>
+          <Link href="/" className="text-xs text-[#888888] hover:text-black transition-colors">Home</Link>
+          <span className="text-[#E5E5E5]">/</span>
+          <span className="text-xs text-black">{pageTitle}</span>
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-2">{pageTitle}</h1>
-        <p className="text-sm text-white/30 font-light mb-8 max-w-lg">{pageDesc}</p>
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-black mb-2">{pageTitle}</h1>
+        <p className="text-sm text-[#888888] mb-8 max-w-lg">{pageDesc}</p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <div className="glass-input flex-1 max-w-md">
+          <div className="input-premium flex-1 max-w-md">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#888888]" size={16} />
               <input type="text" placeholder="Search devices..." value={search} onChange={e => setSearch(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 bg-transparent text-white text-sm placeholder:text-white/20 focus:outline-none" />
-              {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60"><X size={14} /></button>}
+                className="w-full pl-11 pr-10 py-3 bg-transparent text-black text-sm placeholder:text-[#AAAAAA] focus:outline-none" />
+              {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-black"><X size={14} /></button>}
             </div>
           </div>
           <button onClick={() => setShowFilters(!showFilters)}
-            className="btn-premium btn-premium--ghost text-[10px] self-start">
+            className="btn-outline text-xs self-start">
             <SlidersHorizontal size={13} /> Filters
           </button>
         </div>
@@ -113,13 +112,13 @@ export default function CategoryPage({ category, title, description }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.06, duration: 0.6, ease }}
             >
-              <div className="product-card h-full flex flex-col group relative">
+              <div className="card-gray h-full flex flex-col group relative">
                 <button onClick={() => toggleWish(product.id)}
-                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#0A1224]/70 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-[#2563EB]/30">
-                  <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-white/40'}`} />
+                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 border border-[#E5E5E5] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-black/20">
+                  <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-[#888888]'}`} />
                 </button>
 
-                <div onClick={() => setSelectedProduct(product)} className="h-48 flex items-center justify-center bg-gradient-to-b from-white/[0.015] to-transparent border-b border-white/[0.03] relative overflow-hidden cursor-pointer">
+                <div onClick={() => setSelectedProduct(product)} className="h-48 flex items-center justify-center bg-[#F3F3F3] relative overflow-hidden cursor-pointer rounded-t-[16px]">
                   <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                     transition={{ duration: 0.7, ease }}
                     className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
@@ -128,44 +127,44 @@ export default function CategoryPage({ category, title, description }) {
                         className="w-full h-full object-contain rounded-xl"
                         style={{ maxWidth: '170px', maxHeight: '150px' }} />
                     ) : (
-                      <div className="w-24 h-32 rounded-xl border border-white/20 flex items-center justify-center text-white/40 text-xs bg-white/[0.02]">
+                      <div className="w-24 h-32 rounded-xl border border-[#E5E5E5] flex items-center justify-center text-[#888888] text-xs bg-white">
                         {product.name.split(' ').slice(0, 2).join(' ')}
                       </div>
                     )}
                   </motion.div>
-                  {product.badge && <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>}
+                  {product.badge && <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>}
                 </div>
 
                 <div className="flex-1 flex flex-col p-5 space-y-2.5">
                   <div>
-                    <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-white/30">{product.category}</span>
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-[#888888]">{product.category}</span>
                     <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                      <h3 className="text-sm font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
+                      <h3 className="text-sm font-medium text-[#4B4B4B] mt-1 leading-snug group-hover:text-black transition-colors duration-300">{product.name}</h3>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-1.5">
                     {getKeySpecs(product).slice(0, 3).map((spec, i) => (
-                      <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-white/40 font-light">{spec}</span>
+                      <span key={i} className="spec-pill">{spec}</span>
                     ))}
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400/80 fill-amber-400/80' : 'text-white/10'} />
+                      <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
                     ))}
-                    <span className="text-[10px] text-white/30 ml-1">{product.rating}</span>
+                    <span className="text-[10px] text-[#888888] ml-1">{product.rating}</span>
                   </div>
 
-                  <div className="flex items-baseline justify-between pt-2.5 border-t border-white/[0.04]">
+                  <div className="flex items-baseline justify-between pt-2.5 border-t border-[#E5E5E5]">
                     <div className="flex items-baseline gap-3">
-                      <span className="text-lg font-semibold text-[#F1F5F9] tracking-tight">${product.price.toLocaleString()}</span>
-                      {product.originalPrice && <span className="text-xs text-white/20 line-through">${product.originalPrice.toLocaleString()}</span>}
-                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-400 font-medium">Save $${getSavings(product)}</span>}
+                      <span className="text-lg font-semibold text-black tracking-tight">${product.price.toLocaleString()}</span>
+                      {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
+                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-500 font-medium">Save ${getSavings(product)}</span>}
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-400' : 'bg-amber-400'}`} />
-                      <span className={`text-[10px] ${product.inStock ? 'text-green-400/70' : 'text-amber-400/70'}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-amber-500'}`} />
+                      <span className={`text-[10px] ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>
                         {product.inStock ? 'In Stock' : 'Low Stock'}
                       </span>
                     </div>
@@ -174,11 +173,11 @@ export default function CategoryPage({ category, title, description }) {
                   <div className="flex gap-2 pt-1">
                     <button onClick={() => handleAdd(product)}
                       disabled={!product.inStock}
-                      className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] hover:shadow-[0_4px_20px_rgba(37,99,235,0.25)] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                      className="btn-primary flex-1 py-2.5 text-xs font-semibold tracking-wider disabled:opacity-30 disabled:cursor-not-allowed justify-center">
                       Add to Cart
                     </button>
                     <button onClick={() => setSelectedProduct(product)}
-                      className="px-4 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500">
+                      className="btn-outline px-4 py-2.5 text-xs font-semibold tracking-wider">
                       View
                     </button>
                   </div>
@@ -190,7 +189,7 @@ export default function CategoryPage({ category, title, description }) {
 
         {products.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-white/40 text-sm">No devices found matching your criteria.</p>
+            <p className="text-[#888888] text-sm">No devices found matching your criteria.</p>
           </div>
         )}
       </div>
