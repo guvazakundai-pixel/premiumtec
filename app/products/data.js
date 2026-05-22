@@ -87,6 +87,16 @@ export const products = [
     description: 'Victus by HP 15-FA2093 gaming laptop with Intel Core i7 13th Gen, 16GB DDR4 RAM, 1TB SSD, and NVIDIA GeForce RTX 3050 6GB graphics. 15.6" FHD display, backlit keyboard, and advanced cooling system. High-performance gaming machine.',
     features: ['Core i7 13th Generation', '16GB DDR4 RAM', '1TB SSD', 'NVIDIA GeForce RTX 3050 6GB', '15.6" FHD Display', 'Backlit Keyboard', 'Windows 11', 'Advanced Cooling System'],
   },
+  {
+    id: 58, name: 'OMEN Gaming Laptop 16-AM0015NIA', category: 'Gaming',
+    slug: 'omen-16-am0015nia',
+    processor: 'Core Ultra 7 255H', storage: '1TB SSD',
+    display: '16" FHD', price: 1550, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.8, reviews: 0,
+    image: '/images/omen-16-am0015nia.jpg',
+    description: 'HP OMEN 16-AM0015NIA gaming laptop with Intel Core Ultra 7 255H Series 2 processor, 16GB DDR5 RAM, 1TB SSD, and NVIDIA GeForce RTX 5060 8GB graphics. 16" FHD display with advanced thermal management. Next-gen gaming performance with cutting-edge AI acceleration.',
+    features: ['Core Ultra 7 255H Series 2', '16GB DDR5 RAM', '1TB SSD', 'NVIDIA GeForce RTX 5060 8GB', '16" FHD Display', 'Advanced Thermal Management', 'AI Acceleration', 'Windows 11', 'Backlit Keyboard'],
+  },
 
   // ─── VALUE LAPTOPS ───
   {
@@ -528,7 +538,7 @@ export function getProductsByCategory(category) {
 
 export function getBrand(product) {
   const name = product.name.toLowerCase();
-  if (name.includes('hp ') || name.includes('victus')) return 'HP';
+  if (name.includes('hp ') || name.includes('victus') || name.includes('omen')) return 'HP';
   if (name.includes('dell')) return 'Dell';
   if (name.includes('asus')) return 'ASUS';
   if (name.includes('apple') || name.includes('macbook')) return 'Apple';
