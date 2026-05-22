@@ -451,6 +451,46 @@ export const products = [
     description: 'ASUS Zenbook UX3405C in Jasper Gray with Core Ultra 9 285H Series 2, 32GB RAM, 1TB SSD, and 14" touchscreen. Premium ultrabook.',
     features: ['Core Ultra 9 285H Series 2', '32GB RAM', '1TB SSD', '14" Touchscreen', 'Jasper Gray', 'Windows 11'],
   },
+  {
+    id: 61, name: 'Dell 15 DC15250', category: 'Laptops',
+    slug: 'dell-15-dc15250-i5',
+    processor: 'Core i5-1334U 13th Gen', storage: '512GB SSD',
+    display: '15.6" Touchscreen', price: 650, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.5, reviews: 0,
+    image: '/images/dell-15-dc15250-i5.jpg',
+    description: 'Dell 15 DC15250 laptop with Intel Core i5-1334U 13th Gen, 8GB RAM, 512GB SSD, and 15.6" touchscreen display. Perfect for productivity with responsive touch input.',
+    features: ['Core i5-1334U 13th Generation', '8GB RAM', '512GB SSD', '15.6" Touchscreen', 'Windows 11', 'Touch Input'],
+  },
+  {
+    id: 62, name: 'Dell 15 DC15250', category: 'Laptops',
+    slug: 'dell-15-dc15250-i7',
+    processor: 'Core i7-1355U 13th Gen', storage: '1TB SSD',
+    display: '15.6" Touchscreen', price: 780, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.6, reviews: 0,
+    image: '/images/dell-15-dc15250-i7.jpg',
+    description: 'Dell 15 DC15250 laptop with Intel Core i7-1355U 13th Gen, 16GB RAM, 1TB SSD, and 15.6" touchscreen display. High-performance machine with ample storage.',
+    features: ['Core i7-1355U 13th Generation', '16GB RAM', '1TB SSD', '15.6" Touchscreen', 'Windows 11', 'Touch Input', 'High Performance'],
+  },
+  {
+    id: 63, name: 'HP 250 G9 Celeron', category: 'Laptops',
+    slug: 'hp-250-g9-celeron',
+    processor: 'Intel Celeron', storage: '256GB SSD',
+    display: '15.6" HD', price: 310, originalPrice: null,
+    badge: 'BUDGET', inStock: true, rating: 4.0, reviews: 0,
+    image: '/images/hp-250-g9-celeron.jpg',
+    description: 'HP 250 G9 laptop with Intel Celeron processor, 4GB RAM, 256GB SSD, and 15.6" HD display. Budget-friendly computing for everyday tasks and web browsing.',
+    features: ['Intel Celeron', '4GB RAM', '256GB SSD', '15.6" HD Display', 'Windows 11', 'Budget-friendly'],
+  },
+  {
+    id: 64, name: 'HP 250 G10', category: 'Laptops',
+    slug: 'hp-250-g10',
+    processor: 'Core i3-1315U 13th Gen', storage: '512GB SSD',
+    display: '15.6" HD', price: 500, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.3, reviews: 0,
+    image: '/images/hp-250-g10.jpg',
+    description: 'HP 250 G10 laptop with Intel Core i3-1315U 13th Gen, 8GB RAM, 512GB SSD, and 15.6" HD display. Reliable everyday performance for work and study.',
+    features: ['Core i3-1315U 13th Generation', '8GB RAM', '512GB SSD', '15.6" HD Display', 'Windows 11', 'Reliable Performance'],
+  },
 
   // ─── SMARTPHONES ───
   {
@@ -613,7 +653,7 @@ export function getAspectRatio(product) {
 }
 
 export const categories = [
-  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 32, desc: 'Professional computing power' },
+  { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 36, desc: 'Professional computing power' },
   { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 9, desc: 'Consoles, desktops & gaming laptops' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
   { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 8, desc: 'Latest smartphones & deals' },
