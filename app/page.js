@@ -1,1198 +1,506 @@
 'use client';
 
-import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Search, X, ArrowRight, ChevronDown, SlidersHorizontal,
-  Shield, Truck, HeadphonesIcon, CreditCard, Star,
-  Heart, Check, ShoppingBag, ChevronRight,
-  Phone, MessageCircle, MapPin, Clock, Package, Smartphone, Monitor, Gamepad2,
-  Wrench, Cpu, HardDrive, MonitorSmartphone, Zap,
-  RefreshCw, Users, Award, Clock3, Gamepad,
-  Tablet, Laptop, Tv, Speaker, Watch, Camera
+  Shield, Cloud, Brain, Code, ArrowRight, ChevronDown, Check, Star, Quote,
+  Mail, MapPin, Phone, MessageCircle, Menu, X, ExternalLink,
+  Server, Lock, Users, BarChart3, RefreshCw, Zap, Layers, Globe,
+  Cpu, Database, Network, Fingerprint, Smartphone, Monitor,
+  ShoppingBag, HardDrive, Wifi, AlertTriangle, TrendingUp, Bot,
+  LineChart, Settings, Palette, BookOpen, Target, Eye,
 } from 'lucide-react';
-import { products as allProducts, getBrand, getSubcategory, getUsageType, getAspectRatio, categories } from '@/app/products/data';
-import { useCart } from '@/app/context/CartContext';
-import ProductModal from '@/app/components/ProductModal';
 
 const ease = [0.16, 1, 0.3, 1];
 
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease } }
-};
-
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 };
 
-const fadeUpHero = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0)', transition: { duration: 0.6, ease: "easeOut" } }
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease } },
 };
 
-const stagger = {
-  visible: { transition: { staggerChildren: 0.07 } }
-};
-
-const staggerContainer = {
-  visible: { transition: { staggerChildren: 0.07 } }
-};
-
-const products = allProducts;
-
-const filterOptions = {
-  Brand: [...new Set(products.map(p => getBrand(p)))],
-  Category: [...new Set(products.map(p => p.category))],
-  Processor: [...new Set(products.filter(p => p.processor !== 'N/A').map(p => p.processor))],
-  Storage: [...new Set(products.filter(p => p.storage !== 'N/A').map(p => p.storage))],
-};
-
-function getKeySpecs(product) {
-  const specs = [];
-  if (product.processor && product.processor !== 'N/A') specs.push(product.processor);
-  if (product.storage && product.storage !== 'N/A') specs.push(product.storage);
-  if (product.display && product.display !== 'N/A') specs.push(product.display);
-  const ramFeature = product.features?.find(f => f.toLowerCase().includes('gb ram') || f.toLowerCase().includes('gb ddr'));
-  if (ramFeature && !specs.some(s => s.toLowerCase().includes('gb ram') || s.toLowerCase().includes('gb ddr'))) specs.push(ramFeature);
-  return specs.slice(0, 4);
-}
-
-function getSavings(product) {
-  if (!product.originalPrice || product.originalPrice <= product.price) return 0;
-  return product.originalPrice - product.price;
-}
-
-function getPriceTier(price) {
-  if (price < 200) return { label: 'Budget', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
-  if (price < 500) return { label: 'Mid-Range', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' };
-  return { label: 'Premium', color: 'bg-violet-500/10 text-violet-400 border-violet-500/20' };
-}
-
-function lcg(seed) {
-  return ((seed * 1664525 + 1013904223) & 0x7fffffff) / 0x80000000;
-}
-
-function Particles({ count = 20 }) {
-  const particles = useMemo(() =>
-    Array.from({ length: count }, (_, i) => {
-      const s = i + 1;
-      return {
-        id: i, x: lcg(s * 3 + 1) * 100, y: lcg(s * 7 + 2) * 100,
-        size: lcg(s * 11 + 3) * 2 + 1.5,
-        duration: lcg(s * 13 + 4) * 14 + 20,
-        delay: lcg(s * 17 + 5) * 12,
-      };
-    }), [count]);
-
+// ─── HERO ───
+function Hero() {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            width: p.size, height: p.size,
-            left: `${p.x}%`, top: `${p.y}%`,
-            background: p.id % 3 === 0 ? 'rgba(37, 99, 235, 0.3)' : p.id % 3 === 1 ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255,255,255,0.15)',
-          }}
-          animate={{ y: [0, -50, 0], opacity: [0.1, 0.35, 0.1] }}
-          transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}
-        />
-      ))}
-    </div>
-  );
-}
+    <section className="hero-gradient relative min-h-screen flex items-center overflow-hidden pt-16">
+      <div className="infra-lines">
+        <svg viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+          <path d="M0 450 Q 360 300, 720 450 T 1440 450" stroke="#0071E3" strokeWidth="0.5" opacity="0.15" />
+          <path d="M0 550 Q 360 700, 720 550 T 1440 550" stroke="#2997FF" strokeWidth="0.5" opacity="0.1" />
+          <path d="M200 0 L 200 900 M 500 0 L 500 900 M 900 0 L 900 900 M 1200 0 L 1200 900" stroke="#0071E3" strokeWidth="0.3" opacity="0.08" strokeDasharray="4 8" />
+          <circle cx="720" cy="450" r="200" stroke="#2997FF" strokeWidth="0.3" opacity="0.1" fill="none" strokeDasharray="2 6" />
+          <circle cx="720" cy="450" r="300" stroke="#0071E3" strokeWidth="0.3" opacity="0.08" fill="none" strokeDasharray="2 8" />
+          <circle cx="350" cy="250" r="30" fill="#2997FF" opacity="0.1" />
+          <circle cx="1100" cy="650" r="20" fill="#0071E3" opacity="0.08" />
+          <circle cx="250" cy="700" r="15" fill="#2997FF" opacity="0.06" />
+        </svg>
+      </div>
+      <div className="hero-orb" style={{ top: '20%', left: '50%', transform: 'translateX(-50%)' }} />
 
-function Hero({ onShop, onRepairs }) {
-  return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden bg-[#0A0A0A]">
-      <div className="hero-glow absolute inset-0 pointer-events-none" />
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
-        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
-        backgroundRepeat: 'repeat', backgroundSize: '256px 256px',
-      }} />
+      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-20 lg:py-32">
+          <motion.div initial="hidden" animate="visible" variants={{
+            hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
+          }}>
+            <motion.div variants={fadeUp}>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0071E3]/5 text-[#0071E3] text-xs font-semibold mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#0071E3] animate-pulse" />
+                Enterprise Technology Partner
+              </span>
+            </motion.div>
+            <motion.h1 variants={fadeUp} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] mb-6 font-sans">
+              Secure, Scale,
+              <span className="block gradient-text mt-1">Innovate.</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} className="text-lg sm:text-xl text-[#6E6E73] leading-relaxed max-w-lg mb-10">
+              Enterprise cybersecurity, cloud infrastructure, AI solutions, and custom software — engineered for African businesses ready to compete globally.
+            </motion.p>
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
+              <Link href="/#services" className="btn-primary text-sm px-8 py-3.5">
+                Explore Services <ArrowRight size={16} />
+              </Link>
+              <Link href="/laptops" className="btn-outline text-sm px-8 py-3.5 border-[#D2D2D7] text-[#1D1D1F]">
+                Visit Shop
+              </Link>
+            </motion.div>
+            <motion.div variants={fadeUp} className="flex items-center gap-6 mt-12 text-sm text-[#86868B]">
+              <span className="flex items-center gap-2"><Check size={14} className="text-[#0071E3]" /> 99.9% Uptime</span>
+              <span className="flex items-center gap-2"><Check size={14} className="text-[#0071E3]" /> SOC 2 Compliant</span>
+              <span className="flex items-center gap-2"><Check size={14} className="text-[#0071E3]" /> 24/7 Support</span>
+            </motion.div>
+          </motion.div>
 
-      <div className="max-w-5xl mx-auto w-full text-center relative">
-        <motion.div
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="mb-6"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-[11px] font-medium uppercase tracking-widest text-neutral-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse" />
-            Harare&apos;s Premium Tech Store
-          </span>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease, delay: 0.3 }}
+            className="hidden lg:flex flex-col items-end gap-4"
+          >
+            <div className="relative w-full max-w-md">
+              <div className="glass rounded-3xl p-6 shadow-xl animate-float">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <Shield size={18} className="text-[#0071E3]" />
+                    <span className="text-sm font-semibold text-[#1D1D1F]">Threat Detection</span>
+                  </div>
+                  <span className="text-xs font-medium text-[#0071E3] bg-[#0071E3]/5 px-3 py-1 rounded-full">Active</span>
+                </div>
+                <div className="h-20 flex items-end gap-2 mb-3">
+                  {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
+                    <motion.div
+                      key={i} initial={{ height: 0 }}
+                      animate={{ height: `${h}%` }}
+                      transition={{ duration: 0.6, ease, delay: 0.5 + i * 0.08 }}
+                      className="flex-1 rounded-lg bg-gradient-to-t from-[#0071E3] to-[#2997FF] opacity-70"
+                    />
+                  ))}
+                </div>
+                <p className="text-xs text-[#86868B]">Real-time threat analysis — 2,847 events monitored</p>
+              </div>
 
-        <motion.h1
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6 text-white"
-        >
-          Next-Level Tech<br />Starts Here.
-        </motion.h1>
-
-        <motion.p
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-base md:text-lg text-neutral-400 max-w-xl mx-auto leading-relaxed mb-10"
-        >
-          High-performance laptops, gaming setups, repairs, and premium accessories — curated for those who demand the best.
-        </motion.p>
-
-        <motion.div
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <button onClick={onShop} className="btn-primary text-sm px-8 py-3.5">
-            Browse Devices
-            <ArrowRight size={16} />
-          </button>
-          <button onClick={onRepairs} className="btn-outline text-sm px-8 py-3.5 text-white border-white/20 hover:border-white hover:text-white">
-            Book Repairs
-            <Wrench size={16} />
-          </button>
-        </motion.div>
-
-        <motion.div
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto"
-        >
-          {[
-            { icon: Shield, label: 'Official Warranty', sub: '100% Authentic' },
-            { icon: Truck, label: 'Fast Delivery', sub: 'Same-day in Harare' },
-            { icon: HeadphonesIcon, label: 'Premium Support', sub: 'Expert assistance' },
-            { icon: CreditCard, label: 'Secure Payments', sub: 'EcoCash, Visa & more' },
-          ].map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/10">
-                <Icon size={14} className="text-neutral-400 shrink-0" />
-                <div className="text-left">
-                  <p className="text-[11px] font-medium text-white/80 leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-neutral-500 leading-tight">{item.sub}</p>
+              <div className="glass rounded-3xl p-5 shadow-xl animate-float-delayed mt-4 ml-12" style={{ animationDelay: '-3s' }}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Cloud size={18} className="text-[#0071E3]" />
+                    <span className="text-sm font-semibold text-[#1D1D1F]">Cloud Infra</span>
+                  </div>
+                  <span className="text-[10px] text-[#86868B]">99.9% uptime</span>
+                </div>
+                <div className="grid grid-cols-4 gap-2 mb-3">
+                  {[85, 92, 78, 96].map((v, i) => (
+                    <div key={i} className="text-center">
+                      <div className="text-lg font-bold text-[#1D1D1F]">{v}%</div>
+                      <div className="text-[10px] text-[#86868B]">Node {i + 1}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            );
-          })}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <div className="animate-scroll">
-            <ChevronDown size={20} className="text-neutral-500" />
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-function CategoryGateway() {
-  const cats = [
-    { icon: Gamepad2, name: 'Gaming Consoles', href: '/gaming' },
-    { icon: Smartphone, name: 'Smartphones', href: '/phones' },
-    { icon: Laptop, name: 'Laptops', href: '/laptops' },
-    { icon: Monitor, name: 'PCs & Desktops', href: '/pcs' },
-    { icon: Tv, name: 'Displays', href: '/displays' },
-    { icon: Package, name: 'Accessories', href: '/accessories' },
-    { icon: Wrench, name: 'Repairs', href: '/repairs' },
-    { icon: Award, name: 'Deals', href: '/laptops?deals=true' },
+// ─── TRUST BAR ───
+function TrustBar() {
+  const logos = [
+    'TechCorp', 'DataFlow', 'CloudSync', 'SecureNet', 'AILabs',
+    'CyberGuard', 'InfraPro', 'StackBlitz', 'TechCorp', 'DataFlow',
+    'CloudSync', 'SecureNet', 'AILabs', 'CyberGuard', 'InfraPro', 'StackBlitz',
   ];
-
   return (
-    <section className="px-6 py-20 md:py-28 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Categories</p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-black">Shop by Category</h2>
-        </motion.div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {cats.map((cat, i) => {
-            const Icon = cat.icon;
-            return (
-              <motion.a
-                key={cat.name}
-                href={cat.href}
-                initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={fadeUp} transition={{ delay: i * 0.05 }}
-                className="group block"
-              >
-                <div className="card-gray p-6 flex flex-col items-start gap-3">
-                  <Icon size={28} className="text-black group-hover:scale-110 transition-transform duration-200" />
-                  <div>
-                    <h3 className="text-base font-semibold text-black">{cat.name}</h3>
-                    <span className="text-sm text-[#888888] mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-200">
-                      Browse &rarr;
-                    </span>
-                  </div>
+    <section className="py-12 border-y border-[#D2D2D7]/30 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#86868B] text-center mb-8">
+          Trusted by leading organizations across Africa
+        </p>
+        <div className="overflow-hidden">
+          <div className="flex gap-12 animate-ticker">
+            {logos.map((name, i) => (
+              <div key={`${name}-${i}`} className="flex items-center gap-3 shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0071E3]/10 to-[#2997FF]/5 flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-[#0071E3]">{name[0]}</span>
                 </div>
-              </motion.a>
-            );
-          })}
-        </div>
-      </div>
-      <div className="separator mt-20 md:mt-28" />
-    </section>
-  );
-}
-
-function LaptopsSection({ setSelectedProduct }) {
-  const { addItem } = useCart();
-  const [notify, setNotify] = useState(null);
-
-  const handleAdd = useCallback((product) => {
-    addItem(product);
-    setNotify(`${product.name} added to cart`);
-    setTimeout(() => setNotify(null), 2000);
-  }, [addItem]);
-
-  const laptops = useMemo(() =>
-    [...products.filter(p => p.category === 'Laptops')].sort((a, b) => a.price - b.price),
-  []);
-
-  const tiers = useMemo(() => [
-    { label: 'Budget', range: 'Under $200', min: 0, max: 199, color: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
-    { label: 'Mid-Range', range: '$200 – $499', min: 200, max: 499, color: 'bg-blue-50 text-blue-600 border-blue-200' },
-    { label: 'Premium', range: '$500+', min: 500, max: Infinity, color: 'bg-violet-50 text-violet-600 border-violet-200' },
-  ].map(t => ({ ...t, items: laptops.filter(p => p.price >= t.min && p.price <= t.max) })).filter(t => t.items.length > 0), [laptops]);
-
-  return (
-    <section id="laptops-section" className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
-      {notify && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
-        >
-          {notify}
-        </motion.div>
-      )}
-
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Laptops</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Laptops</h2>
-          <p className="text-sm text-[#888888] mt-3 max-w-lg">Affordable refurbished laptops for every budget — sorted by price.</p>
-        </motion.div>
-
-        {tiers.map(({ label, range, color, items }) => (
-          <div key={label} className="mb-12 last:mb-0">
-            <div className="flex items-center gap-3 mb-5">
-              <h3 className="text-lg font-semibold text-black">{label}</h3>
-              <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-medium ${color}`}>{range}</span>
-              <span className="text-xs text-[#888888]">({items.length} devices)</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {items.map(product => {
-                const savings = getSavings(product);
-                const specs = getKeySpecs(product);
-                return (
-                  <div key={product.id} className="card-gray h-full flex flex-col group">
-                    <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] overflow-hidden cursor-pointer rounded-t-[16px]"
-                      style={{ aspectRatio: getAspectRatio(product) }}>
-                      {product.image ? (
-                        <img src={product.image} alt={product.name}
-                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
-                      ) : (
-                        <Laptop size={40} className="text-[#888888]" />
-                      )}
-                      {product.badge && (
-                        <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
-                      )}
-                      {savings > 10 && (
-                        <span className="absolute top-3 right-3 text-[9px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-semibold">Save ${savings}</span>
-                      )}
-                    </div>
-                    <div className="flex-1 flex flex-col p-4 gap-2">
-                      <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                        <h4 className="text-sm font-semibold text-[#4B4B4B] leading-snug line-clamp-2 hover:text-black transition-colors">{product.name}</h4>
-                      </div>
-                      <div className="flex flex-wrap gap-1">
-                        {specs.map((spec, i) => (
-                          <span key={i} className="spec-pill">{spec}</span>
-                        ))}
-                      </div>
-                      <div className="mt-auto pt-3 border-t border-[#E5E5E5] flex items-center justify-between">
-                        <div>
-                          <span className="text-lg font-bold text-black">${product.price.toLocaleString()}</span>
-                          {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
-                          {savings > 10 && <span className="text-[10px] text-emerald-600 font-medium ml-2">Save ${savings}</span>}
-                        </div>
-                        <button onClick={() => handleAdd(product)}
-                          disabled={!product.inStock}
-                          className="btn-primary text-[9px] font-semibold tracking-wider px-3 py-2 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-
-        <motion.div variants={fadeUp} className="text-center mt-8">
-          <a href="/laptops" className="text-xs text-[#888888] hover:text-black transition-colors font-semibold tracking-wider uppercase inline-flex items-center gap-2">
-            Browse All Laptops <ArrowRight size={14} />
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function FeaturedDeals({ setSelectedProduct }) {
-  const { addItem } = useCart();
-  const [notify, setNotify] = useState(null);
-
-  const handleAdd = useCallback((product) => {
-    addItem(product);
-    setNotify(`${product.name} added to cart`);
-    setTimeout(() => setNotify(null), 2000);
-  }, [addItem]);
-
-  const deals = useMemo(() =>
-    [...products.filter(p => p.badge && (p.badge === 'DEAL' || p.badge === 'NEW' || p.price < 300))]
-      .sort((a, b) => (a.originalPrice ? (a.originalPrice - a.price) : 0) - (b.originalPrice ? (b.originalPrice - b.price) : 0))
-      .reverse()
-      .slice(0, 6),
-  []);
-
-  return (
-    <section className="px-6 py-24 md:py-28 bg-white">
-      {notify && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
-        >
-          {notify}
-        </motion.div>
-      )}
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Deals</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Featured Deals</h2>
-          <p className="text-sm text-[#888888] mt-3 max-w-lg">Best-value products handpicked for you.</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {deals.map(product => {
-            const savings = getSavings(product);
-            const specs = getKeySpecs(product);
-            return (
-              <div key={product.id}>
-                <div className="card-gray h-full flex flex-col group overflow-hidden">
-                  <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] overflow-hidden cursor-pointer"
-                    style={{ aspectRatio: getAspectRatio(product) }}>
-                    {product.image ? (
-                      <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    ) : (
-                      <Package size={48} className="text-[#888888]" />
-                    )}
-                    {product.badge && (
-                      <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
-                    )}
-                    {savings > 10 && (
-                      <span className="absolute top-3 right-3 px-2 py-1 text-[9px] font-semibold rounded-full bg-emerald-600 text-white">-${savings}</span>
-                    )}
-                  </div>
-                  <div className="p-4 flex flex-col gap-2 flex-1">
-                    <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                      <h3 className="text-sm font-semibold text-[#4B4B4B] leading-snug group-hover:text-black transition-colors">{product.name}</h3>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {specs.slice(0, 2).map((spec, i) => (
-                        <span key={i} className="spec-pill">{spec}</span>
-                      ))}
-                    </div>
-                    <div className="mt-auto pt-3 border-t border-[#E5E5E5] flex items-center justify-between">
-                      <div>
-                        <span className="text-lg font-bold text-black">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
-                      </div>
-                      <button onClick={() => handleAdd(product)}
-                        disabled={!product.inStock}
-                        className="btn-primary text-[9px] font-semibold tracking-wider px-3 py-2 disabled:opacity-30 disabled:cursor-not-allowed">
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <span className="text-sm font-medium text-[#86868B] whitespace-nowrap">{name}</span>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function PhonesSection({ setSelectedProduct }) {
-  const [activeTab, setActiveTab] = useState('All');
+// ─── MISSION ───
+function Mission() {
+  const stats = [
+    { value: '99.9%', label: 'Uptime Guaranteed' },
+    { value: '150+', label: 'Enterprise Clients' },
+    { value: '24/7', label: 'Support Available' },
+    { value: '50+', label: 'Certified Engineers' },
+  ];
+  return (
+    <section className="py-24 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={{
+            hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
+          }}>
+            <motion.p variants={fadeUp} className="section-label">Our Mission</motion.p>
+            <motion.h2 variants={fadeUp} className="section-title mb-6">
+              Engineering the future of African enterprise technology
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-[#6E6E73] text-lg leading-relaxed mb-8">
+              We bridge the gap between global enterprise standards and African business needs. From cybersecurity
+              to cloud infrastructure, AI to custom software, we deliver world-class technology solutions that
+              empower organizations to compete on the global stage.
+            </motion.p>
+            <motion.p variants={fadeUp} className="text-[#6E6E73] text-lg leading-relaxed mb-10">
+              Our team of certified engineers brings decades of combined experience from global technology leaders,
+              now focused on transforming African enterprises.
+            </motion.p>
+            <motion.div variants={fadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <div className="text-2xl sm:text-3xl font-bold text-[#1D1D1F] font-sans">{s.value}</div>
+                  <div className="text-xs text-[#86868B] mt-1">{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease }}
+            className="relative"
+          >
+            <div className="glass rounded-3xl p-8 shadow-xl">
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: Shield, title: 'Security First', desc: 'Every solution built on zero-trust architecture' },
+                  { icon: Zap, title: 'Performance', desc: 'Optimized for speed, reliability, and scale' },
+                  { icon: Users, title: 'Local Expertise', desc: 'Deep understanding of African business context' },
+                  { icon: Globe, title: 'Global Standards', desc: 'SOC 2, ISO 27001, and GDPR compliant' },
+                ].map((f) => {
+                  const Icon = f.icon;
+                  return (
+                    <div key={f.title} className="p-4 rounded-2xl bg-[#F5F5F7]">
+                      <Icon size={20} className="text-[#0071E3] mb-2" />
+                      <h4 className="text-sm font-semibold text-[#1D1D1F] mb-1">{f.title}</h4>
+                      <p className="text-xs text-[#86868B]">{f.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-  const phones = useMemo(() => products.filter(p => p.category === 'Phones'), []);
+// ─── SERVICES ───
+const serviceTabs = [
+  { id: 'cybersecurity', label: 'Cybersecurity', icon: Shield },
+  { id: 'cloud', label: 'Cloud Infrastructure', icon: Cloud },
+  { id: 'ai', label: 'AI & Machine Learning', icon: Brain },
+  { id: 'software', label: 'Software Development', icon: Code },
+];
 
-  const getPhoneBrand = useCallback((product) => {
-    const n = product.name.toLowerCase();
-    if (n.includes('iphone') || n.includes('apple')) return 'Apple';
-    if (n.includes('samsung') || n.includes('galaxy')) return 'Samsung';
-    if (n.includes('pixel') || n.includes('google')) return 'Google';
-    if (n.includes('xiaomi') || n.includes('redmi') || n.includes('poco')) return 'Xiaomi';
-    if (n.includes('nothing')) return 'Nothing';
-    return 'Other';
-  }, []);
+const serviceData = {
+  cybersecurity: {
+    title: 'Enterprise Cybersecurity',
+    desc: 'Protect your organization with military-grade security solutions designed for modern threats.',
+    items: [
+      { title: 'Threat Detection & Response', desc: '24/7 SOC monitoring with real-time threat intelligence', features: ['SIEM integration', 'Incident response', 'Threat hunting'] },
+      { title: 'Network Security', desc: 'Zero-trust architecture and advanced firewall protection', features: ['Zero-trust implementation', 'Firewall management', 'Network segmentation'] },
+      { title: 'Endpoint Protection', desc: 'Comprehensive device security across your organization', features: ['EDR/XDR solutions', 'Mobile device management', 'Patch automation'] },
+      { title: 'Cloud Security', desc: 'Secure your cloud infrastructure across all providers', features: ['CSPM', 'Cloud IAM', 'Compliance monitoring'] },
+      { title: 'Identity & Access', desc: 'Robust identity management and access control systems', features: ['SSO/MFA', 'Privileged access', 'Identity governance'] },
+      { title: 'Compliance & Audit', desc: 'Stay compliant with regulatory requirements and standards', features: ['ISO 27001', 'POPIA compliance', 'Audit readiness'] },
+    ],
+  },
+  cloud: {
+    title: 'Cloud Infrastructure',
+    desc: 'Scalable, resilient cloud solutions engineered for growth and reliability.',
+    items: [
+      { title: 'Cloud Migration', desc: 'Seamless migration of workloads to any cloud provider', features: ['Assessment & planning', 'Phased migration', 'Post-migration optimization'] },
+      { title: 'Infrastructure as Code', desc: 'Automated, repeatable infrastructure deployment', features: ['Terraform/AWS CDK', 'CI/CD pipelines', 'Configuration management'] },
+      { title: 'Kubernetes & Containers', desc: 'Container orchestration at enterprise scale', features: ['K8s cluster management', 'Service mesh', 'Auto-scaling'] },
+      { title: 'DevOps & SRE', desc: 'Reliable operations with modern DevOps practices', features: ['Monitoring & alerting', 'Incident management', 'SLO tracking'] },
+      { title: 'Hybrid & Multi-Cloud', desc: 'Unified management across any cloud environment', features: ['AWS/Azure/GCP', 'Cross-cloud networking', 'Cost optimization'] },
+      { title: 'Disaster Recovery', desc: 'Business continuity with automated failover solutions', features: ['Backup automation', 'DR testing', 'RTO/RPO optimization'] },
+    ],
+  },
+  ai: {
+    title: 'AI & Machine Learning',
+    desc: 'Intelligent automation and data-driven insights to transform your business.',
+    items: [
+      { title: 'Custom ML Models', desc: 'Tailored machine learning models for your use cases', features: ['Model development', 'Training & tuning', 'Deployment & MLOps'] },
+      { title: 'Natural Language Processing', desc: 'Text analysis, chatbots, and language understanding', features: ['Conversational AI', 'Sentiment analysis', 'Document processing'] },
+      { title: 'Computer Vision', desc: 'Visual recognition and analysis solutions', features: ['Object detection', 'Image classification', 'Video analytics'] },
+      { title: 'Predictive Analytics', desc: 'Forecast trends and make data-driven decisions', features: ['Demand forecasting', 'Anomaly detection', 'Risk prediction'] },
+      { title: 'Data Engineering', desc: 'Robust data pipelines and infrastructure', features: ['Data lakes/warehouses', 'ETL pipelines', 'Data governance'] },
+      { title: 'AI Consulting', desc: 'Strategic guidance for AI adoption and integration', features: ['Use case identification', 'ROI analysis', 'Implementation roadmap'] },
+    ],
+  },
+  software: {
+    title: 'Software Development',
+    desc: 'Custom software solutions built with modern architectures and best practices.',
+    items: [
+      { title: 'Web Applications', desc: 'Responsive, high-performance web applications', features: ['React/Next.js', 'API development', 'Progressive web apps'] },
+      { title: 'Mobile Applications', desc: 'Native and cross-platform mobile experiences', features: ['iOS/Android', 'React Native/Flutter', 'App store deployment'] },
+      { title: 'Microservices', desc: 'Scalable, decoupled service architectures', features: ['Service decomposition', 'Event-driven design', 'API gateways'] },
+      { title: 'Enterprise Platforms', desc: 'Large-scale platforms for complex business needs', features: ['ERP/CRM systems', 'Workflow automation', 'Integration platforms'] },
+      { title: 'Legacy Modernization', desc: 'Transform legacy systems into modern solutions', features: ['Code refactoring', 'Platform migration', 'Technical debt reduction'] },
+      { title: 'Quality Engineering', desc: 'Comprehensive testing and quality assurance', features: ['Automated testing', 'Performance testing', 'Security testing'] },
+    ],
+  },
+};
 
-  const tabs = ['All', 'Apple', 'Samsung', 'Google', 'Xiaomi', 'Nothing'];
-
-  const filtered = useMemo(() => {
-    if (activeTab === 'All') return phones;
-    return phones.filter(p => getPhoneBrand(p) === activeTab);
-  }, [activeTab, phones, getPhoneBrand]);
+function Services() {
+  const [activeTab, setActiveTab] = useState('cybersecurity');
+  const current = serviceData[activeTab];
+  const ActiveIcon = serviceTabs.find(t => t.id === activeTab)?.icon;
 
   return (
-    <section className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-10">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Mobiles</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Smartphones</h2>
+    <section id="services" className="py-24 md:py-32 section-accent">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={{
+          hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
+        }}>
+          <motion.p variants={fadeUp} className="section-label text-center">Our Services</motion.p>
+          <motion.h2 variants={fadeUp} className="section-title text-center mb-4">
+            Enterprise-grade technology solutions
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-[#6E6E73] text-center mx-auto max-w-2xl mb-12">
+            From security to software, we deliver end-to-end technology solutions that protect, scale, and transform your business.
+          </motion.p>
         </motion.div>
 
-        <motion.div
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="flex flex-wrap gap-2 mb-10"
-        >
-          {tabs.map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-full text-[10px] font-semibold tracking-wider uppercase transition-all duration-300 ${
-                activeTab === tab
-                  ? 'bg-black text-white'
-                  : 'border border-[#E5E5E5] text-[#888888] hover:text-black hover:border-black'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </motion.div>
+        <div className="flex flex-wrap justify-center gap-2 mb-14">
+          {serviceTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  isActive ? 'tab-active' : 'tab-inactive'
+                }`}
+              >
+                <Icon size={16} />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
-        >
-          {filtered.map(product => (
-            <motion.div key={product.id} variants={fadeUp}>
-              <div className="card-gray h-full flex flex-col group p-5">
-                <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] rounded-xl overflow-hidden cursor-pointer"
-                  style={{ aspectRatio: getAspectRatio(product) }}>
-                  {product.image ? (
-                    <img src={product.image} alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  ) : (
-                    <Smartphone size={48} className="text-[#888888]" />
-                  )}
-                  {product.badge && (
-                    <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
-                  )}
-                </div>
-                <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                  <h3 className="text-sm font-medium text-[#4B4B4B] leading-snug mb-2 hover:text-black transition-colors">{product.name}</h3>
-                </div>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {getKeySpecs(product).map((spec, i) => (
-                    <span key={i} className="spec-pill">{spec}</span>
-                  ))}
-                </div>
-                <div className="flex items-center gap-1.5 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
-                  ))}
-                  <span className="text-[10px] text-[#888888] ml-1">{product.rating}</span>
-                </div>
-                  <div className="mt-auto pt-3 border-t border-[#E5E5E5] flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-semibold text-black">${product.price.toLocaleString()}</span>
-                      {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
-                      {getSavings(product) > 10 && <span className="text-[9px] text-emerald-600 font-medium">Save ${getSavings(product)}</span>}
-                    </div>
-                    <div onClick={() => setSelectedProduct(product)} className="text-[10px] font-semibold tracking-wider uppercase text-black hover:text-[#4B4B4B] transition-colors cursor-pointer">
-                      View
-                    </div>
-                  </div>
-                <button
-                  onClick={() => {
-                    const msg = `Hi Core Tech Systems, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
-                    window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
-                  }}
-                  className="btn-outline w-full mt-3 py-2.5 text-[9px] font-semibold tracking-wider uppercase"
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.3, ease }}
+          >
+            <div className="text-center mb-12">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#1D1D1F] font-sans mb-3">{current.title}</h3>
+              <p className="text-[#6E6E73] max-w-xl mx-auto">{current.desc}</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {current.items.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease, delay: i * 0.05 }}
                 >
-                  Inquire on WhatsApp
-                </button>
+                  <div className="service-card h-full flex flex-col">
+                    <div className="w-10 h-10 rounded-xl bg-[#0071E3]/5 flex items-center justify-center mb-4">
+                      <ActiveIcon size={20} className="text-[#0071E3]" />
+                    </div>
+                    <h4 className="text-base font-semibold text-[#1D1D1F] mb-2">{item.title}</h4>
+                    <p className="text-sm text-[#6E6E73] mb-4 flex-1">{item.desc}</p>
+                    <ul className="space-y-1.5">
+                      {item.features.map((f) => (
+                        <li key={f} className="flex items-center gap-2 text-xs text-[#86868B]">
+                          <Check size={12} className="text-[#0071E3] shrink-0" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <button className="mt-5 text-xs font-semibold text-[#0071E3] flex items-center gap-1 hover:gap-2 transition-all">
+                      Learn more <ArrowRight size={12} />
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+}
+
+// ─── TECH STACK ───
+function TechStack() {
+  const stacks = [
+    { category: 'Cloud & Infra', items: ['AWS', 'Azure', 'GCP', 'Kubernetes', 'Terraform', 'Docker'] },
+    { category: 'Security', items: ['CrowdStrike', 'Palo Alto', 'Cloudflare', 'Splunk', 'Wazuh', 'Okta'] },
+    { category: 'AI & Data', items: ['TensorFlow', 'PyTorch', 'LangChain', 'Spark', 'Kafka', 'Snowflake'] },
+    { category: 'Development', items: ['React', 'Next.js', 'Node.js', 'Go', 'Python', 'Rust'] },
+  ];
+  return (
+    <section className="py-24 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <p className="section-label text-center">Technology Stack</p>
+          <h2 className="section-title text-center mb-4">Built on world-class technology</h2>
+          <p className="text-[#6E6E73] text-center mx-auto max-w-xl mb-14">
+            We partner with industry-leading platforms to deliver enterprise-grade solutions you can trust.
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {stacks.map((stack) => (
+            <motion.div key={stack.category} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={scaleIn} className="card-gray p-6">
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-[#0071E3] mb-4">{stack.category}</h4>
+              <div className="flex flex-wrap gap-2">
+                {stack.items.map((item) => (
+                  <span key={item} className="px-3 py-1.5 rounded-lg bg-white border border-[#D2D2D7] text-xs font-medium text-[#6E6E73]">
+                    {item}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {filtered.length === 0 && (
-          <div className="text-center py-16">
-            <Smartphone size={40} className="text-[#E5E5E5] mx-auto mb-3" />
-            <p className="text-[#888888] text-sm">No phones in this category yet.</p>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function GamingShowcase({ setSelectedProduct }) {
-  const gamingProducts = useMemo(() => products.filter(p => p.category === 'Gaming'), []);
-  const gamingDesktop = useMemo(() => gamingProducts.filter(p => p.name.toLowerCase().includes('desktop')), [gamingProducts]);
-  const consoles = useMemo(() => gamingProducts.filter(p => p.name.toLowerCase().includes('playstation') || p.name.toLowerCase().includes('xbox')), [gamingProducts]);
-  const gear = useMemo(() => gamingProducts.filter(p => !p.name.toLowerCase().includes('desktop') && !p.name.toLowerCase().includes('playstation') && !p.name.toLowerCase().includes('xbox')), [gamingProducts]);
-
-  return (
-    <section className="px-6 py-24 md:py-32 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Gaming</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Gaming Zone</h2>
-          <p className="text-sm text-[#888888] mt-3 max-w-lg">
-            Consoles, desktops, monitors, and gear for every level of play.
-          </p>
-        </motion.div>
-
-        <div className="space-y-12">
-          <div>
-            <h3 className="text-lg font-semibold text-black mb-5">Top Gaming Picks</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {gamingDesktop.slice(0, 2).map((product, i) => (
-                <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                  variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)}
-                    className="card-gray h-full p-6 group cursor-pointer">
-                    <div className="flex items-start gap-5">
-                      <div className="w-36 h-36 rounded-xl bg-[#F3F3F3] flex items-center justify-center overflow-hidden shrink-0">
-                        {product.image ? (
-                          <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        ) : (
-                          <Gamepad2 size={40} className="text-[#888888]" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="badge text-[9px]">{product.badge || 'GAMING'}</span>
-                        <h4 className="text-base font-semibold text-[#4B4B4B] mt-2 group-hover:text-black transition-colors">{product.name}</h4>
-                        <p className="text-xs text-[#888888] mt-2 line-clamp-2">{product.description}</p>
-                        <div className="flex items-baseline gap-2 mt-3">
-                          <span className="text-xl font-bold text-black">${product.price.toLocaleString()}</span>
-                          {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-black mb-5">Best Sellers</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {consoles.map((product, i) => (
-                <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                  variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)} className="card-gray p-5 h-full flex items-start gap-4 group cursor-pointer">
-                    <div className="w-28 h-28 rounded-xl bg-[#F3F3F3] flex items-center justify-center overflow-hidden shrink-0">
-                      {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                      ) : (
-                        <Gamepad size={36} className="text-[#888888]" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="badge text-[9px]">{product.badge || 'CONSOLE'}</span>
-                      <h4 className="text-sm font-semibold text-[#4B4B4B] mt-1 group-hover:text-black transition-colors">{product.name}</h4>
-                      <p className="text-xs text-[#888888] mt-1">{product.display}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="text-lg font-bold text-black">${product.price.toLocaleString()}</span>
-                        <span className={`text-[10px] ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-black mb-5">Gaming Gear</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {gear.slice(0, 2).map((product, i) => (
-                <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                  variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)} className="card-gray p-4 h-full flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 rounded-xl bg-[#F3F3F3] flex items-center justify-center overflow-hidden shrink-0">
-                      {product.image ? (
-                        <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                      ) : (
-                        <Monitor size={24} className="text-[#888888]" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-[#4B4B4B] group-hover:text-black transition-colors">{product.name}</h4>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {getKeySpecs(product).slice(0, 2).map((spec, i) => (
-                          <span key={i} className="spec-pill">{spec}</span>
-                        ))}
-                      </div>
-                      <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-sm font-semibold text-black">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-[10px] text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
         </div>
-
-        <motion.div variants={fadeUp} className="text-center mt-12">
-          <a href="/gaming" className="btn-primary text-xs">
-            Explore All Gaming <ArrowRight size={14} />
-          </a>
-        </motion.div>
       </div>
     </section>
   );
 }
 
-function PCShowcase({ setSelectedProduct }) {
-  const pcs = useMemo(() => products.filter(p => p.category === 'PCs'), []);
-
-  const getPerformanceLabel = useCallback((product) => {
-    const n = product.name.toLowerCase();
-    if (n.includes('gaming') && n.includes('ryzen')) return 'Mid Range';
-    if (n.includes('workstation') || n.includes('core i9')) return 'High Performance';
-    if (n.includes('office') || n.includes('core i5')) return 'Entry Level';
-    if (n.includes('custom')) return 'Custom Build';
-    return 'Standard';
-  }, []);
-
-  const getPerformanceColor = (label) => {
-    switch (label) {
-      case 'Entry Level': return 'bg-emerald-50 text-emerald-600 border-emerald-200';
-      case 'Mid Range': return 'bg-blue-50 text-blue-600 border-blue-200';
-      case 'High Performance': return 'bg-violet-50 text-violet-600 border-violet-200';
-      case 'Custom Build': return 'bg-amber-50 text-amber-600 border-amber-200';
-      default: return 'bg-[#F3F3F3] text-[#888888] border-[#E5E5E5]';
-    }
-  };
-
-  return (
-    <section className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Desktops</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Performance PCs</h2>
-          <p className="text-sm text-[#888888] mt-3 max-w-lg">
-            From office-ready to high-performance workstations — built for what you do.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {pcs.map((product, i) => {
-            const label = getPerformanceLabel(product);
-            const colorClass = getPerformanceColor(label);
-            const isCustom = label === 'Custom Build';
-            return (
-              <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                <div className={`card-gray h-full p-6 ${isCustom ? 'border-amber-200' : ''}`}>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#F3F3F3] flex items-center justify-center">
-                        {isCustom ? <Wrench size={18} className="text-[#888888]" /> : <Monitor size={18} className="text-[#888888]" />}
-                      </div>
-                      <div>
-                        <h3 className="text-base font-semibold text-black">{product.name}</h3>
-                        {product.badge && <span className="badge-light text-[9px]">{product.badge}</span>}
-                      </div>
-                    </div>
-                    <span className={`text-[9px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full border ${colorClass}`}>
-                      {label}
-                    </span>
-                  </div>
-
-                  {!isCustom && getKeySpecs(product).length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {getKeySpecs(product).map((spec, i) => (
-                        <span key={i} className="spec-pill">{spec}</span>
-                      ))}
-                    </div>
-                  )}
-
-                  {isCustom ? (
-                    <div>
-                      <p className="text-sm text-[#888888] leading-relaxed mb-4">
-                        We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.
-                      </p>
-                      <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%27d%20like%20to%20discuss%20a%20custom%20PC%20build."
-                        target="_blank" rel="noopener noreferrer"
-                        className="btn-outline text-[10px] font-semibold tracking-wider px-5 py-3 inline-flex">
-                        Start Your Build <ArrowRight size={14} />
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="pt-4 border-t border-[#E5E5E5] flex items-center justify-between">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-black">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
-                        {getSavings(product) > 10 && <span className="text-[10px] text-emerald-600 font-medium">Save ${getSavings(product)}</span>}
-                      </div>
-                      <button onClick={() => setSelectedProduct(product)}
-                        className="text-[10px] font-semibold tracking-wider uppercase text-black hover:text-[#4B4B4B] transition-colors flex items-center gap-1">
-                        View Details <ChevronRight size={12} />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        <motion.div variants={fadeUp} className="text-center mt-10">
-          <a href="/pcs" className="text-xs text-[#888888] hover:text-black transition-colors font-semibold tracking-wider uppercase inline-flex items-center gap-2">
-            View All PCs <ArrowRight size={14} />
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function WhyChooseUs() {
+// ─── FEATURES ───
+function Features() {
   const features = [
-    { icon: Shield, title: '100% Authentic', desc: 'Every device sourced from official distributors. Full manufacturer warranty included.' },
-    { icon: Truck, title: 'Free Express Delivery', desc: 'Complimentary express shipping on orders over $999. Same-day within Harare.' },
-    { icon: Star, title: 'Best Price Guarantee', desc: 'Found a lower price? We will match it. Premium tech should never mean overpaying.' },
+    { icon: Shield, title: 'Zero-Trust Security', desc: 'Every solution built on zero-trust architecture with end-to-end encryption and continuous verification.' },
+    { icon: BarChart3, title: 'Real-Time Analytics', desc: 'Complete visibility into your infrastructure with customizable dashboards and intelligent alerts.' },
+    { icon: RefreshCw, title: 'Automated Operations', desc: 'CI/CD pipelines, infrastructure as code, and automated incident response reduce manual toil.' },
+    { icon: Users, title: 'Dedicated Support', desc: '24/7 access to certified engineers with average response time under 15 minutes.' },
+    { icon: Layers, title: 'Scalable Architecture', desc: 'Solutions designed to grow with you — from startup to enterprise, without re-platforming.' },
+    { icon: Globe, title: 'Global Compliance', desc: 'SOC 2, ISO 27001, GDPR, and POPIA compliant. Enterprise-grade governance built in.' },
   ];
-
   return (
-    <section className="px-6 py-24 md:py-28 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Why Choose Us</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Why Core Tech Systems</h2>
+    <section className="py-24 md:py-32 section-accent">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <p className="section-label text-center">Why Core Tech Systems</p>
+          <h2 className="section-title text-center mb-14">
+            Enterprise engineering, <span className="gradient-text">African built</span>
+          </h2>
         </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {features.map((f, i) => {
             const Icon = f.icon;
             return (
-              <motion.div key={f.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                <div className="card-gray p-7 h-full text-center md:text-left">
-                  <div className="w-11 h-11 rounded-xl bg-[#F3F3F3] flex items-center justify-center mb-4 mx-auto md:mx-0">
-                    <Icon size={20} className="text-black" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-black mb-2">{f.title}</h3>
-                  <p className="text-sm text-[#888888] leading-relaxed">{f.desc}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ProductShowcase({
-  searchQuery, setSearchQuery, filteredProducts, handleWhatsApp,
-  filterOptions, selectedFilters, toggleFilter, activeFilterCount, clearAllFilters,
-  setSelectedProduct
-}) {
-  const [expandedFilter, setExpandedFilter] = useState('Category');
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [wishlist, setWishlist] = useState(new Set());
-  const { addItem } = useCart();
-  const [notify, setNotify] = useState(null);
-
-  const toggleWishlist = useCallback((id) => {
-    setWishlist(prev => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }, []);
-
-  const handleAdd = useCallback((product) => {
-    addItem(product);
-    setNotify(`${product.name} added to cart`);
-    setTimeout(() => setNotify(null), 2000);
-  }, [addItem]);
-
-  return (
-    <section id="products" className="px-6 py-24 md:py-32 bg-white">
-      {notify && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-black shadow-lg"
-        >
-          {notify}
-        </motion.div>
-      )}
-
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={fadeUp}
-          className="mb-14"
-        >
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Collection</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">All Premium Devices</h2>
-          <p className="text-sm text-[#888888] mt-3 max-w-lg">
-            Carefully selected devices, each chosen for exceptional build quality and performance.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="mb-10"
-        >
-          <div className="input-premium max-w-md">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#888888]" size={16} />
-              <input
-                type="text"
-                placeholder="Search devices, processors, storage..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-3 bg-transparent text-black text-sm placeholder:text-[#AAAAAA] focus:outline-none"
-              />
-              {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#888888] hover:text-black transition-colors">
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-white p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
-            <div className="sticky top-24">
-              <div className="card-gray p-6">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E5E5]">
-                  <div className="flex items-center gap-2">
-                    <SlidersHorizontal size={13} className="text-[#888888]" />
-                    <h3 className="text-[10px] font-semibold tracking-wider uppercase text-[#888888]">Filters</h3>
-                  </div>
-                  {activeFilterCount > 0 && <span className="text-[10px] font-bold text-black">{activeFilterCount}</span>}
-                </div>
-                <div className="space-y-1">
-                  {Object.entries(filterOptions).map(([filterName, values]) => {
-                    const isOpen = expandedFilter === filterName;
-                    const selectedInCategory = selectedFilters[filterName]?.length || 0;
-                    return (
-                      <div key={filterName} className="border-b border-[#E5E5E5] last:border-b-0">
-                        <button onClick={() => setExpandedFilter(isOpen ? null : filterName)}
-                          className="w-full flex items-center justify-between py-3 text-[10px] font-semibold tracking-wider uppercase text-[#888888] hover:text-black transition-colors">
-                          <span>{filterName}</span>
-                          <div className="flex items-center gap-2">
-                            {selectedInCategory > 0 && <span className="text-[10px] font-bold text-black">{selectedInCategory}</span>}
-                            <ChevronDown size={12} className={`text-[#888888] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-                          </div>
-                        </button>
-                        {isOpen && (
-                          <div className="pb-4 space-y-2.5">
-                            {values.map((value) => {
-                              const isChecked = selectedFilters[filterName]?.includes(value) || false;
-                              return (
-                                <label key={value} className="flex items-center gap-3 cursor-pointer group py-0.5">
-                                  <input type="checkbox" checked={isChecked} onChange={() => toggleFilter(filterName, value)}
-                                    className="appearance-none w-4 h-4 rounded-md border border-[#E5E5E5] bg-white checked:bg-black checked:border-black transition-all duration-300" />
-                                  <span className={`text-xs transition-colors ${isChecked ? 'text-black font-medium' : 'text-[#888888] group-hover:text-black'}`}>{value}</span>
-                                </label>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              {mobileFiltersOpen && (
-                <button onClick={() => setMobileFiltersOpen(false)}
-                  className="btn-outline w-full mt-4 py-3 text-[10px] font-semibold tracking-wider uppercase">
-                  Close Filters
-                </button>
-              )}
-            </div>
-          </div>
-
-          {!mobileFiltersOpen && (
-            <button onClick={() => setMobileFiltersOpen(true)}
-              className="lg:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-5 py-3 btn-primary text-[10px] font-semibold tracking-wider uppercase shadow-xl">
-              <SlidersHorizontal size={13} /> Filters{activeFilterCount > 0 && <span>({activeFilterCount})</span>}
-            </button>
-          )}
-
-          <div className="lg:col-span-4">
-            {activeFilterCount > 0 && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                transition={{ duration: 0.3, ease }}
-                className="mb-6 overflow-hidden"
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, ease, delay: i * 0.05 }}
+                className="card-gray p-8"
               >
-                <div className="flex items-center justify-between rounded-xl border border-[#E5E5E5] px-5 py-3 bg-[#F9F9F9]">
-                  <span className="text-xs text-[#888888]">
-                    <span className="text-black font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
-                  </span>
-                  <button onClick={clearAllFilters} className="text-[10px] font-semibold tracking-wider uppercase text-[#888888] hover:text-black transition-colors">
-                    Clear All
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }}
-              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product) => (
-                  <motion.div key={product.id} variants={fadeUp}>
-                    <div className="card-gray h-full flex flex-col group relative">
-                      <button onClick={() => toggleWishlist(product.id)}
-                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 border border-[#E5E5E5] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-black/30">
-                        <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-[#888888]'}`} />
-                      </button>
-
-                      <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F3F3F3] overflow-hidden cursor-pointer rounded-t-[16px]"
-                        style={{ aspectRatio: getAspectRatio(product) }}>
-                        {product.image ? (
-                          <img src={product.image} alt={product.name}
-                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
-                        ) : (
-                          <div className="w-24 h-32 rounded-xl border border-[#E5E5E5] flex items-center justify-center text-[#888888] text-xs bg-white">
-                            {product.name.split(' ').slice(0, 2).join(' ')}
-                          </div>
-                        )}
-                        {product.badge && (
-                          <span className="absolute top-3 left-3 badge text-[9px]">{product.badge}</span>
-                        )}
-                      </div>
-
-                      <div className="flex-1 flex flex-col p-5 space-y-2.5">
-                        <div>
-                          <span className="text-[9px] font-semibold uppercase tracking-wider text-[#888888]">{product.category}</span>
-                          <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                            <h3 className="text-sm font-medium text-[#4B4B4B] mt-1 leading-snug group-hover:text-black transition-colors duration-300">{product.name}</h3>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap gap-1.5">
-                          {getKeySpecs(product).slice(0, 3).map((spec, i) => (
-                            <span key={i} className="spec-pill">{spec}</span>
-                          ))}
-                        </div>
-
-                        <div className="flex items-center gap-1.5">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
-                          ))}
-                          <span className="text-[10px] text-[#888888] ml-1">{product.rating}</span>
-                        </div>
-
-                        <div className="flex items-baseline justify-between pt-2.5 border-t border-[#E5E5E5]">
-                          <div className="flex items-baseline gap-3">
-                            <span className="text-lg font-semibold text-black tracking-tight">${product.price.toLocaleString()}</span>
-                            {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
-                            {getSavings(product) > 10 && <span className="text-[9px] text-emerald-600 font-medium">Save ${getSavings(product)}</span>}
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-amber-500'}`} />
-                            <span className={`text-[10px] ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-2 pt-1">
-                          <button onClick={() => handleAdd(product)}
-                            disabled={!product.inStock}
-                            className="btn-primary flex-1 py-2.5 text-[10px] font-semibold tracking-wider disabled:opacity-30 disabled:cursor-not-allowed justify-center">
-                            Add to Cart
-                          </button>
-                          <button onClick={() => handleWhatsApp(product)}
-                            className="btn-outline px-4 py-2.5 text-[10px] font-semibold tracking-wider">
-                            Inquire
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
-              ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="col-span-full">
-                  <div className="text-center py-20 rounded-2xl border border-[#E5E5E5] bg-[#F9F9F9]">
-                    <p className="text-[#888888] text-sm mb-1">No products match your filters.</p>
-                    <p className="text-[#AAAAAA] text-xs mb-4">Try adjusting your search or filter criteria.</p>
-                    <button onClick={clearAllFilters} className="btn-outline text-[10px]">Clear all filters</button>
-                  </div>
-                </motion.div>
-              )}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              className="mt-10 pt-6 border-t border-[#E5E5E5] text-center"
-            >
-              <p className="text-xs text-[#888888] tracking-wider">
-                Showing <span className="text-black font-medium">{filteredProducts.length}</span> of{' '}
-                <span className="text-black font-medium">{products.length}</span> devices
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function RepairServices() {
-  const services = [
-    { icon: MonitorSmartphone, title: 'Diagnostics', desc: 'Comprehensive hardware and software diagnostics.', time: '30 min', badge: 'Quick' },
-    { icon: Cpu, title: 'Hardware Upgrades', desc: 'RAM, SSD storage, and processor upgrades.', time: '1-2 hrs', badge: 'Popular' },
-    { icon: HardDrive, title: 'Screen Repairs', desc: 'Cracked screen replacement for laptops and phones.', time: '2-4 hrs', badge: null },
-    { icon: Zap, title: 'Virus Removal', desc: 'Malware removal and system optimization.', time: '1 hr', badge: 'Fast' },
-    { icon: RefreshCw, title: 'OS Installation', desc: 'Windows, macOS reinstallation and setup.', time: '1-2 hrs', badge: null },
-    { icon: Wrench, title: 'General Service', desc: 'Battery replacement, keyboard fixes, and more.', time: 'Varies', badge: null },
-  ];
-
-  return (
-    <section id="repairs" className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Services</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Repair & Upgrade Center</h2>
-          <p className="text-sm text-[#888888] mt-3 max-w-lg">
-            Professional repairs, upgrades, and maintenance for all your devices.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.map((svc, i) => {
-            const Icon = svc.icon;
-            return (
-              <motion.div key={svc.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.07 }}>
-                <div className="card-gray p-6 h-full flex flex-col group">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#F3F3F3] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Icon size={18} className="text-black" />
-                    </div>
-                    {svc.badge && (
-                      <span className="badge-light text-[9px]">{svc.badge}</span>
-                    )}
-                  </div>
-                  <h3 className="text-sm font-semibold text-black mb-1.5">{svc.title}</h3>
-                  <p className="text-xs text-[#888888] flex-1">{svc.desc}</p>
-                  <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#E5E5E5]">
-                    <Clock3 size={11} className="text-[#888888]" />
-                    <span className="text-[10px] text-[#888888]">{svc.time}</span>
-                  </div>
-                </div>
+                <Icon size={24} className="text-[#0071E3] mb-4" />
+                <h3 className="text-base font-semibold text-[#1D1D1F] mb-2">{f.title}</h3>
+                <p className="text-sm text-[#6E6E73] leading-relaxed">{f.desc}</p>
               </motion.div>
             );
           })}
         </div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mt-8 text-center">
-          <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%20need%20a%20repair%20or%20upgrade%20service."
-            target="_blank" rel="noopener noreferrer"
-            className="btn-outline text-xs">
-            Book a Repair <ArrowRight size={14} />
-          </a>
-        </motion.div>
       </div>
     </section>
   );
 }
 
-function TrustStats() {
-  const stats = [
-    { icon: Clock3, value: '5+', label: 'Years Experience' },
-    { icon: Users, value: '500+', label: 'Happy Customers' },
-    { icon: Award, value: '100%', label: 'Authentic Products' },
-    { icon: Shield, value: '1yr', label: 'Warranty Included' },
+// ─── CASE STUDIES ───
+function CaseStudies() {
+  const cases = [
+    {
+      client: 'FinServe Africa',
+      tag: 'Cybersecurity',
+      title: 'Zero-trust transformation for a financial services leader',
+      result: '99.9% threat detection rate, 60% reduction in incident response time',
+    },
+    {
+      client: 'RetailChain ZW',
+      tag: 'Cloud Infrastructure',
+      title: 'Multi-cloud migration powering 200+ retail locations',
+      result: '40% infrastructure cost reduction, 99.99% uptime achieved',
+    },
+    {
+      client: 'HealthAI Labs',
+      tag: 'AI & ML',
+      title: 'ML-powered diagnostic system for rural healthcare',
+      result: '85% faster diagnosis, serving 50,000+ patients monthly',
+    },
   ];
-
   return (
-    <section className="px-6 py-20 bg-white">
-      <div className="max-w-5xl mx-auto">
-        <div className="card-gray p-8 md:p-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {stats.map((stat, i) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                  variants={scaleIn} transition={{ delay: i * 0.12 }}
-                  className="text-center">
-                  <Icon size={22} className="text-black mx-auto mb-3" />
-                  <p className="text-2xl md:text-3xl font-bold text-black tracking-tight">{stat.value}</p>
-                  <p className="text-xs text-[#888888] mt-1">{stat.label}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Testimonials() {
-  const reviews = [
-    { name: 'Sarah M.', role: 'Verified Buyer', text: 'Absolutely exceptional service. My MacBook Pro arrived within 24 hours, perfectly packaged. The price was unbeatable for a brand-new device.', rating: 5 },
-    { name: 'James K.', role: 'Verified Buyer', text: 'The attention to detail sets them apart. From the unboxing experience to the post-purchase support — truly a premium experience.', rating: 5 },
-    { name: 'Tatenda R.', role: 'Verified Buyer', text: 'I have bought three devices from Core Tech Systems now. The authenticity guarantee gives me complete peace of mind. Highly recommend.', rating: 5 },
-  ];
-
-  return (
-    <section className="px-6 py-24 md:py-28 bg-[#F9F9F9]">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Testimonials</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">What Our Customers Say</h2>
+    <section className="py-24 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <p className="section-label text-center">Case Studies</p>
+          <h2 className="section-title text-center mb-4">Real results for real businesses</h2>
+          <p className="text-[#6E6E73] text-center mx-auto max-w-xl mb-14">
+            See how we&apos;ve helped organizations transform their technology and achieve measurable outcomes.
+          </p>
         </motion.div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {reviews.map((review, i) => (
-            <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              variants={scaleIn} transition={{ delay: i * 0.1 }}>
-              <div className="card-gray p-7 h-full flex flex-col">
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, s) => (
-                    <Star key={s} size={13} className={s < review.rating ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
-                  ))}
-                </div>
-                <p className="text-sm text-[#888888] leading-relaxed flex-1 mb-5">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-                <div className="pt-4 border-t border-[#E5E5E5]">
-                  <p className="text-sm font-medium text-black">{review.name}</p>
-                  <p className="text-[11px] text-[#888888]">{review.role}</p>
-                </div>
+          {cases.map((c, i) => (
+            <motion.div
+              key={c.client}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, ease, delay: i * 0.08 }}
+              className="service-card h-full flex flex-col"
+            >
+              <span className="text-xs font-semibold text-[#0071E3] mb-3">{c.tag}</span>
+              <span className="text-xs text-[#86868B] mb-2">{c.client}</span>
+              <h3 className="text-base font-semibold text-[#1D1D1F] mb-3 flex-1">{c.title}</h3>
+              <div className="pt-4 border-t border-[#D2D2D7]/50">
+                <p className="text-sm text-[#6E6E73]">{c.result}</p>
               </div>
             </motion.div>
           ))}
@@ -1202,254 +510,345 @@ function Testimonials() {
   );
 }
 
+// ─── TESTIMONIALS ───
+function Testimonials() {
+  const testimonials = [
+    { name: 'Tafadzwa M.', role: 'CTO, FinServe Africa', text: 'Core Tech Systems transformed our security posture. Their team understood our unique challenges as an African financial institution and delivered a solution that exceeds global standards.' },
+    { name: 'Sarah N.', role: 'VP Engineering, RetailChain ZW', text: 'The cloud migration was seamless. Zero downtime, measurable cost savings, and their 24/7 support team is exceptional. Truly a world-class partner.' },
+    { name: 'Dr. Kelvin C.', role: 'Founder, HealthAI Labs', text: 'Their AI team built a diagnostic system that is literally saving lives. The expertise and dedication they brought to our project was remarkable.' },
+    { name: 'Elizabeth T.', role: 'CIO, EduTech Africa', text: 'From assessment to deployment, every phase was executed with precision. Our infrastructure has never been more reliable or secure.' },
+    { name: 'James R.', role: 'Director of IT, GovTech Solutions', text: 'Working with Core Tech Systems was a game-changer. Their compliance expertise ensured we met all regulatory requirements while modernizing our systems.' },
+  ];
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((c) => (c + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
+  const t = testimonials[current];
+  return (
+    <section className="py-24 md:py-32 section-accent">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <p className="section-label">Testimonials</p>
+          <h2 className="section-title mb-14">Trusted by industry leaders</h2>
+        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            <Quote size={32} className="text-[#0071E3]/20 mx-auto mb-6" />
+            <p className="text-xl sm:text-2xl text-[#1D1D1F] leading-relaxed mb-8 font-medium max-w-2xl mx-auto">
+              &ldquo;{t.text}&rdquo;
+            </p>
+            <div className="flex items-center justify-center gap-1 mb-2">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={16} className="text-[#FF9F0A] fill-[#FF9F0A]" />
+              ))}
+            </div>
+            <p className="text-sm font-semibold text-[#1D1D1F]">{t.name}</p>
+            <p className="text-xs text-[#86868B]">{t.role}</p>
+          </motion.div>
+        </AnimatePresence>
+        <div className="flex items-center justify-center gap-2 mt-10">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`carousel-dot ${i === current ? 'active' : ''}`}
+              aria-label={`Testimonial ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── ABOUT ───
+function AboutSection() {
+  const team = [
+    { name: 'Tendai Gumbo', role: 'CEO & Founder', desc: '15+ years in enterprise technology, former Cloud Architect at AWS' },
+    { name: 'Rumbi Chikwanha', role: 'CTO, Cybersecurity', desc: 'Former Security Lead at CrowdStrike, CISSP, CISM certified' },
+    { name: 'Tanaka Moyo', role: 'VP, Cloud Engineering', desc: 'Ex-Google SRE, Kubernetes contributor, led migrations for 50+ enterprises' },
+  ];
+  return (
+    <section id="about" className="py-24 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <p className="section-label text-center">About Us</p>
+          <h2 className="section-title text-center mb-4">Built by engineers, for enterprises</h2>
+          <p className="text-[#6E6E73] text-center mx-auto max-w-2xl mb-16">
+            Core Tech Systems was founded by a team of African technology leaders with experience at the world&apos;s
+            most innovative companies. We returned home to build world-class technology infrastructure for African businesses.
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
+          {team.map((member, i) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, ease, delay: i * 0.08 }}
+              className="card-gray p-8 text-center"
+            >
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0071E3] to-[#2997FF] mx-auto mb-4 flex items-center justify-center">
+                <span className="text-xl font-bold text-white">{member.name[0]}</span>
+              </div>
+              <h4 className="text-sm font-semibold text-[#1D1D1F]">{member.name}</h4>
+              <p className="text-xs text-[#0071E3] font-medium mb-3">{member.role}</p>
+              <p className="text-sm text-[#6E6E73]">{member.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── PRICING ───
+function Pricing() {
+  const plans = [
+    {
+      name: 'Starter', price: 'Custom', desc: 'For growing businesses taking their first steps with enterprise technology',
+      features: ['Security audit & recommendations', 'Basic cloud setup (1 provider)', 'Email support (8am-5pm)', 'Monthly review calls', 'Community access'],
+    },
+    {
+      name: 'Professional', price: 'Custom', desc: 'For established organizations needing comprehensive enterprise solutions',
+      features: ['Full security implementation', 'Multi-cloud architecture', '24/7 priority support', 'Dedicated account manager', 'Monthly strategy sessions', 'Advanced analytics', 'CI/CD pipeline setup'],
+      popular: true,
+    },
+    {
+      name: 'Enterprise', price: 'Custom', desc: 'Tailored solutions for large organizations with complex requirements',
+      features: ['Custom security framework', 'Global infrastructure management', '24/7 white-glove support', 'Dedicated engineering team', 'Quarterly business reviews', 'SLA guarantees', 'Compliance management', 'On-site engineering'],
+    },
+  ];
+  return (
+    <section id="pricing" className="py-24 md:py-32 section-accent">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
+          <p className="section-label text-center">Pricing</p>
+          <h2 className="section-title text-center mb-4">Plans for every scale</h2>
+          <p className="text-[#6E6E73] text-center mx-auto max-w-xl mb-14">
+            Transparent, value-based pricing. Every plan includes a comprehensive assessment and customized quote.
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {plans.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, ease, delay: i * 0.08 }}
+              className={`pricing-card ${plan.popular ? 'pricing-featured' : ''}`}
+            >
+              {plan.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#0071E3] text-white text-[10px] font-semibold uppercase tracking-wider whitespace-nowrap">
+                  Most Popular
+                </span>
+              )}
+              <h3 className="text-lg font-semibold text-[#1D1D1F] mb-1">{plan.name}</h3>
+              <div className="text-3xl font-bold text-[#1D1D1F] font-sans mb-2">{plan.price}</div>
+              <p className="text-xs text-[#86868B] mb-2">Custom quote after assessment</p>
+              <p className="text-sm text-[#6E6E73] mb-6">{plan.desc}</p>
+              <ul className="space-y-3 mb-8">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-[#6E6E73]">
+                    <Check size={14} className="text-[#0071E3] mt-0.5 shrink-0" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contact"
+                className={`block text-center py-3 px-6 rounded-full text-sm font-medium transition-all duration-300 ${
+                  plan.popular
+                    ? 'bg-[#0071E3] text-white hover:shadow-lg hover:shadow-[#0071E3]/20'
+                    : 'border border-[#D2D2D7] text-[#1D1D1F] hover:border-[#0071E3] hover:text-[#0071E3]'
+                }`}
+              >
+                Get a Quote
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── FAQ ───
 function FAQ() {
   const [open, setOpen] = useState(null);
   const faqs = [
-    { q: 'How do I place an order?', a: 'Browse our collection, add items to your cart, and checkout via WhatsApp. Our team confirms availability and arranges payment.' },
-    { q: 'What payment methods do you accept?', a: 'EcoCash, Innbucks, Visa, Mastercard, and ZIPIT. Full payment is required before dispatch.' },
-    { q: 'Do you deliver nationwide?', a: 'Yes. Same-day within Harare (orders before 14:00). Nationwide takes 1-3 business days via courier.' },
-    { q: 'Are your products authentic?', a: 'Absolutely. Every device is sourced from official distributors with full manufacturer warranty.' },
-    { q: 'What repairs do you offer?', a: 'Screen repairs, hardware upgrades, virus removal, OS installation, battery replacement, and more.' },
+    { q: 'What cybersecurity services do you offer?', a: 'We provide end-to-end cybersecurity including threat detection & response, network security, endpoint protection, cloud security, identity management, and compliance auditing. Every solution is tailored to your organization\'s specific risk profile.' },
+    { q: 'How long does a cloud migration typically take?', a: 'Timeline depends on complexity. A standard migration takes 4-8 weeks for assessment and planning, followed by 8-16 weeks for phased execution. We ensure zero downtime throughout the process.' },
+    { q: 'Do you work with startups or only enterprises?', a: 'We work with organizations of all sizes. Our Starter plan is designed for growing businesses, while Professional and Enterprise tiers serve established companies and large organizations.' },
+    { q: 'What makes Core Tech Systems different?', a: 'We combine global enterprise expertise with deep understanding of the African business context. Our team has held senior roles at AWS, CrowdStrike, and Google — now focused on African enterprise transformation.' },
+    { q: 'Do you still sell laptops and consumer tech?', a: 'Yes! Our Shop section features premium laptops, phones, gaming systems, and accessories. We also offer repairs and support for consumer devices.' },
+    { q: 'How do I get started?', a: 'Book a free consultation through our contact form or WhatsApp. We\'ll assess your needs, provide recommendations, and deliver a customized proposal within 48 hours.' },
   ];
-
   return (
-    <section className="px-6 py-24 md:py-28 bg-white">
-      <div className="max-w-3xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">FAQ</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black">Frequently Asked Questions</h2>
-        </motion.div>
-
-        <div className="space-y-2">
-          {faqs.map((faq, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-              className="card-gray overflow-hidden">
-              <button onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-6 py-4 text-left text-sm font-medium text-[#4B4B4B] hover:text-black transition-colors flex items-center justify-between gap-2">
-                {faq.q}
-                <ChevronDown size={14} className={`text-[#888888] shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence>
-                {open === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 pb-4 text-sm text-[#888888] leading-relaxed border-t border-[#E5E5E5] pt-3">
-                      {faq.a}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function NewsletterSection() {
-  const [email, setEmail] = useState('');
-
-  return (
-    <section className="px-6 py-20 md:py-28 bg-[#F9F9F9]">
-      <div className="max-w-4xl mx-auto">
+    <section id="faq" className="py-24 md:py-32 bg-white">
+      <div className="max-w-3xl mx-auto px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
-          <div className="card-gray text-center p-8 md:p-12">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-4">Stay Connected</p>
-            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-black mb-4">Join Our Newsletter</h2>
-            <p className="text-sm text-[#888888] mb-8 max-w-md mx-auto">Get early access to new arrivals, exclusive deals, and tech tips delivered to your inbox.</p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)}
-                className="input-premium flex-1 px-5 py-3.5 text-center sm:text-left" />
-              <button className="btn-primary text-[10px] whitespace-nowrap w-full sm:w-auto justify-center">
-                Subscribe
-              </button>
+          <p className="section-label text-center">FAQ</p>
+          <h2 className="section-title text-center mb-14">Frequently asked questions</h2>
+        </motion.div>
+        {faqs.map((faq, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.04 }}
+            className="accordion-item"
+          >
+            <button onClick={() => setOpen(open === i ? null : i)} className="accordion-trigger">
+              {faq.q}
+              <ChevronDown size={16} className={`text-[#86868B] shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
+            </button>
+            <div className="accordion-content" style={{ maxHeight: open === i ? '200px' : '0' }}>
+              <div className="accordion-panel">{faq.a}</div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
 }
 
-function InfoSection() {
-  const items = [
-    { icon: MapPin, title: 'Visit Us', desc: 'Sirus Mall, 1st Floor\nHarare, Zimbabwe', accent: 'Mon – Sat: 08:30 – 17:00' },
-    { icon: Phone, title: 'Call Us', desc: '+263 780 579 633\n+263 708 463 628', accent: 'Same-day delivery available' },
-    { icon: MessageCircle, title: 'WhatsApp', desc: 'Fastest response via WhatsApp', accent: 'Typically replies in 5 min' },
-  ];
-
+// ─── CONTACT ───
+function Contact() {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   return (
-    <section className="px-6 py-24 md:py-28 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#888888] mb-3">Connect</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black">Get In Touch</h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {items.map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                <div className="card-gray p-6 md:p-7">
-                  <div className="w-9 h-9 rounded-xl bg-[#F3F3F3] flex items-center justify-center">
-                    <Icon size={16} className="text-black" />
+    <section id="contact" className="py-24 md:py-32 section-accent">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={{
+            hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
+          }}>
+            <motion.p variants={fadeUp} className="section-label">Contact Us</motion.p>
+            <motion.h2 variants={fadeUp} className="section-title mb-6">
+              Let&apos;s build something extraordinary
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-[#6E6E73] leading-relaxed mb-10">
+              Tell us about your project. We&apos;ll respond within 24 hours with a comprehensive assessment and proposal.
+            </motion.p>
+            <motion.div variants={fadeUp} className="space-y-5">
+              {[
+                { icon: MapPin, label: 'Sirus Mall, 1st Floor, Harare, Zimbabwe' },
+                { icon: Phone, label: '+263 780 579 633' },
+                { icon: MessageCircle, label: 'WhatsApp — replies in 5 min' },
+                { icon: Mail, label: 'hello@coretechsystems.co.zw' },
+              ].map((c) => {
+                const Icon = c.icon;
+                return (
+                  <div key={c.label} className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-[#0071E3]/5 flex items-center justify-center">
+                      <Icon size={16} className="text-[#0071E3]" />
+                    </div>
+                    <span className="text-sm text-[#6E6E73]">{c.label}</span>
                   </div>
-                  <h3 className="text-sm font-semibold text-black mt-4 mb-1">{item.title}</h3>
-                  <p className="text-sm text-[#888888] whitespace-pre-line leading-relaxed">{item.desc}</p>
-                  <p className="text-sm font-medium text-black mt-4">{item.accent}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+                );
+              })}
+            </motion.div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease }}
+          >
+            <form onSubmit={(e) => { e.preventDefault(); }} className="glass rounded-3xl p-8 shadow-xl space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input type="text" placeholder="Full name" className="input-premium w-full" />
+                <input type="email" placeholder="Email address" className="input-premium w-full" />
+              </div>
+              <input type="text" placeholder="Company name" className="input-premium w-full" />
+              <select className="input-premium w-full text-[#86868B]">
+                <option value="">Select service interest</option>
+                <option>Cybersecurity</option>
+                <option>Cloud Infrastructure</option>
+                <option>AI & Machine Learning</option>
+                <option>Software Development</option>
+                <option>Consumer Tech / Shop</option>
+              </select>
+              <textarea
+                placeholder="Tell us about your project"
+                rows={4}
+                className="input-premium w-full resize-none"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <button type="submit" className="btn-primary w-full justify-center text-sm py-3.5">
+                Send Message <ArrowRight size={16} />
+              </button>
+            </form>
+          </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <motion.div variants={fadeUp} className="card-gray p-8 text-center mt-6">
-          <p className="text-sm text-[#888888]">
-            Free delivery within Harare. Nationwide shipping across Zimbabwe. All prices in USD.
-          </p>
-          <a href="https://wa.me/263780579633" target="_blank" rel="noopener noreferrer"
-            className="btn-outline text-[10px] mt-6 inline-flex">
-            <MessageCircle size={14} /> Chat with Us
-          </a>
+// ─── CTA ───
+function FinalCTA() {
+  return (
+    <section className="py-24 md:py-32 bg-[#1D1D1F] text-white overflow-hidden relative">
+      <div className="hero-orb" style={{ top: '50%', right: '-10%', transform: 'translateY(-50%)', background: 'radial-gradient(circle, rgba(0,113,227,0.15), transparent 60%)' }} />
+      <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={{
+          hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
+        }}>
+          <motion.p variants={fadeUp} className="section-label text-[#2997FF]">Get Started</motion.p>
+          <motion.h2 variants={fadeUp} className="section-title text-white mb-6">
+            Ready to transform your technology?
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-lg text-[#86868B] leading-relaxed mb-10 max-w-xl mx-auto">
+            Book a free 30-minute consultation with our team. No obligation, just expert advice tailored to your needs.
+          </motion.p>
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#0071E3] text-white text-sm font-medium hover:shadow-lg hover:shadow-[#0071E3]/20 transition-all">
+              Schedule a Call <ArrowRight size={16} />
+            </Link>
+            <Link href="/laptops" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[#424245] text-[#A1A1A6] text-sm font-medium hover:border-white hover:text-white transition-all">
+              Browse Shop
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>
   );
 }
 
-export default function CoreTechSystems() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilters, setSelectedFilters] = useState({});
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const mainRef = useRef(null);
-
-  useEffect(() => {
-    window.__openProductModal = setSelectedProduct;
-    return () => { delete window.__openProductModal; };
-  }, []);
-
-  const { scrollYProgress } = useScroll({ target: mainRef, offset: ['start start', 'end start'] });
-  const heroBlur = useTransform(scrollYProgress, [0, 0.2], [0, 3]);
-  const springBlur = useSpring(heroBlur, { stiffness: 80, damping: 25 });
-
-  const filteredProducts = useMemo(() => {
-    return products.filter(product => {
-      const q = searchQuery.toLowerCase();
-      const searchMatch =
-        product.name.toLowerCase().includes(q) ||
-        product.processor.toLowerCase().includes(q) ||
-        product.storage.toLowerCase().includes(q) ||
-        product.category.toLowerCase().includes(q);
-      const filterMatch = Object.entries(selectedFilters).every(([key, values]) => {
-        if (values.length === 0) return true;
-        if (key === 'Brand') return values.some(v => getBrand(product) === v);
-        if (key === 'Category') return values.includes(product.category);
-        if (key === 'Processor') return values.some(v => product.processor.includes(v));
-        if (key === 'Storage') return values.some(v => product.storage.includes(v));
-        return true;
-      });
-      return searchMatch && filterMatch;
-    });
-  }, [searchQuery, selectedFilters]);
-
-  const handleWhatsApp = useCallback((product) => {
-    const message = `Hi Core Tech Systems, I'd like to inquire about:\n\nProduct: ${product.name}\nSpecs: ${product.processor} | ${product.storage} | ${product.display}\nPrice: $${product.price.toLocaleString()}\n\nPlease confirm availability.`;
-    window.open(`https://wa.me/263780579633?text=${encodeURIComponent(message)}`, '_blank');
-  }, []);
-
-  const toggleFilter = useCallback((filterName, value) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [filterName]: prev[filterName]?.includes(value)
-        ? prev[filterName].filter(v => v !== value)
-        : [...(prev[filterName] || []), value]
-    }));
-  }, []);
-
-  const clearAllFilters = useCallback(() => {
-    setSelectedFilters({});
-    setSearchQuery('');
-  }, []);
-
-  const activeFilterCount = Object.values(selectedFilters).reduce((sum, arr) => sum + arr.length, 0);
-
-  const scrollToProducts = useCallback(() => {
-    const el = document.getElementById('products');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
-  const scrollToRepairs = useCallback(() => {
-    const el = document.getElementById('repairs');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
-    return (
+// ─── EXPORT ───
+export default function HomePage() {
+  return (
     <>
-    <div ref={mainRef} className="min-h-screen bg-[#0A1224] relative overflow-x-hidden">
-      <div className="noise-overlay" />
-
-      <div className="relative z-10">
-        <motion.div style={{ filter: `blur(${springBlur}px)` }}>
-          <Hero onShop={scrollToProducts} onRepairs={scrollToRepairs} />
-        </motion.div>
-
-        <CategoryGateway />
-        <FeaturedDeals setSelectedProduct={setSelectedProduct} />
-        <LaptopsSection setSelectedProduct={setSelectedProduct} />
-        <GamingShowcase setSelectedProduct={setSelectedProduct} />
-        <PhonesSection setSelectedProduct={setSelectedProduct} />
-        <PCShowcase setSelectedProduct={setSelectedProduct} />
-
-        <div id="repairs">
-          <RepairServices />
-        </div>
-
-        <WhyChooseUs />
-        <TrustStats />
-
-        <div id="products">
-          <ProductShowcase
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            filteredProducts={filteredProducts}
-            handleWhatsApp={handleWhatsApp}
-            filterOptions={filterOptions}
-            selectedFilters={selectedFilters}
-            toggleFilter={toggleFilter}
-            activeFilterCount={activeFilterCount}
-            clearAllFilters={clearAllFilters}
-            setSelectedProduct={setSelectedProduct}
-          />
-        </div>
-
-        <Testimonials />
-        <FAQ />
-        <NewsletterSection />
-        <InfoSection />
-        </div>
-
-        <button
-          onClick={scrollToProducts}
-          className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-[#2563EB] text-white shadow-[0_4px_24px_rgba(37,99,235,0.35)] flex items-center justify-center hover:bg-[#1D4ED8] transition-all duration-500 active:scale-95"
-          style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
-        >
-          <ShoppingBag size={18} />
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {selectedProduct && (
-          <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
-        )}
-      </AnimatePresence>
+      <Hero />
+      <TrustBar />
+      <Mission />
+      <Services />
+      <TechStack />
+      <Features />
+      <CaseStudies />
+      <Testimonials />
+      <AboutSection />
+      <Pricing />
+      <FAQ />
+      <Contact />
+      <FinalCTA />
     </>
-    );
+  );
 }

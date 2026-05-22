@@ -31,7 +31,7 @@ export default function ProductDetail({ params }) {
   }, [params]);
 
   if (slug && !product) notFound();
-  if (!product) return <div className="min-h-screen bg-white flex items-center justify-center"><div className="text-[#888888]">Loading...</div></div>;
+  if (!product) return <div className="min-h-screen bg-white flex items-center justify-center"><div className="text-[#86868B]">Loading...</div></div>;
 
   const handleAdd = () => {
     addItem(product);
@@ -82,7 +82,7 @@ export default function ProductDetail({ params }) {
     <main className="min-h-screen bg-white pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <Link href={`/${product.category.toLowerCase()}`}
-          className="inline-flex items-center gap-2 text-xs text-[#888888] hover:text-black transition-colors mb-8">
+          className="inline-flex items-center gap-2 text-xs text-[#86868B] hover:text-black transition-colors mb-8">
           <ArrowLeft size={14} /> Back to {product.category}
         </Link>
 
@@ -93,7 +93,7 @@ export default function ProductDetail({ params }) {
                 <img src={allImages[activeImage]} alt={product.name}
                   className="w-full h-full object-cover transition-all duration-700 hover:scale-110 rounded-lg" />
               ) : (
-                <div className="flex flex-col items-center justify-center gap-3 text-[#888888]">
+                <div className="flex flex-col items-center justify-center gap-3 text-[#86868B]">
                   <Monitor size={48} />
                   <span className="text-xs text-center px-4">{product.name}</span>
                 </div>
@@ -108,7 +108,7 @@ export default function ProductDetail({ params }) {
                 {allImages.map((img, i) => (
                   <button key={i} onClick={() => setActiveImage(i)}
                     className={`w-16 h-16 rounded-xl border-2 overflow-hidden transition-all duration-300 ${
-                      activeImage === i ? 'border-black' : 'border-[#E5E5E5] hover:border-[#888888]'
+                      activeImage === i ? 'border-black' : 'border-[#D2D2D7] hover:border-[#86868B]'
                     }`}>
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -120,13 +120,13 @@ export default function ProductDetail({ params }) {
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1, ease }}>
             <div className="flex items-center gap-2 mb-4 flex-wrap">
               {product.badge && <span className="badge text-[9px]">{product.badge}</span>}
-              <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#F3F3F3] border border-[#E5E5E5] text-[#555555] flex items-center gap-1.5">
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] text-[#555555] flex items-center gap-1.5">
                 {categoryIcon({ size: 11 })} {product.category}
               </span>
               <span className="text-[10px] px-2.5 py-1 rounded-full bg-black text-white">
                 {brand}
               </span>
-              <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#F3F3F3] text-[#555555]">
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#F5F5F7] text-[#555555]">
                 {usageType}
               </span>
             </div>
@@ -137,37 +137,37 @@ export default function ProductDetail({ params }) {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={14} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
               ))}
-              <span className="text-xs text-[#888888]">{product.rating} ({product.reviews} reviews)</span>
+              <span className="text-xs text-[#86868B]">{product.rating} ({product.reviews} reviews)</span>
             </div>
 
             <div className="flex items-baseline gap-3 mb-6">
               <span className="text-3xl font-bold text-black">${product.price.toLocaleString()}</span>
               {product.originalPrice && (
-                <span className="text-lg text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>
+                <span className="text-lg text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>
               )}
             </div>
 
-            <p className="text-sm text-[#888888] leading-relaxed mb-8">{product.description}</p>
+            <p className="text-sm text-[#86868B] leading-relaxed mb-8">{product.description}</p>
 
             <div className="card-gray p-5 mb-8">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#888888] mb-4 flex items-center gap-2">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-4 flex items-center gap-2">
                 <Monitor size={12} /> Specifications
               </h3>
               <div className="divide-y divide-[#E5E5E5]">
                 {specs.map(spec => (
                   <div key={spec.label} className="flex items-center gap-3 py-3">
                     {specIcon(spec.label)}
-                    <span className="text-xs text-[#888888] w-24 shrink-0">{spec.label}</span>
+                    <span className="text-xs text-[#86868B] w-24 shrink-0">{spec.label}</span>
                     <span className={`text-xs font-medium ${spec.color || 'text-black'}`}>{spec.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#888888] mb-3">Key Features</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-3">Key Features</h3>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
               {product.features.map((f, i) => (
-                <li key={i} className="flex items-center gap-2 text-xs text-[#888888]">
+                <li key={i} className="flex items-center gap-2 text-xs text-[#86868B]">
                   <Check size={12} className="text-black shrink-0" /> {f}
                 </li>
               ))}
@@ -190,24 +190,24 @@ export default function ProductDetail({ params }) {
           <section>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
               className="mb-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#888888]">Related Products</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#86868B]">Related Products</p>
             </motion.div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map(p => (
                 <div key={p.id} onClick={() => setSelectedProduct(p)} className="group cursor-pointer">
                   <div className="card-gray p-4 h-full flex flex-col">
-                    <div className="h-36 flex items-center justify-center mb-3 bg-[#F3F3F3] rounded-xl overflow-hidden">
+                    <div className="h-36 flex items-center justify-center mb-3 bg-[#F5F5F7] rounded-xl overflow-hidden">
                       {p.image ? (
                         <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
-                        <Monitor size={28} className="text-[#888888]" />
+                        <Monitor size={28} className="text-[#86868B]" />
                       )}
                     </div>
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-[#888888]">{p.category}</span>
-                    <h4 className="text-xs font-medium text-[#4B4B4B] mt-1 leading-snug group-hover:text-black transition-colors">{p.name}</h4>
-                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#E5E5E5]">
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-[#86868B]">{p.category}</span>
+                    <h4 className="text-xs font-medium text-[#6E6E73] mt-1 leading-snug group-hover:text-black transition-colors">{p.name}</h4>
+                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#D2D2D7]">
                       <span className="text-sm font-semibold text-black">${p.price.toLocaleString()}</span>
-                      <ChevronRight size={12} className="text-[#888888] group-hover:text-black transition-colors" />
+                      <ChevronRight size={12} className="text-[#86868B] group-hover:text-black transition-colors" />
                     </div>
                   </div>
                 </div>

@@ -5,53 +5,32 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, ChevronDown, Monitor, Smartphone, Gamepad2, Package, Wrench, Laptop, Gamepad, Cpu, HardDrive } from 'lucide-react';
+import { Menu, X, ShoppingBag, ChevronDown, Monitor, Smartphone, Gamepad2, Package, Wrench, Laptop, Gamepad, Cpu, HardDrive, Shield, Cloud, Brain, Code } from 'lucide-react';
 import { useCart } from '@/app/context/CartContext';
 
 const navItems = [
   { href: '/', label: 'Home' },
   {
-    label: 'Laptops', href: '/laptops',
+    label: 'Services', href: '/#services',
     dropdown: [
-      { label: 'All Laptops', href: '/laptops', icon: Laptop },
-      { label: 'HP Laptops', href: '/laptops', icon: Monitor },
-      { label: 'Dell Laptops', href: '/laptops', icon: Monitor },
-      { label: 'ASUS Laptops', href: '/laptops', icon: Monitor },
-      { label: 'Apple MacBook', href: '/laptops', icon: Monitor },
+      { label: 'Cybersecurity', href: '/#services', icon: Shield },
+      { label: 'Cloud Infrastructure', href: '/#services', icon: Cloud },
+      { label: 'AI & Machine Learning', href: '/#services', icon: Brain },
+      { label: 'Software Development', href: '/#services', icon: Code },
     ],
   },
   {
-    label: 'Phones', href: '/phones',
+    label: 'Shop', href: '/laptops',
     dropdown: [
-      { label: 'All Phones', href: '/phones', icon: Smartphone },
-      { label: 'iPhone', href: '/phones', icon: Smartphone },
-      { label: 'Samsung', href: '/phones', icon: Smartphone },
-      { label: 'Google Pixel', href: '/phones', icon: Smartphone },
-      { label: 'Xiaomi', href: '/phones', icon: Smartphone },
-      { label: 'Nothing', href: '/phones', icon: Smartphone },
-    ],
-  },
-  {
-    label: 'Gaming', href: '/gaming',
-    dropdown: [
-      { label: 'All Gaming', href: '/gaming', icon: Gamepad2 },
-      { label: 'Gaming Desktops', href: '/gaming', icon: Cpu },
-      { label: 'Consoles', href: '/gaming', icon: Gamepad },
-      { label: 'Monitors & Gear', href: '/gaming', icon: Monitor },
-    ],
-  },
-  {
-    label: 'PCs', href: '/pcs',
-    dropdown: [
-      { label: 'All PCs', href: '/pcs', icon: Monitor },
-      { label: 'Gaming PCs', href: '/pcs', icon: Cpu },
-      { label: 'Office PCs', href: '/pcs', icon: Monitor },
-      { label: 'Workstations', href: '/pcs', icon: HardDrive },
-      { label: 'Custom Build', href: '/pcs', icon: Wrench },
+      { label: 'Laptops', href: '/laptops', icon: Laptop },
+      { label: 'Phones', href: '/phones', icon: Smartphone },
+      { label: 'Gaming', href: '/gaming', icon: Gamepad2 },
+      { label: 'PCs', href: '/pcs', icon: Monitor },
+      { label: 'Accessories', href: '/accessories', icon: Package },
+      { label: 'Displays', href: '/displays', icon: Monitor },
     ],
   },
   { href: '/repairs', label: 'Repairs' },
-  { href: '/accessories', label: 'Accessories' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -106,19 +85,18 @@ export default function Nav() {
             <Image
               src="/logo.png"
               alt="Core Tech Systems"
-              width={320}
-              height={152}
-              className={`h-10 w-auto object-contain ${scrolled ? '' : 'brightness-0 invert'}`}
+              width={280}
+              height={133}
+              className={`h-9 w-auto object-contain ${scrolled ? '' : 'brightness-0 invert'}`}
               priority
               quality={100}
             />
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
               if (item.dropdown) {
                 const isOpen = openDropdown === item.label;
-                const textColor = scrolled ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white';
                 return (
                   <div key={item.label} className="relative"
                     onMouseEnter={() => setOpenDropdown(item.label)}
@@ -126,7 +104,11 @@ export default function Nav() {
                   >
                     <button
                       onClick={() => setOpenDropdown(isOpen ? null : item.label)}
-                      className={`flex items-center gap-1 text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-black' : 'text-white'}`}
+                      className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                        scrolled
+                          ? 'text-[#1D1D1F]/70 hover:text-[#1D1D1F] hover:bg-[#F5F5F7]'
+                          : 'text-white/80 hover:text-white hover:bg-white/10'
+                      }`}
                     >
                       {item.label}
                       <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -138,7 +120,7 @@ export default function Nav() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 8, scale: 0.96 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 rounded-xl bg-white shadow-lg border border-[#E5E5E5]"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 p-2 rounded-2xl bg-white/80 backdrop-blur-2xl shadow-lg border border-[#D2D2D7]/50"
                         >
                           {item.dropdown.map((sub) => {
                             const SubIcon = sub.icon;
@@ -147,9 +129,9 @@ export default function Nav() {
                                 key={sub.label}
                                 href={sub.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#4B4B4B] hover:text-black hover:bg-[#F5F5F5] transition-all duration-200"
+                                className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-[#F5F5F7] transition-all duration-200"
                               >
-                                <SubIcon size={14} className="text-[#888888] shrink-0" />
+                                <SubIcon size= {15} className="text-[#86868B] shrink-0" />
                                 {sub.label}
                               </Link>
                             );
@@ -164,20 +146,31 @@ export default function Nav() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-black' : 'text-white'}`}
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                    isActive(item.href) && scrolled
+                      ? 'text-[#0071E3] bg-[#0071E3]/5'
+                      : scrolled
+                        ? 'text-[#1D1D1F]/70 hover:text-[#1D1D1F] hover:bg-[#F5F5F7]'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                  }`}
                 >
                   {item.label}
                 </Link>
               );
             })}
+            <div className="w-px h-5 bg-[#D2D2D7]/50 mx-2" />
             <Link
               href="/cart"
-              className="relative bg-black text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-neutral-800 transition-colors flex items-center gap-2"
+              className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                scrolled
+                  ? 'bg-[#0071E3] text-white hover:shadow-lg hover:shadow-[#0071E3]/20'
+                  : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
+              }`}
             >
               <ShoppingBag size={15} />
               Cart
               {totalItems > 0 && (
-                <span className="w-5 h-5 rounded-full bg-white text-black text-[10px] font-bold flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-white text-[#0071E3] text-[10px] font-bold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
@@ -185,17 +178,17 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
-            <Link href="/cart" className={`relative p-2 transition-colors ${scrolled ? 'text-black' : 'text-white'}`}>
+            <Link href="/cart" className={`relative p-2 transition-colors ${scrolled ? 'text-[#1D1D1F]' : 'text-white'}`}>
               <ShoppingBag size={19} />
               {totalItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-black text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#0071E3] text-white text-[9px] font-bold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`p-2 transition-colors ${scrolled ? 'text-black' : 'text-white'}`}
+              className={`p-2 transition-colors ${scrolled ? 'text-[#1D1D1F]' : 'text-white'}`}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -211,11 +204,11 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center"
+            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center"
           >
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-5 right-6 text-white/70 hover:text-white transition-colors"
+              className="absolute top-5 right-6 text-[#86868B] hover:text-[#1D1D1F] transition-colors"
               aria-label="Close menu"
             >
               <X size={24} />
@@ -231,7 +224,7 @@ export default function Nav() {
                   <Link
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-2xl font-medium text-white/80 hover:text-white transition-colors"
+                    className="text-2xl font-medium text-[#1D1D1F]/70 hover:text-[#1D1D1F] transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -241,8 +234,9 @@ export default function Nav() {
                 <Link
                   href="/cart"
                   onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-medium text-white/80 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0071E3] text-white text-lg font-medium hover:shadow-lg hover:shadow-[#0071E3]/20 transition-all"
                 >
+                  <ShoppingBag size={18} />
                   Cart {totalItems > 0 && `(${totalItems})`}
                 </Link>
               </motion.div>

@@ -82,7 +82,7 @@ export default function ProductModal({ product, onClose }) {
         <div className="flex items-center justify-between px-5 pt-4 pb-2 shrink-0">
           <div className="w-10 h-1 rounded-full bg-[#E5E5E5] mx-auto absolute left-1/2 -translate-x-1/2 top-2" />
           <button onClick={onClose} className="ml-auto p-2 rounded-full bg-[#F5F5F5] hover:bg-[#E5E5E5] transition-colors z-10">
-            <X size={16} className="text-[#888888]" />
+            <X size={16} className="text-[#86868B]" />
           </button>
         </div>
 
@@ -94,7 +94,7 @@ export default function ProductModal({ product, onClose }) {
               <img src={allImages[activeImage]} alt={product.name}
                 className="w-full h-full object-contain p-4" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#888888]">
+              <div className="w-full h-full flex items-center justify-center text-[#86868B]">
                 <Monitor size={48} />
               </div>
             )}
@@ -123,13 +123,13 @@ export default function ProductModal({ product, onClose }) {
 
           <div className="space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#F3F3F3] text-[#555555] font-medium border border-[#E5E5E5]">
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#F5F5F7] text-[#555555] font-medium border border-[#D2D2D7]">
                 {product.category}
               </span>
               <span className="text-[9px] px-2 py-0.5 rounded-full bg-black text-white font-medium">
                 {brand}
               </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#F3F3F3] text-[#555555] font-medium">
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#F5F5F7] text-[#555555] font-medium">
                 {usageType}
               </span>
             </div>
@@ -140,7 +140,7 @@ export default function ProductModal({ product, onClose }) {
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-bold text-black">${product.price.toLocaleString()}</span>
               {product.originalPrice && (
-                <span className="text-base text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>
+                <span className="text-base text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>
               )}
             </div>
             <span className={`flex items-center gap-1.5 text-xs ${product.inStock ? 'text-green-600' : 'text-amber-600'}`}>
@@ -153,7 +153,7 @@ export default function ProductModal({ product, onClose }) {
             {[...Array(5)].map((_, i) => (
               <Star key={i} size={13} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
             ))}
-            <span className="text-xs text-[#888888] ml-1">{product.rating} ({product.reviews} reviews)</span>
+            <span className="text-xs text-[#86868B] ml-1">{product.rating} ({product.reviews} reviews)</span>
           </div>
 
           <div className="flex gap-2 overflow-x-auto pb-1">
@@ -166,10 +166,10 @@ export default function ProductModal({ product, onClose }) {
             <h3 className="text-sm font-semibold text-black flex items-center gap-2 mb-3">
               <Cpu size={14} className="text-black" /> Specifications
             </h3>
-            <div className="rounded-xl overflow-hidden border border-[#E5E5E5]">
+            <div className="rounded-xl overflow-hidden border border-[#D2D2D7]">
               {specs.map((spec, i) => (
-                <div key={spec.label} className={`flex items-center justify-between px-4 py-3 ${i % 2 === 0 ? 'bg-[#F9F9F9]' : 'bg-white'}`}>
-                  <span className="text-xs text-[#888888]">{spec.label}</span>
+                <div key={spec.label} className={`flex items-center justify-between px-4 py-3 ${i % 2 === 0 ? 'bg-[#F5F5F7]' : 'bg-white'}`}>
+                  <span className="text-xs text-[#86868B]">{spec.label}</span>
                   <span className="text-xs text-black font-medium text-right max-w-[60%]">{spec.value}</span>
                 </div>
               ))}
@@ -178,7 +178,7 @@ export default function ProductModal({ product, onClose }) {
 
           <div className="space-y-2">
             <h3 className="text-sm font-semibold text-black">About This Device</h3>
-            <p className="text-xs text-[#888888] leading-relaxed">{product.description}</p>
+            <p className="text-xs text-[#86868B] leading-relaxed">{product.description}</p>
           </div>
 
           {performanceTags.length > 0 && (
@@ -206,7 +206,7 @@ export default function ProductModal({ product, onClose }) {
           </div>
 
           {related.length > 0 && (
-            <div className="space-y-3 pt-2 border-t border-[#E5E5E5]">
+            <div className="space-y-3 pt-2 border-t border-[#D2D2D7]">
               <h3 className="text-sm font-semibold text-black">You Might Also Like</h3>
               <div className="flex gap-3 overflow-x-auto pb-2">
                 {related.map(p => (
@@ -216,12 +216,12 @@ export default function ProductModal({ product, onClose }) {
                       {p.image ? (
                         <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[#888888]">
+                        <div className="w-full h-full flex items-center justify-center text-[#86868B]">
                           <Monitor size={20} />
                         </div>
                       )}
                     </div>
-                    <h4 className="text-[11px] text-[#4B4B4B] font-medium leading-snug line-clamp-2">{p.name}</h4>
+                    <h4 className="text-[11px] text-[#6E6E73] font-medium leading-snug line-clamp-2">{p.name}</h4>
                     <span className="text-xs text-black font-semibold">${p.price.toLocaleString()}</span>
                   </button>
                 ))}

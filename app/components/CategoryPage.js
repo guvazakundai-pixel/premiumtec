@@ -81,21 +81,21 @@ export default function CategoryPage({ category, title, description }) {
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center gap-3 mb-2">
-          <Link href="/" className="text-xs text-[#888888] hover:text-black transition-colors">Home</Link>
+          <Link href="/" className="text-xs text-[#86868B] hover:text-black transition-colors">Home</Link>
           <span className="text-[#E5E5E5]">/</span>
           <span className="text-xs text-black">{pageTitle}</span>
         </div>
 
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-black mb-2">{pageTitle}</h1>
-        <p className="text-sm text-[#888888] mb-8 max-w-lg">{pageDesc}</p>
+        <p className="text-sm text-[#86868B] mb-8 max-w-lg">{pageDesc}</p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="input-premium flex-1 max-w-md">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#888888]" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#86868B]" size={16} />
               <input type="text" placeholder="Search devices..." value={search} onChange={e => setSearch(e.target.value)}
-                className="w-full pl-11 pr-10 py-3 bg-transparent text-black text-sm placeholder:text-[#AAAAAA] focus:outline-none" />
-              {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-black"><X size={14} /></button>}
+                className="w-full pl-11 pr-10 py-3 bg-transparent text-black text-sm placeholder:text-[#A1A1A6] focus:outline-none" />
+              {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#86868B] hover:text-black"><X size={14} /></button>}
             </div>
           </div>
           <button onClick={() => setShowFilters(!showFilters)}
@@ -114,11 +114,11 @@ export default function CategoryPage({ category, title, description }) {
             >
               <div className="card-gray h-full flex flex-col group relative">
                 <button onClick={() => toggleWish(product.id)}
-                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 border border-[#E5E5E5] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-black/20">
-                  <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-[#888888]'}`} />
+                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 border border-[#D2D2D7] opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-black/20">
+                  <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-red-400 fill-red-400' : 'text-[#86868B]'}`} />
                 </button>
 
-                <div onClick={() => setSelectedProduct(product)} className="h-48 flex items-center justify-center bg-[#F3F3F3] relative overflow-hidden cursor-pointer rounded-t-[16px]">
+                <div onClick={() => setSelectedProduct(product)} className="h-48 flex items-center justify-center bg-[#F5F5F7] relative overflow-hidden cursor-pointer rounded-t-[16px]">
                   <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
                     transition={{ duration: 0.7, ease }}
                     className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
@@ -127,7 +127,7 @@ export default function CategoryPage({ category, title, description }) {
                         className="w-full h-full object-contain rounded-xl"
                         style={{ maxWidth: '170px', maxHeight: '150px' }} />
                     ) : (
-                      <div className="w-24 h-32 rounded-xl border border-[#E5E5E5] flex items-center justify-center text-[#888888] text-xs bg-white">
+                      <div className="w-24 h-32 rounded-xl border border-[#D2D2D7] flex items-center justify-center text-[#86868B] text-xs bg-white">
                         {product.name.split(' ').slice(0, 2).join(' ')}
                       </div>
                     )}
@@ -137,9 +137,9 @@ export default function CategoryPage({ category, title, description }) {
 
                 <div className="flex-1 flex flex-col p-5 space-y-2.5">
                   <div>
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-[#888888]">{product.category}</span>
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-[#86868B]">{product.category}</span>
                     <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                      <h3 className="text-sm font-medium text-[#4B4B4B] mt-1 leading-snug group-hover:text-black transition-colors duration-300">{product.name}</h3>
+                      <h3 className="text-sm font-medium text-[#6E6E73] mt-1 leading-snug group-hover:text-black transition-colors duration-300">{product.name}</h3>
                     </div>
                   </div>
 
@@ -153,13 +153,13 @@ export default function CategoryPage({ category, title, description }) {
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
                     ))}
-                    <span className="text-[10px] text-[#888888] ml-1">{product.rating}</span>
+                    <span className="text-[10px] text-[#86868B] ml-1">{product.rating}</span>
                   </div>
 
-                  <div className="flex items-baseline justify-between pt-2.5 border-t border-[#E5E5E5]">
+                  <div className="flex items-baseline justify-between pt-2.5 border-t border-[#D2D2D7]">
                     <div className="flex items-baseline gap-3">
                       <span className="text-lg font-semibold text-black tracking-tight">${product.price.toLocaleString()}</span>
-                      {product.originalPrice && <span className="text-xs text-[#AAAAAA] line-through">${product.originalPrice.toLocaleString()}</span>}
+                      {product.originalPrice && <span className="text-xs text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>}
                       {getSavings(product) > 10 && <span className="text-[9px] text-emerald-500 font-medium">Save ${getSavings(product)}</span>}
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -189,7 +189,7 @@ export default function CategoryPage({ category, title, description }) {
 
         {products.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-[#888888] text-sm">No devices found matching your criteria.</p>
+            <p className="text-[#86868B] text-sm">No devices found matching your criteria.</p>
           </div>
         )}
       </div>
