@@ -957,6 +957,27 @@ export const products = [
     description: 'Lenovo ThinkPad E14 Gen 6 with Intel Core Ultra 7 155H Series 1, 16GB RAM, 512GB SSD, and 14" FHD display. Enterprise-grade business laptop with premium build quality and security features.',
     features: ['Core Ultra 7 155H Series 1', '16GB RAM', '512GB SSD', '14" FHD Display', 'Business Grade', 'ThinkPad Quality', 'Windows 11 Pro', 'Security Features'],
   },
+  // ─── NEW ACCESSORIES ───
+  {
+    id: 95, name: 'HP Colour LaserJet Pro MFP 4303FDW', category: 'Accessories',
+    slug: 'hp-colour-laserjet-pro-mfp-4303fdw',
+    processor: 'N/A', storage: 'N/A',
+    display: 'N/A', price: 680, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.6, reviews: 0,
+    image: 'https://i.ibb.co/vvB54nCW',
+    description: 'HP Colour LaserJet Pro MFP 4303FDW — professional colour multifunction printer with print, scan, copy, and fax capabilities. Fast printing, wireless connectivity, and robust build quality for busy offices.',
+    features: ['Colour Laser Printing', 'Print, Scan, Copy, Fax', 'Wireless Connectivity', 'Automatic Document Feeder', 'Duplex Printing', 'High-Yield Toner', 'Business Grade'],
+  },
+  {
+    id: 96, name: 'HP DeskJet 2320', category: 'Accessories',
+    slug: 'hp-deskjet-2320',
+    processor: 'N/A', storage: 'N/A',
+    display: 'N/A', price: 45, originalPrice: null,
+    badge: 'DEAL', inStock: true, rating: 4.1, reviews: 0,
+    image: 'https://i.ibb.co/mCKdQY5N',
+    description: 'HP DeskJet 2320 — compact and affordable inkjet printer for home use. Prints crisp documents and photos with easy wireless setup.',
+    features: ['Inkjet Printing', 'Compact Design', 'Wireless Connectivity', 'Affordable', 'Home Use', 'HP Quality'],
+  },
 ];
 
 export function getProductBySlug(slug) {
