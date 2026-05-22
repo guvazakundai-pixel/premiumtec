@@ -4,18 +4,18 @@ import { motion } from 'framer-motion';
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">
+    <main className="min-h-screen bg-white pt-24 pb-20">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Legal</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#2997FF]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#86868B]">Legal</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-4">Privacy Policy</h1>
-          <p className="text-sm text-white/30 font-light max-w-lg mb-12">Last updated: January 2026</p>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F] mb-4">Privacy Policy</h1>
+          <p className="text-sm text-[#6E6E73] font-light max-w-lg mb-12">Last updated: January 2026</p>
         </motion.div>
 
-        <div className="glass-card p-8 md:p-10 space-y-8">
+        <div className="card-gray p-8 md:p-10 space-y-8">
           <Section title="1. Information We Collect">
             <p>We collect information you provide directly to us, including your name, email address, phone number, and delivery address when you place an order or contact us via WhatsApp, email, or our contact forms.</p>
             <p>We automatically collect certain information when you visit our website, including your IP address, browser type, device information, and browsing behavior through cookies and similar technologies.</p>
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
 
           <Section title="2. How We Use Your Information">
             <p>We use your information to:</p>
-            <ul className="list-disc pl-5 space-y-1 text-white/40">
+            <ul className="list-disc pl-5 space-y-1 text-[#6E6E73]">
               <li>Process and fulfill your orders</li>
               <li>Communicate with you about your orders and inquiries</li>
               <li>Send you marketing communications (with your consent)</li>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
 
           <Section title="5. Your Rights">
             <p>You have the right to:</p>
-            <ul className="list-disc pl-5 space-y-1 text-white/40">
+            <ul className="list-disc pl-5 space-y-1 text-[#6E6E73]">
               <li>Access your personal data held by us</li>
               <li>Request correction of inaccurate data</li>
               <li>Request deletion of your data</li>
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
 
           <Section title="7. Contact Us">
             <p>If you have any questions about this Privacy Policy, please contact us:</p>
-            <p className="text-white/60">WhatsApp: +263 780 579 633<br />Visit: Sirus Mall, 1st Floor, Harare, Zimbabwe</p>
+            <p className="text-[#1D1D1F]">WhatsApp: +263 780 579 633<br />Visit: Sirus Mall, 1st Floor, Harare, Zimbabwe</p>
           </Section>
         </div>
       </div>
@@ -68,8 +68,8 @@ export default function PrivacyPage() {
 function Section({ title, children }) {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white/85 mb-3">{title}</h2>
-      <div className="text-sm text-white/40 font-light leading-relaxed space-y-2">{children}</div>
+      <h2 className="text-lg font-semibold text-[#1D1D1F] mb-3">{title}</h2>
+      <div className="text-sm text-[#6E6E73] font-light leading-relaxed space-y-2">{children}</div>
     </div>
   );
 }

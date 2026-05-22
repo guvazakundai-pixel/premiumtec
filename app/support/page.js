@@ -28,27 +28,27 @@ export default function SupportPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0A1224] pt-24 pb-20">
+    <main className="min-h-screen bg-white pt-24 pb-20">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#2563EB] to-[#38BDF8]" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/30">Support</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#2997FF]" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#86868B]">Support</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F1F5F9] mb-4">How Can We Help?</h1>
-          <p className="text-sm text-white/30 font-light max-w-lg mb-12">Find answers to common questions or reach out directly.</p>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F] mb-4">How Can We Help?</h1>
+          <p className="text-sm text-[#6E6E73] font-light max-w-lg mb-12">Find answers to common questions or reach out directly.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <h2 className="text-lg font-semibold text-white/85 mb-6">FAQ</h2>
+            <h2 className="text-lg font-semibold text-[#1D1D1F] mb-6">FAQ</h2>
             <div className="space-y-2">
               {faqs.map((faq, i) => (
-                <div key={i} className="glass-card overflow-hidden rounded-[14px]">
+                <div key={i} className="card-gray overflow-hidden rounded-[14px]">
                   <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full px-5 py-4 text-left text-sm font-medium text-white/70 hover:text-white transition-colors flex items-center justify-between gap-2">
+                    className="w-full px-5 py-4 text-left text-sm font-medium text-[#1D1D1F] hover:text-[#0071E3] transition-colors flex items-center justify-between gap-2">
                     {faq.q}
-                    <ChevronDown size={14} className={`text-white/20 shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={14} className={`text-[#86868B] shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
                     {openFaq === i && (
@@ -59,7 +59,7 @@ export default function SupportPage() {
                         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-4 text-sm text-white/40 font-light leading-relaxed border-t border-white/[0.04] pt-3">
+                        <div className="px-5 pb-4 text-sm text-[#6E6E73] font-light leading-relaxed border-t border-[#D2D2D7] pt-3">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -71,24 +71,20 @@ export default function SupportPage() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-            <div className="glass-card p-8 sticky top-24">
-              <h2 className="text-lg font-semibold text-white/85 mb-2">Contact Us</h2>
-              <p className="text-sm text-white/30 font-light mb-6">Reach out via WhatsApp for fastest response.</p>
+            <div className="card-gray p-8 sticky top-24">
+              <h2 className="text-lg font-semibold text-[#1D1D1F] mb-2">Contact Us</h2>
+              <p className="text-sm text-[#6E6E73] font-light mb-6">Reach out via WhatsApp for fastest response.</p>
               <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-                <div className="glass-input">
-                  <input type="email" placeholder="Your email" value={email} onChange={e => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 bg-transparent text-white text-sm placeholder:text-white/20 focus:outline-none" required />
-                </div>
-                <div className="glass-input">
-                  <textarea placeholder="How can we help?" value={msg} onChange={e => setMsg(e.target.value)} rows={4}
-                    className="w-full px-4 py-3 bg-transparent text-white text-sm placeholder:text-white/20 focus:outline-none resize-none" />
-                </div>
-                <button type="submit" className="w-full btn-premium btn-premium--primary text-[10px] justify-center">Send via WhatsApp →</button>
+                <input type="email" placeholder="Your email" value={email} onChange={e => setEmail(e.target.value)}
+                  className="input-premium w-full" required />
+                <textarea placeholder="How can we help?" value={msg} onChange={e => setMsg(e.target.value)} rows={4}
+                  className="input-premium w-full resize-none" />
+                <button type="submit" className="btn-primary w-full text-xs justify-center">Send via WhatsApp →</button>
               </form>
-              <div className="border-t border-white/[0.04] pt-4 space-y-2 text-xs text-white/50">
-                <p><span className="text-[#2563EB]">Call:</span> +263 780 579 633</p>
-                <p><span className="text-[#2563EB]">WhatsApp:</span> +263 780 579 633</p>
-                <p><span className="text-[#2563EB]">Visit:</span> Sirus Mall, 1st Floor, Harare</p>
+              <div className="border-t border-[#D2D2D7] pt-4 space-y-2 text-xs text-[#6E6E73]">
+                <p><span className="text-[#0071E3]">Call:</span> +263 780 579 633</p>
+                <p><span className="text-[#0071E3]">WhatsApp:</span> +263 780 579 633</p>
+                <p><span className="text-[#0071E3]">Visit:</span> Sirus Mall, 1st Floor, Harare</p>
               </div>
             </div>
           </motion.div>
