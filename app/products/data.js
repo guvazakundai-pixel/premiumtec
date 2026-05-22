@@ -189,6 +189,16 @@ export const products = [
     description: 'Original PlayStation 5 Phat Disc Edition with 825GB SSD. The flagship next-gen console with 4K Blu-ray drive, haptic feedback, adaptive triggers, and stunning 4K graphics.',
     features: ['825GB Custom SSD', '4K / 120Hz Output', '4K Blu-ray Disc Drive', 'DualSense Controller', 'Original Design', 'Ray Tracing'],
   },
+  {
+    id: 74, name: 'PlayStation 5 Controller', category: 'Gaming',
+    slug: 'playstation-5-controller',
+    processor: 'N/A', storage: 'N/A',
+    display: 'N/A', price: 80, originalPrice: 90,
+    badge: 'DEAL', inStock: true, rating: 4.8, reviews: 0,
+    image: '/images/playstation-5-controller.jpg',
+    description: 'Official PlayStation 5 DualSense wireless controller with haptic feedback, adaptive triggers, built-in microphone, and motion controls. Immersive gaming experience.',
+    features: ['DualSense Wireless Controller', 'Haptic Feedback', 'Adaptive Triggers', 'Built-in Microphone', 'Motion Controls', 'USB-C Charging'],
+  },
 
   // ─── VALUE LAPTOPS ───
   {
