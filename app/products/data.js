@@ -978,6 +978,17 @@ export const products = [
     description: 'HP DeskJet 2320 — compact and affordable inkjet printer for home use. Prints crisp documents and photos with easy wireless setup.',
     features: ['Inkjet Printing', 'Compact Design', 'Wireless Connectivity', 'Affordable', 'Home Use', 'HP Quality'],
   },
+  // ─── NEW PC ───
+  {
+    id: 97, name: 'HP All-in-One Desktop 24-CR0308NH', category: 'PCs',
+    slug: 'hp-all-in-one-24-cr0308nh',
+    processor: 'Core i5-1335U 13th Gen', storage: '512GB SSD',
+    display: '24" FHD', price: 859, originalPrice: null,
+    badge: 'NEW', inStock: true, rating: 4.5, reviews: 0,
+    image: 'https://i.ibb.co/mVZXdg5j',
+    description: 'HP All-in-One Desktop 24-CR0308NH with Intel Core i5-1335U 13th Gen, 8GB RAM, 512GB SSD, and 24" FHD display. Space-saving design with powerful performance for home and office.',
+    features: ['Core i5-1335U 13th Generation', '8GB RAM', '512GB SSD', '24" FHD Display', 'All-in-One Design', 'Space-Saving', 'Windows 11', 'Built-in Speakers'],
+  },
 ];
 
 export function getProductBySlug(slug) {
