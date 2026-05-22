@@ -108,7 +108,7 @@ export default function Nav() {
               alt="Core Tech Systems"
               width={320}
               height={152}
-              className="h-10 w-auto object-contain"
+              className={`h-10 w-auto object-contain ${scrolled ? '' : 'brightness-0 invert'}`}
               priority
               quality={100}
             />
