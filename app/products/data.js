@@ -97,6 +97,26 @@ export const products = [
     description: 'HP OMEN 16-AM0015NIA gaming laptop with Intel Core Ultra 7 255H Series 2 processor, 16GB DDR5 RAM, 1TB SSD, and NVIDIA GeForce RTX 5060 8GB graphics. 16" FHD display with advanced thermal management. Next-gen gaming performance with cutting-edge AI acceleration.',
     features: ['Core Ultra 7 255H Series 2', '16GB DDR5 RAM', '1TB SSD', 'NVIDIA GeForce RTX 5060 8GB', '16" FHD Display', 'Advanced Thermal Management', 'AI Acceleration', 'Windows 11', 'Backlit Keyboard'],
   },
+  {
+    id: 59, name: 'OMEN Gaming Laptop 16-AN0075', category: 'Gaming',
+    slug: 'omen-16-an0075',
+    processor: 'Core Ultra 9', storage: '1TB SSD',
+    display: '16" FHD', price: 2000, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.9, reviews: 0,
+    image: '/images/omen-16-an0075.jpg',
+    description: 'HP OMEN 16-AN0075 flagship gaming laptop with Intel Core Ultra 9 processor, 32GB DDR5 RAM, 1TB SSD, and NVIDIA GeForce RTX 5070 8GB graphics. 16" FHD display with advanced vapor chamber cooling. Ultimate gaming performance with AI-powered optimization.',
+    features: ['Core Ultra 9', '32GB DDR5 RAM', '1TB SSD', 'NVIDIA GeForce RTX 5070 8GB', '16" FHD Display', 'Vapor Chamber Cooling', 'AI-Powered Optimization', 'Windows 11', 'Backlit Keyboard'],
+  },
+  {
+    id: 60, name: 'Lenovo Legion 5 16IAX10 Gaming Laptop', category: 'Gaming',
+    slug: 'lenovo-legion-5-16iax10',
+    processor: 'Core Ultra 9 275HX', storage: '1TB SSD',
+    display: '16" FHD', price: 1850, originalPrice: null,
+    badge: 'GAMING', inStock: true, rating: 4.8, reviews: 0,
+    image: '/images/lenovo-legion-5-16iax10.jpg',
+    description: 'Lenovo Legion 5 16IAX10 gaming laptop with Intel Core Ultra 9 275HX Series 2 Hyper X processor, 32GB DDR5 RAM, 1TB SSD, and NVIDIA GeForce RTX 5060 8GB GDDR7 graphics. 16" FHD display with Legion ColdFront thermal system. Premium build with Hyper X AI engine.',
+    features: ['Core Ultra 9 275HX Series 2 Hyper X', '32GB DDR5 RAM', '1TB SSD', 'NVIDIA GeForce RTX 5060 8GB GDDR7', '16" FHD Display', 'Legion ColdFront Thermal', 'Hyper X AI Engine', 'Windows 11', 'Backlit Keyboard'],
+  },
 
   // ─── VALUE LAPTOPS ───
   {
@@ -539,6 +559,7 @@ export function getProductsByCategory(category) {
 export function getBrand(product) {
   const name = product.name.toLowerCase();
   if (name.includes('hp ') || name.includes('victus') || name.includes('omen')) return 'HP';
+  if (name.includes('legion') || name.includes('lenovo')) return 'Lenovo';
   if (name.includes('dell')) return 'Dell';
   if (name.includes('asus')) return 'ASUS';
   if (name.includes('apple') || name.includes('macbook')) return 'Apple';
@@ -593,7 +614,7 @@ export function getAspectRatio(product) {
 
 export const categories = [
   { slug: 'laptops', name: 'Laptops', icon: 'Monitor', count: 32, desc: 'Professional computing power' },
-  { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 7, desc: 'Consoles, desktops & gaming laptops' },
+  { slug: 'gaming', name: 'Gaming', icon: 'Gamepad2', count: 9, desc: 'Consoles, desktops & gaming laptops' },
   { slug: 'accessories', name: 'Accessories', icon: 'Package', count: 3, desc: 'Printers, chargers & repairs' },
   { slug: 'phones', name: 'Phones', icon: 'Smartphone', count: 8, desc: 'Latest smartphones & deals' },
   { slug: 'pcs', name: 'PCs', icon: 'Monitor', count: 4, desc: 'Desktops & workstations' },
