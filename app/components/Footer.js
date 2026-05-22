@@ -14,9 +14,9 @@ export default function Footer() {
             <Link href="/" className="flex items-center mb-4">
               <Image
                 src="/images/techstore-logo.png"
-                alt="Tech Store"
+                alt="Core Tech Systems"
                 width={280}
-                height={70}
+                height={133}
                 className="h-14 w-auto object-contain"
               />
             </Link>

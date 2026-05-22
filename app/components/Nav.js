@@ -96,13 +96,12 @@ export default function Nav() {
         <Link href="/" className="flex items-center shrink-0">
           <Image
             src="/logo.png"
-            alt="Tech Store"
+            alt="Core Tech Systems"
             width={320}
-            height={80}
+            height={152}
             className="h-10 w-auto object-contain"
             priority
             quality={100}
-            style={{ imageRendering: 'crisp-edges' }}
           />
         </Link>
 

@@ -73,7 +73,7 @@ export default function ContactPage() {
 
             <div className="glass-card p-8 mt-4">
               <h3 className="text-sm font-semibold text-white/70 mb-3">Follow Us</h3>
-              <a href="https://threads.net/@premiumtec_inv" target="_blank" rel="noopener noreferrer"
+              <a href="https://threads.net/@coretechsystems_zw" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs text-white/40 hover:text-white/70 transition-colors">
                 @techstore_zw on Threads
               </a>

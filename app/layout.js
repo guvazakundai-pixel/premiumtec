@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="theme-color" content="#0A1224" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="canonical" href="https://premiumtec.vercel.app" />
+        <link rel="canonical" href="https://coretechsystems.vercel.app" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
               "@type": "Store",
               name: "Tech Store",
               description: "Premium technology — laptops, gaming, repairs, and accessories in Harare, Zimbabwe.",
-              url: "https://premiumtec.vercel.app",
+              url: "https://coretechsystems.vercel.app",
               telephone: "+263780579633",
               address: {
                 "@type": "PostalAddress",
@@ -57,7 +57,7 @@ export default function RootLayout({ children }) {
                 opens: "08:30",
                 closes: "17:00",
               },
-              sameAs: ["https://threads.net/@premiumtec_inv"],
+              sameAs: ["https://threads.net/@coretechsystems_zw"],
             }),
           }}
         />
