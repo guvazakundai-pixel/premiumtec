@@ -5,20 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, ChevronDown, Monitor, Smartphone, Gamepad2, Package, Wrench, Laptop, Gamepad, Cpu, HardDrive, Shield, Cloud, Brain, Code } from 'lucide-react';
+import { Menu, X, ShoppingBag, ChevronDown, Monitor, Smartphone, Gamepad2, Package, Wrench, Laptop, Gamepad, Cpu, HardDrive } from 'lucide-react';
 import { useCart } from '@/app/context/CartContext';
 
 const navItems = [
   { href: '/', label: 'Home' },
-  {
-    label: 'Services', href: '/#services',
-    dropdown: [
-      { label: 'Cybersecurity', href: '/#services', icon: Shield },
-      { label: 'Cloud Infrastructure', href: '/#services', icon: Cloud },
-      { label: 'AI & Machine Learning', href: '/#services', icon: Brain },
-      { label: 'Software Development', href: '/#services', icon: Code },
-    ],
-  },
   {
     label: 'Shop', href: '/shop',
     dropdown: [
