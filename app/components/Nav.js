@@ -20,7 +20,7 @@ const navItems = [
     ],
   },
   {
-    label: 'Shop', href: '/laptops',
+    label: 'Shop', href: '/shop',
     dropdown: [
       { label: 'Laptops', href: '/laptops', icon: Laptop },
       { label: 'Phones', href: '/phones', icon: Smartphone },

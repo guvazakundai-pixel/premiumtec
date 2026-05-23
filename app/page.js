@@ -991,7 +991,7 @@ function FinalCTA() {
             <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#0071E3] text-white text-sm font-medium hover:shadow-lg hover:shadow-[#0071E3]/20 transition-all">
               Schedule a Call <ArrowRight size={16} />
             </Link>
-            <Link href="/laptops" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[#424245] text-[#A1A1A6] text-sm font-medium hover:border-white hover:text-white transition-all">
+            <Link href="/shop" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[#424245] text-[#A1A1A6] text-sm font-medium hover:border-white hover:text-white transition-all">
               Browse Shop
             </Link>
           </motion.div>
