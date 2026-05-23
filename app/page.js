@@ -3,13 +3,19 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import {
   Shield, Cloud, Brain, Code, ArrowRight, ChevronDown, Check, Star, Quote,
   Mail, MapPin, Phone, MessageCircle, Menu, X, ExternalLink,
   Server, Lock, Users, BarChart3, RefreshCw, Zap, Layers, Globe,
   Cpu, Database, Network, Fingerprint, Smartphone, Monitor,
   ShoppingBag, HardDrive, Wifi, AlertTriangle, TrendingUp, Bot,
-  LineChart, Settings, Palette, BookOpen, Target, Eye,
+  LineChart, Settings, Palette, BookOpen, Target, Eye, Laptop, Gamepad2,
+  Headphones, Router,
 } from 'lucide-react';
 
 const ease = [0.16, 1, 0.3, 1];
@@ -24,69 +30,217 @@ const scaleIn = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease } },
 };
 
-// ─── HERO ───
-function Hero() {
-  return (
-    <section className="bg-white relative min-h-screen flex items-center overflow-hidden pt-20">
-      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-20 lg:py-32">
-          <motion.div initial="hidden" animate="visible" variants={{
-            hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
-          }}>
-            <motion.div variants={fadeUp}>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0071E3]/5 text-[#0071E3] text-xs font-semibold mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#0071E3] animate-pulse" />
-                Enterprise Technology Partner
-              </span>
-            </motion.div>
-            <motion.h1 variants={fadeUp} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] mb-6 font-sans">
-              Secure, Scale,
-              <span className="block gradient-text mt-1">Innovate.</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg sm:text-xl text-[#6E6E73] leading-relaxed max-w-lg mb-10">
-              Enterprise cybersecurity, cloud infrastructure, AI solutions, and custom software — engineered for African businesses ready to compete globally.
-            </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
-              <Link href="/#services" className="btn-primary text-sm px-8 py-3.5">
-                Explore Services <ArrowRight size={16} />
-              </Link>
-              <Link href="/laptops" className="btn-outline text-sm px-8 py-3.5 border-[#D2D2D7] text-[#1D1D1F]">
-                Visit Shop
-              </Link>
-            </motion.div>
-            <motion.div variants={fadeUp} className="flex items-center gap-6 mt-12 text-sm text-[#86868B]">
-              <span className="flex items-center gap-2"><Check size={14} className="text-[#0071E3]" /> 99.9% Uptime</span>
-              <span className="flex items-center gap-2"><Check size={14} className="text-[#0071E3]" /> SOC 2 Compliant</span>
-              <span className="flex items-center gap-2"><Check size={14} className="text-[#0071E3]" /> 24/7 Support</span>
-            </motion.div>
-          </motion.div>
+// ─── HERO CAROUSEL ───
+const slides = [
+  {
+    id: 'laptops',
+    title: 'Premium Laptops',
+    subtitle: 'Power & portability redefined',
+    desc: 'From ultrabooks to workstations — discover the finest laptops engineered for performance, crafted for excellence.',
+    cta: 'Browse Laptops',
+    href: '/laptops',
+    gradient: 'from-[#F0F6FF] to-[#FFFFFF]',
+    icon: Laptop,
+    accent: '#0071E3',
+    features: ['Intel Core Ultra', 'Up to 64GB RAM', 'All-day battery'],
+  },
+  {
+    id: 'gaming',
+    title: 'Gaming Desktops',
+    subtitle: 'Dominate every frame',
+    desc: 'Built for gamers who demand the best. RTX-powered rigs with liquid cooling, RGB, and uncompromising performance.',
+    cta: 'Explore Gaming',
+    href: '/gaming',
+    gradient: 'from-[#F5F0FF] to-[#FFFFFF]',
+    icon: Gamepad2,
+    accent: '#7C3AED',
+    features: ['NVIDIA RTX 40 Series', 'Up to 64GB DDR5', 'Liquid Cooling'],
+  },
+  {
+    id: 'accessories',
+    title: 'Premium Accessories',
+    subtitle: 'Complete your setup',
+    desc: 'Keyboards, mice, audio, printers, and more — every accessory you need to elevate your workspace.',
+    cta: 'Shop Accessories',
+    href: '/accessories',
+    gradient: 'from-[#FFF5F0] to-[#FFFFFF]',
+    icon: Headphones,
+    accent: '#FF6B35',
+    features: ['Wireless Freedom', 'Mechanical Perfection', 'Studio Sound'],
+  },
+  {
+    id: 'phones',
+    title: 'Flagship Smartphones',
+    subtitle: 'The future in your hands',
+    desc: 'Latest flagships from Apple, Samsung, and more. Cutting-edge cameras, blazing processors, stunning displays.',
+    cta: 'View Phones',
+    href: '/phones',
+    gradient: 'from-[#F0FFF4] to-[#FFFFFF]',
+    icon: Smartphone,
+    accent: '#10B981',
+    features: ['Pro Camera Systems', 'A19 Pro / S26', 'All-day Battery'],
+  },
+  {
+    id: 'networking',
+    title: 'Enterprise Networking',
+    subtitle: 'Connect with confidence',
+    desc: 'Enterprise-grade networking, interactive displays, and infrastructure solutions for modern businesses.',
+    cta: 'See Products',
+    href: '/displays',
+    gradient: 'from-[#FFF0F5] to-[#FFFFFF]',
+    icon: Router,
+    accent: '#E11D48',
+    features: ['Enterprise-Grade', 'Interactive Displays', 'Secure Infrastructure'],
+  },
+];
 
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease, delay: 0.3 }}
-            className="hidden lg:flex flex-col items-end gap-4"
-          >
-            <div className="relative w-full max-w-md">
-              <div className="border border-[#D2D2D7] rounded-3xl p-6 shadow-sm bg-white">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Shield size={18} className="text-[#0071E3]" />
-                    <span className="text-sm font-semibold text-[#1D1D1F]">Threat Detection</span>
+function Hero() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const progressRef = useRef(null);
+
+  useEffect(() => {
+    const el = progressRef.current;
+    if (!el) return;
+    el.style.transition = 'none';
+    el.style.width = '0%';
+    requestAnimationFrame(() => {
+      el.style.transition = 'width 5s linear';
+      el.style.width = '100%';
+    });
+  }, [activeIndex]);
+
+  return (
+    <section className="relative pt-16 overflow-hidden">
+      <Swiper
+        modules={[Autoplay, Navigation, Pagination]}
+        navigation={{
+          prevEl: '.swiper-prev',
+          nextEl: '.swiper-next',
+        }}
+        pagination={{ clickable: true, el: '.swiper-dots', bulletClass: 'carousel-dot', bulletActiveClass: 'active' }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        speed={700}
+        onSlideChange={(s) => setActiveIndex(s.realIndex)}
+        loop
+        className="w-full"
+      >
+        {slides.map((slide, i) => {
+          const Icon = slide.icon;
+          return (
+            <SwiperSlide key={slide.id}>
+              <div className={`min-h-[85vh] sm:min-h-screen bg-gradient-to-br ${slide.gradient} flex items-center`}>
+                <div className="max-w-7xl mx-auto px-6 w-full py-16 sm:py-20">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                    <div className="order-2 lg:order-1">
+                      <motion.span
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, ease, delay: 0.1 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-5"
+                        style={{ backgroundColor: `${slide.accent}0d`, color: slide.accent }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: slide.accent }} />
+                        {slide.subtitle}
+                      </motion.span>
+                      <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease, delay: 0.2 }}
+                        className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] mb-4 font-sans"
+                      >
+                        {slide.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease, delay: 0.3 }}
+                        className="text-base sm:text-lg text-[#6E6E73] leading-relaxed max-w-md mb-8"
+                      >
+                        {slide.desc}
+                      </motion.p>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease, delay: 0.4 }}
+                        className="flex flex-col sm:flex-row gap-3"
+                      >
+                        <Link
+                          href={slide.href}
+                          className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium transition-all duration-300"
+                          style={{ backgroundColor: slide.accent, color: '#FFFFFF' }}
+                        >
+                          {slide.cta} <ArrowRight size={15} />
+                        </Link>
+                        <Link
+                          href={slide.href}
+                          className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium border border-[#D2D2D7] text-[#1D1D1F] hover:border-[#1D1D1F] transition-all duration-300"
+                        >
+                          Learn More
+                        </Link>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, ease, delay: 0.5 }}
+                        className="flex items-center gap-4 mt-8"
+                      >
+                        {slide.features.map((f) => (
+                          <span key={f} className="text-xs text-[#86868B] flex items-center gap-1.5">
+                            <Check size={11} className="shrink-0" style={{ color: slide.accent }} />
+                            {f}
+                          </span>
+                        ))}
+                      </motion.div>
+                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.6, ease, delay: 0.3 }}
+                      className="order-1 lg:order-2 flex justify-center lg:justify-end"
+                    >
+                      <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+                        <div
+                          className="absolute inset-0 rounded-full opacity-10"
+                          style={{
+                            background: `radial-gradient(circle, ${slide.accent}20 0%, transparent 70%)`,
+                          }}
+                        />
+                        <div className="w-full h-full flex items-center justify-center">
+                          <div
+                            className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-3xl flex items-center justify-center shadow-lg"
+                            style={{
+                              background: `linear-gradient(135deg, ${slide.accent}15, ${slide.accent}05)`,
+                              border: `1px solid ${slide.accent}20`,
+                            }}
+                          >
+                            <Icon size={80} style={{ color: slide.accent, opacity: 0.6 }} />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
-                  <span className="text-xs font-medium text-[#0071E3] bg-[#0071E3]/5 px-3 py-1 rounded-full">Active</span>
                 </div>
-                <div className="h-20 flex items-end gap-2 mb-3">
-                  {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-                    <div key={i} style={{ height: `${h}%` }} className="flex-1 rounded-lg bg-gradient-to-t from-[#0071E3] to-[#2997FF] opacity-70" />
-                  ))}
-                </div>
-                <p className="text-xs text-[#86868B]">Real-time threat analysis — 2,847 events monitored</p>
               </div>
-            </div>
-          </motion.div>
-        </div>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+
+      {/* Progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-1 bg-[#E5E5E5]">
+        <div ref={progressRef} className="h-full" style={{ width: '100%', backgroundColor: slides[activeIndex]?.accent || '#0071E3' }} />
       </div>
+
+      {/* Custom nav arrows */}
+      <button className="swiper-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm border border-[#D2D2D7] flex items-center justify-center hover:bg-white transition-all duration-200 shadow-sm hidden md:flex">
+        <ChevronDown size={18} className="rotate-90 text-[#1D1D1F]" />
+      </button>
+      <button className="swiper-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm border border-[#D2D2D7] flex items-center justify-center hover:bg-white transition-all duration-200 shadow-sm hidden md:flex">
+        <ChevronDown size={18} className="-rotate-90 text-[#1D1D1F]" />
+      </button>
+
+      {/* Dots */}
+      <div className="swiper-dots absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2" />
     </section>
   );
 }
@@ -121,7 +275,59 @@ function TrustBar() {
   );
 }
 
-// ─── MISSION ───
+// ─── SHOP BY CATEGORY ───
+const categories = [
+  { name: 'Laptops', href: '/laptops', icon: Laptop, count: '50+ models', color: '#0071E3' },
+  { name: 'PCs', href: '/pcs', icon: Monitor, count: 'Custom builds', color: '#7C3AED' },
+  { name: 'Gaming', href: '/gaming', icon: Gamepad2, count: 'Consoles & PCs', color: '#E11D48' },
+  { name: 'Phones', href: '/phones', icon: Smartphone, count: 'Latest flagships', color: '#10B981' },
+  { name: 'Accessories', href: '/accessories', icon: Headphones, count: 'Complete setups', color: '#FF6B35' },
+  { name: 'Displays', href: '/displays', icon: Monitor, count: 'Interactive panels', color: '#2563EB' },
+];
+
+function ShopByCategory() {
+  return (
+    <section className="py-16 sm:py-20 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#0071E3] text-center mb-2">Shop by Category</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#1D1D1F] mb-10 font-sans">
+            Explore our collection
+          </h2>
+        </motion.div>
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-6 px-6">
+          {categories.map((cat, i) => {
+            const Icon = cat.icon;
+            return (
+              <motion.div
+                key={cat.name}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease, delay: i * 0.06 }}
+                className="snap-start shrink-0"
+              >
+                <Link
+                  href={cat.href}
+                  className="group block w-40 sm:w-44 p-5 rounded-2xl border border-[#D2D2D7] bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
+                    style={{ backgroundColor: `${cat.color}0d` }}
+                  >
+                    <Icon size={22} style={{ color: cat.color }} />
+                  </div>
+                  <h3 className="text-sm font-semibold text-[#1D1D1F] mb-1">{cat.name}</h3>
+                  <p className="text-xs text-[#86868B]">{cat.count}</p>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 function Mission() {
   const stats = [
     { value: '99.9%', label: 'Uptime Guaranteed' },
@@ -801,6 +1007,7 @@ export default function HomePage() {
     <>
       <Hero />
       <TrustBar />
+      <ShopByCategory />
       <Mission />
       <Services />
       <TechStack />

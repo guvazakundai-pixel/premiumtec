@@ -425,3 +425,34 @@ body {
   filter: blur(60px);
   pointer-events: none;
 }
+
+/* ─── SWIPER OVERRIDES ─── */
+.swiper-dots {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+}
+.swiper-dots .carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #D2D2D7;
+  transition: all 0.3s var(--ease-premium);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.swiper-dots .carousel-dot.active {
+  width: 20px;
+  border-radius: 3px;
+  background: #0071E3;
+}
+
+/* ─── SCROLLBAR HIDE ─── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
