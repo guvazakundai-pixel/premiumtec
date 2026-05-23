@@ -87,7 +87,7 @@ export default function Nav() {
               alt="Core Tech Systems"
               width={280}
               height={133}
-              className={`h-9 w-auto object-contain ${scrolled ? '' : 'brightness-0 invert'}`}
+              className="h-9 w-auto object-contain"
               priority
               quality={100}
             />
@@ -104,11 +104,7 @@ export default function Nav() {
                   >
                     <button
                       onClick={() => setOpenDropdown(isOpen ? null : item.label)}
-                      className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-                        scrolled
-                          ? 'text-[#1D1D1F]/70 hover:text-[#1D1D1F] hover:bg-[#F5F5F7]'
-                          : 'text-white/80 hover:text-white hover:bg-white/10'
-                      }`}
+                      className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 text-[#1D1D1F]/70 hover:text-[#1D1D1F] hover:bg-[#F5F5F7]`}
                     >
                       {item.label}
                       <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -149,9 +145,7 @@ export default function Nav() {
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
                     isActive(item.href) && scrolled
                       ? 'text-[#0071E3] bg-[#0071E3]/5'
-                      : scrolled
-                        ? 'text-[#1D1D1F]/70 hover:text-[#1D1D1F] hover:bg-[#F5F5F7]'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                      : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F] hover:bg-[#F5F5F7]'
                   }`}
                 >
                   {item.label}
@@ -161,11 +155,7 @@ export default function Nav() {
             <div className="w-px h-5 bg-[#D2D2D7]/50 mx-2" />
             <Link
               href="/cart"
-              className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                scrolled
-                  ? 'bg-[#0071E3] text-white hover:shadow-lg hover:shadow-[#0071E3]/20'
-                  : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
-              }`}
+              className="relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-[#0071E3] text-white hover:shadow-lg hover:shadow-[#0071E3]/20"
             >
               <ShoppingBag size={15} />
               Cart
@@ -178,7 +168,7 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
-            <Link href="/cart" className={`relative p-2 transition-colors ${scrolled ? 'text-[#1D1D1F]' : 'text-white'}`}>
+            <Link href="/cart" className="relative p-2 text-[#1D1D1F]">
               <ShoppingBag size={19} />
               {totalItems > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#0071E3] text-white text-[9px] font-bold flex items-center justify-center">
@@ -188,7 +178,7 @@ export default function Nav() {
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`p-2 transition-colors ${scrolled ? 'text-[#1D1D1F]' : 'text-white'}`}
+              className="p-2 text-[#1D1D1F]"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}

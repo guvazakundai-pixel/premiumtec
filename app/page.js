@@ -27,21 +27,7 @@ const scaleIn = {
 // ─── HERO ───
 function Hero() {
   return (
-    <section className="hero-gradient relative min-h-screen flex items-center overflow-hidden pt-16">
-      <div className="infra-lines">
-        <svg viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-          <path d="M0 450 Q 360 300, 720 450 T 1440 450" stroke="#0071E3" strokeWidth="0.5" opacity="0.15" />
-          <path d="M0 550 Q 360 700, 720 550 T 1440 550" stroke="#2997FF" strokeWidth="0.5" opacity="0.1" />
-          <path d="M200 0 L 200 900 M 500 0 L 500 900 M 900 0 L 900 900 M 1200 0 L 1200 900" stroke="#0071E3" strokeWidth="0.3" opacity="0.08" strokeDasharray="4 8" />
-          <circle cx="720" cy="450" r="200" stroke="#2997FF" strokeWidth="0.3" opacity="0.1" fill="none" strokeDasharray="2 6" />
-          <circle cx="720" cy="450" r="300" stroke="#0071E3" strokeWidth="0.3" opacity="0.08" fill="none" strokeDasharray="2 8" />
-          <circle cx="350" cy="250" r="30" fill="#2997FF" opacity="0.1" />
-          <circle cx="1100" cy="650" r="20" fill="#0071E3" opacity="0.08" />
-          <circle cx="250" cy="700" r="15" fill="#2997FF" opacity="0.06" />
-        </svg>
-      </div>
-      <div className="hero-orb" style={{ top: '20%', left: '50%', transform: 'translateX(-50%)' }} />
-
+    <section className="bg-white relative min-h-screen flex items-center overflow-hidden pt-20">
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-20 lg:py-32">
           <motion.div initial="hidden" animate="visible" variants={{
@@ -82,7 +68,7 @@ function Hero() {
             className="hidden lg:flex flex-col items-end gap-4"
           >
             <div className="relative w-full max-w-md">
-              <div className="glass rounded-3xl p-6 shadow-xl animate-float">
+              <div className="border border-[#D2D2D7] rounded-3xl p-6 shadow-sm bg-white">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <Shield size={18} className="text-[#0071E3]" />
@@ -92,33 +78,10 @@ function Hero() {
                 </div>
                 <div className="h-20 flex items-end gap-2 mb-3">
                   {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-                    <motion.div
-                      key={i} initial={{ height: 0 }}
-                      animate={{ height: `${h}%` }}
-                      transition={{ duration: 0.6, ease, delay: 0.5 + i * 0.08 }}
-                      className="flex-1 rounded-lg bg-gradient-to-t from-[#0071E3] to-[#2997FF] opacity-70"
-                    />
+                    <div key={i} style={{ height: `${h}%` }} className="flex-1 rounded-lg bg-gradient-to-t from-[#0071E3] to-[#2997FF] opacity-70" />
                   ))}
                 </div>
                 <p className="text-xs text-[#86868B]">Real-time threat analysis — 2,847 events monitored</p>
-              </div>
-
-              <div className="glass rounded-3xl p-5 shadow-xl animate-float-delayed mt-4 ml-12" style={{ animationDelay: '-3s' }}>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <Cloud size={18} className="text-[#0071E3]" />
-                    <span className="text-sm font-semibold text-[#1D1D1F]">Cloud Infra</span>
-                  </div>
-                  <span className="text-[10px] text-[#86868B]">99.9% uptime</span>
-                </div>
-                <div className="grid grid-cols-4 gap-2 mb-3">
-                  {[85, 92, 78, 96].map((v, i) => (
-                    <div key={i} className="text-center">
-                      <div className="text-lg font-bold text-[#1D1D1F]">{v}%</div>
-                      <div className="text-[10px] text-[#86868B]">Node {i + 1}</div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </motion.div>
