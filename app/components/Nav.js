@@ -74,7 +74,7 @@ export default function Nav() {
         <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between" ref={dropdownRef}>
           <Link href="/" className="flex items-center shrink-0">
             <Image
-              src="/logo.png"
+              src="/images/coretechsystems-logo.png"
               alt="Core Tech Systems"
               width={280}
               height={133}
