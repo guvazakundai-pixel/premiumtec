@@ -18,10 +18,10 @@ export default function WhatsAppButton() {
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-72">
           <div className="rounded-2xl overflow-hidden border border-white/[0.06] shadow-2xl"
-            style={{ background: 'rgba(10,18,36,0.96)', backdropFilter: 'blur(60px)' }}>
+            style={{ background: 'rgba(10,10,10,0.96)', backdropFilter: 'blur(60px)' }}>
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.04]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
                   <MessageCircle size={16} className="text-white" />
                 </div>
                 <div>
