@@ -31,7 +31,7 @@ export default function ProductDetail({ params }) {
   }, [params]);
 
   if (slug && !product) notFound();
-  if (!product) return <div className="min-h-screen bg-white flex items-center justify-center"><div className="text-[#86868B]">Loading...</div></div>;
+  if (!product) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><div className="text-neutral-400">Loading...</div></div>;
 
   const handleAdd = () => {
     addItem(product);
@@ -59,7 +59,7 @@ export default function ProductDetail({ params }) {
       'GPU': Cpu, 'RAM': HardDrive,
     };
     const Icon = icons[label] || Monitor;
-    return <Icon size={14} className="text-black shrink-0" />;
+    return <Icon size={14} className="text-neutral-400 shrink-0" />;
   };
 
   const specs = [
@@ -79,27 +79,27 @@ export default function ProductDetail({ params }) {
     : Monitor;
 
   return (
-    <main className="min-h-screen bg-white pt-24 pb-20">
+    <main className="min-h-screen bg-[#0A0A0A] pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <Link href={`/${product.category.toLowerCase()}`}
-          className="inline-flex items-center gap-2 text-xs text-[#86868B] hover:text-black transition-colors mb-8">
+          className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-white transition-colors mb-8">
           <ArrowLeft size={14} /> Back to {product.category}
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease }}>
-            <div className="card-gray p-6 lg:p-8 flex items-center justify-center min-h-[350px] lg:min-h-[450px] relative overflow-hidden">
+            <div className="card p-6 lg:p-8 flex items-center justify-center min-h-[350px] lg:min-h-[450px] relative overflow-hidden">
               {allImages.length > 0 ? (
                 <img src={allImages[activeImage]} alt={product.name}
                   className="w-full h-full object-cover transition-all duration-700 hover:scale-110 rounded-lg" />
               ) : (
-                <div className="flex flex-col items-center justify-center gap-3 text-[#86868B]">
+                <div className="flex flex-col items-center justify-center gap-3 text-neutral-500">
                   <Monitor size={48} />
                   <span className="text-xs text-center px-4">{product.name}</span>
                 </div>
               )}
               {product.badge && (
-                <span className="absolute top-4 left-4 badge text-[9px]">{product.badge}</span>
+                <span className="absolute top-4 left-4 badge-premium text-[9px]">{product.badge}</span>
               )}
             </div>
 
@@ -108,7 +108,7 @@ export default function ProductDetail({ params }) {
                 {allImages.map((img, i) => (
                   <button key={i} onClick={() => setActiveImage(i)}
                     className={`w-16 h-16 rounded-xl border-2 overflow-hidden transition-all duration-300 ${
-                      activeImage === i ? 'border-black' : 'border-[#D2D2D7] hover:border-[#86868B]'
+                      activeImage === i ? 'border-white' : 'border-white/20 hover:border-white/40'
                     }`}>
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -119,67 +119,67 @@ export default function ProductDetail({ params }) {
 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1, ease }}>
             <div className="flex items-center gap-2 mb-4 flex-wrap">
-              {product.badge && <span className="badge text-[9px]">{product.badge}</span>}
-              <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#F5F5F7] border border-[#D2D2D7] text-[#555555] flex items-center gap-1.5">
+              {product.badge && <span className="badge-premium text-[9px]">{product.badge}</span>}
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-400 flex items-center gap-1.5">
                 {categoryIcon({ size: 11 })} {product.category}
               </span>
-              <span className="text-[10px] px-2.5 py-1 rounded-full bg-black text-white">
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/10 text-white">
                 {brand}
               </span>
-              <span className="text-[10px] px-2.5 py-1 rounded-full bg-[#F5F5F7] text-[#555555]">
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-neutral-400">
                 {usageType}
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-black mb-2">{product.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">{product.name}</h1>
 
             <div className="flex items-center gap-2 mb-4">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={14} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
+                <Star key={i} size={14} className={i < Math.floor(product.rating) ? 'text-neutral-500 fill-neutral-500' : 'text-white/10'} />
               ))}
-              <span className="text-xs text-[#86868B]">{product.rating} ({product.reviews} reviews)</span>
+              <span className="text-xs text-neutral-500">{product.rating} ({product.reviews} reviews)</span>
             </div>
 
             <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl font-bold text-black">${product.price.toLocaleString()}</span>
+              <span className="text-3xl font-bold text-white">${product.price.toLocaleString()}</span>
               {product.originalPrice && (
-                <span className="text-lg text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>
+                <span className="text-lg text-neutral-500 line-through">${product.originalPrice.toLocaleString()}</span>
               )}
             </div>
 
-            <p className="text-sm text-[#86868B] leading-relaxed mb-8">{product.description}</p>
+            <p className="text-sm text-neutral-400 leading-relaxed mb-8">{product.description}</p>
 
-            <div className="card-gray p-5 mb-8">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-4 flex items-center gap-2">
+            <div className="card p-5 mb-8">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-4 flex items-center gap-2">
                 <Monitor size={12} /> Specifications
               </h3>
-              <div className="divide-y divide-[#E5E5E5]">
+              <div className="divide-y divide-white/10">
                 {specs.map(spec => (
                   <div key={spec.label} className="flex items-center gap-3 py-3">
                     {specIcon(spec.label)}
-                    <span className="text-xs text-[#86868B] w-24 shrink-0">{spec.label}</span>
-                    <span className={`text-xs font-medium ${spec.color || 'text-black'}`}>{spec.value}</span>
+                    <span className="text-xs text-neutral-400 w-24 shrink-0">{spec.label}</span>
+                    <span className={`text-xs font-medium ${spec.color || 'text-white'}`}>{spec.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#86868B] mb-3">Key Features</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">Key Features</h3>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
               {product.features.map((f, i) => (
-                <li key={i} className="flex items-center gap-2 text-xs text-[#86868B]">
-                  <Check size={12} className="text-black shrink-0" /> {f}
+                <li key={i} className="flex items-center gap-2 text-xs text-neutral-400">
+                  <Check size={12} className="text-white shrink-0" /> {f}
                 </li>
               ))}
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button onClick={handleAdd} disabled={!product.inStock}
-                className="btn-primary flex-1 py-4 text-xs font-semibold tracking-wider justify-center disabled:opacity-30 disabled:cursor-not-allowed">
+                className="flex-1 py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 <ShoppingBag size={16} /> {added ? 'Added!' : 'Add to Cart'}
               </button>
               <button onClick={handleWhatsApp}
-                className="btn-outline py-4 text-xs font-semibold tracking-wider justify-center">
+                className="py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500 flex items-center justify-center gap-2">
                 Buy via WhatsApp
               </button>
             </div>
@@ -190,24 +190,24 @@ export default function ProductDetail({ params }) {
           <section>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}
               className="mb-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#86868B]">Related Products</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">Related Products</p>
             </motion.div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map(p => (
                 <div key={p.id} onClick={() => setSelectedProduct(p)} className="group cursor-pointer">
-                  <div className="card-gray p-4 h-full flex flex-col">
-                    <div className="h-36 flex items-center justify-center mb-3 bg-[#F5F5F7] rounded-xl overflow-hidden">
+                  <div className="card p-4 h-full flex flex-col">
+                    <div className="h-36 flex items-center justify-center mb-3 bg-gradient-to-b from-white/[0.03] to-transparent rounded-xl overflow-hidden">
                       {p.image ? (
                         <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
-                        <Monitor size={28} className="text-[#86868B]" />
+                        <Monitor size={28} className="text-neutral-500" />
                       )}
                     </div>
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-[#86868B]">{p.category}</span>
-                    <h4 className="text-xs font-medium text-[#6E6E73] mt-1 leading-snug group-hover:text-black transition-colors">{p.name}</h4>
-                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#D2D2D7]">
-                      <span className="text-sm font-semibold text-black">${p.price.toLocaleString()}</span>
-                      <ChevronRight size={12} className="text-[#86868B] group-hover:text-black transition-colors" />
+                    <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-neutral-500">{p.category}</span>
+                    <h4 className="text-xs font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors">{p.name}</h4>
+                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/10">
+                      <span className="text-sm font-semibold text-white">${p.price.toLocaleString()}</span>
+                      <ChevronRight size={12} className="text-neutral-500 group-hover:text-white transition-colors" />
                     </div>
                   </div>
                 </div>

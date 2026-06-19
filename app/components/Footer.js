@@ -4,26 +4,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const footerLinks = {
-  Services: [
-    { label: 'Cybersecurity', href: '/#services' },
-    { label: 'Cloud Infrastructure', href: '/#services' },
-    { label: 'AI & Machine Learning', href: '/#services' },
-    { label: 'Software Development', href: '/#services' },
-    { label: 'Repairs', href: '/repairs' },
-  ],
   Shop: [
     { label: 'Laptops', href: '/laptops' },
     { label: 'Phones', href: '/phones' },
     { label: 'Gaming', href: '/gaming' },
-    { label: 'PCs', href: '/pcs' },
+    { label: 'PCs & Desktops', href: '/pcs' },
+    { label: 'Displays', href: '/displays' },
     { label: 'Accessories', href: '/accessories' },
   ],
+  Services: [
+    { label: 'Repairs & Upgrades', href: '/repairs' },
+    { label: 'Custom PC Builds', href: '/pcs' },
+    { label: 'OS Installation', href: '/repairs' },
+    { label: 'Data Recovery', href: '/repairs' },
+    { label: 'Diagnostics', href: '/repairs' },
+  ],
   Company: [
-    { label: 'About', href: '/about' },
+    { label: 'About Us', href: '/about' },
     { label: 'Contact', href: '/contact' },
-    { label: 'Support', href: '/support' },
-    { label: 'Privacy', href: '/privacy' },
-    { label: 'Terms', href: '/terms' },
+    { label: 'Request Quote', href: '/contact' },
+    { label: 'FAQ', href: '/' },
   ],
 };
 
@@ -44,8 +44,22 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm text-[#86868B] leading-relaxed max-w-sm mb-6">
-              Enterprise technology solutions — cybersecurity, cloud infrastructure, AI, and software development. Premium tech retail in Harare, Zimbabwe.
+              Premium laptops, gaming consoles, smartphones, PC builds, and accessories in Harare, Zimbabwe. Expert repairs and tech support.
             </p>
+            <div className="space-y-2 text-sm text-[#86868B] mb-6">
+              <p className="flex items-center gap-2">
+                <span className="text-[#6E6E73] font-medium">Call / WhatsApp:</span>
+                <a href="https://wa.me/263780579633" className="hover:text-white transition-colors">+263 780 579 633</a>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-[#6E6E73] font-medium">Call:</span>
+                <a href="tel:+263710713518" className="hover:text-white transition-colors">+263 71 071 3518</a>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-[#6E6E73] font-medium">Email:</span>
+                <a href="mailto:kuzivakwashegoko@gmail.com" className="hover:text-white transition-colors">kuzivakwashegoko@gmail.com</a>
+              </p>
+            </div>
             <div className="flex items-center gap-4 text-sm text-[#86868B]">
               <span>&copy; {new Date().getFullYear()}</span>
               <span className="w-1 h-1 rounded-full bg-[#424245]" />
