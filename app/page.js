@@ -65,39 +65,76 @@ function getSavings(product) {
 }
 
 function getPriceTier(price) {
-  if (price < 200) return { label: 'Budget', color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' };
-  if (price < 500) return { label: 'Mid-Range', color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' };
-  return { label: 'Premium', color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' };
+  if (price < 200) return { label: 'Budget', color: 'bg-white/5 text-neutral-400 border-white/10' };
+  if (price < 500) return { label: 'Mid-Range', color: 'bg-white/5 text-neutral-400 border-white/10' };
+  return { label: 'Premium', color: 'bg-white/5 text-neutral-400 border-white/10' };
+}
+
+function lcg(seed) {
+  return ((seed * 1664525 + 1013904223) & 0x7fffffff) / 0x80000000;
+}
+
+function Particles({ count = 20 }) {
+  const particles = useMemo(() =>
+    Array.from({ length: count }, (_, i) => {
+      const s = i + 1;
+      return {
+        id: i, x: lcg(s * 3 + 1) * 100, y: lcg(s * 7 + 2) * 100,
+        size: lcg(s * 11 + 3) * 2 + 1.5,
+        duration: lcg(s * 13 + 4) * 14 + 20,
+        delay: lcg(s * 17 + 5) * 12,
+      };
+    }), [count]);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            width: p.size, height: p.size,
+            left: `${p.x}%`, top: `${p.y}%`,
+            background: p.id % 3 === 0 ? 'rgba(255,255,255,0.15)' : p.id % 3 === 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
+          }}
+          animate={{ y: [0, -50, 0], opacity: [0.1, 0.35, 0.1] }}
+          transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}
+        />
+      ))}
+    </div>
+  );
 }
 
 function Hero({ onShop, onRepairs }) {
   return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden hero-gradient">
-      <div className="hero-orb" style={{ top: '10%', left: '50%', transform: 'translateX(-50%)' }} />
+    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden bg-[#0A0A0A]">
       <div className="hero-glow absolute inset-0 pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
+        backgroundRepeat: 'repeat', backgroundSize: '256px 256px',
+      }} />
 
       <div className="max-w-5xl mx-auto w-full text-center relative">
         <motion.div
           initial="hidden" animate="visible" variants={fadeUpHero}
           className="mb-6"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0071E3]/5 text-[#0071E3] text-[11px] font-semibold uppercase tracking-widest border border-[#0071E3]/10">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0071E3] animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-[11px] font-medium uppercase tracking-widest text-neutral-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse" />
             Harare&apos;s Premium Tech Store
           </span>
         </motion.div>
 
         <motion.h1
           initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6"
+          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6 text-white"
         >
-          Next-Level Tech{' '}
-          <span className="gradient-text">Starts Here.</span>
+          Next-Level Tech<br />Starts Here.
         </motion.h1>
 
         <motion.p
           initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-base md:text-lg text-[#86868B] max-w-xl mx-auto leading-relaxed mb-10"
+          className="text-base md:text-lg text-neutral-400 max-w-xl mx-auto leading-relaxed mb-10"
         >
           High-performance laptops, gaming setups, repairs, and premium accessories — curated for those who demand the best.
         </motion.p>
@@ -110,7 +147,7 @@ function Hero({ onShop, onRepairs }) {
             Browse Devices
             <ArrowRight size={16} />
           </button>
-          <button onClick={onRepairs} className="btn-outline text-sm px-8 py-3.5">
+          <button onClick={onRepairs} className="btn-outline text-sm px-8 py-3.5 text-white border-white/20 hover:border-white hover:text-white">
             Book Repairs
             <Wrench size={16} />
           </button>
@@ -128,11 +165,11 @@ function Hero({ onShop, onRepairs }) {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/60 backdrop-blur-sm border border-[#D2D2D7]">
-                <Icon size={14} className="text-[#86868B] shrink-0" />
+              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/10">
+                <Icon size={14} className="text-neutral-400 shrink-0" />
                 <div className="text-left">
-                  <p className="text-[11px] font-medium text-[#1D1D1F]/80 leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-[#A1A1A6] leading-tight">{item.sub}</p>
+                  <p className="text-[11px] font-medium text-white/80 leading-tight">{item.label}</p>
+                  <p className="text-[10px] text-neutral-500 leading-tight">{item.sub}</p>
                 </div>
               </div>
             );
@@ -146,7 +183,7 @@ function Hero({ onShop, onRepairs }) {
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <div className="animate-scroll">
-            <ChevronDown size={20} className="text-[#A1A1A6]" />
+            <ChevronDown size={20} className="text-neutral-500" />
           </div>
         </motion.div>
       </div>
@@ -167,11 +204,11 @@ function CategoryGateway() {
   ];
 
   return (
-    <section className="px-6 py-20 md:py-28 bg-white">
+    <section className="px-6 py-20 md:py-28 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#86868B] mb-3">Categories</p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-[#1D1D1F]">Shop by Category</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-3">Categories</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">Shop by Category</h2>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -186,10 +223,10 @@ function CategoryGateway() {
                 className="group block"
               >
                 <div className="card-gray p-6 flex flex-col items-start gap-3">
-                  <Icon size={28} className="text-[#1D1D1F] group-hover:scale-110 transition-transform duration-200" />
+                  <Icon size={28} className="text-white group-hover:scale-110 transition-transform duration-200" />
                   <div>
-                    <h3 className="text-base font-semibold text-[#1D1D1F]">{cat.name}</h3>
-                    <span className="text-sm text-[#86868B] mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-200">
+                    <h3 className="text-base font-semibold text-white">{cat.name}</h3>
+                    <span className="text-sm text-neutral-400 mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-200">
                       Browse &rarr;
                     </span>
                   </div>
@@ -219,9 +256,9 @@ function LaptopsSection({ setSelectedProduct }) {
   []);
 
   const tiers = useMemo(() => [
-    { label: 'Budget', range: 'Under $200', min: 0, max: 199, color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' },
-    { label: 'Mid-Range', range: '$200 – $499', min: 200, max: 499, color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' },
-    { label: 'Premium', range: '$500+', min: 500, max: Infinity, color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' },
+    { label: 'Budget', range: 'Under $200', min: 0, max: 199, color: 'bg-white/5 text-neutral-400 border-white/10' },
+    { label: 'Mid-Range', range: '$200 – $499', min: 200, max: 499, color: 'bg-white/5 text-neutral-400 border-white/10' },
+    { label: 'Premium', range: '$500+', min: 500, max: Infinity, color: 'bg-white/5 text-neutral-400 border-white/10' },
   ].map(t => ({ ...t, items: laptops.filter(p => p.price >= t.min && p.price <= t.max) })).filter(t => t.items.length > 0), [laptops]);
 
   return (
@@ -231,8 +268,8 @@ function LaptopsSection({ setSelectedProduct }) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#D2D2D7]"
-          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-white/10"
+          style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(12px)' }}
         >
           {notify}
         </motion.div>
@@ -241,20 +278,20 @@ function LaptopsSection({ setSelectedProduct }) {
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#86868B]">Laptops</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400">Laptops</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Laptops</h2>
-          <p className="text-sm text-[#86868B] mt-3 max-w-lg font-light">Affordable refurbished laptops for every budget — sorted by price.</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Laptops</h2>
+          <p className="text-sm text-neutral-400 mt-3 max-w-lg font-light">Affordable refurbished laptops for every budget — sorted by price.</p>
         </motion.div>
 
         {tiers.map(({ label, range, color, items }) => (
           <div key={label} className="mb-12 last:mb-0">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-1 h-5 rounded-full bg-[#0071E3]" />
-              <h3 className="text-lg font-semibold text-[#1D1D1F]">{label}</h3>
+              <div className="w-1 h-5 rounded-full bg-white/20" />
+              <h3 className="text-lg font-semibold text-white">{label}</h3>
               <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-medium ${color}`}>{range}</span>
-              <span className="text-xs text-[#86868B]">({items.length} devices)</span>
+              <span className="text-xs text-neutral-400">({items.length} devices)</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {items.map(product => {
@@ -262,39 +299,39 @@ function LaptopsSection({ setSelectedProduct }) {
                 const specs = getKeySpecs(product);
                 return (
                   <div key={product.id} className="card-light h-full flex flex-col group">
-                    <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-[#F5F5F7] to-transparent border-b border-[#D2D2D7] overflow-hidden cursor-pointer"
+                    <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.06] overflow-hidden cursor-pointer"
                       style={{ aspectRatio: getAspectRatio(product) }}>
                       {product.image ? (
                         <img src={product.image} alt={product.name}
                           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                       ) : (
-                        <Laptop size={40} className="text-[#86868B]" />
+                        <Laptop size={40} className="text-neutral-400" />
                       )}
                       {product.badge && (
                         <span className="absolute top-3 left-3 badge-light text-[9px]">{product.badge}</span>
                       )}
                       {savings > 10 && (
-                        <span className="absolute top-3 right-3 text-[9px] px-2 py-0.5 rounded-full bg-[#E8E8ED] text-[#1D1D1F] font-semibold">Save ${savings}</span>
+                        <span className="absolute top-3 right-3 text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-white font-semibold">Save ${savings}</span>
                       )}
                     </div>
                     <div className="flex-1 flex flex-col p-4 gap-2">
                       <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                        <h4 className="text-sm font-semibold text-[#1D1D1F] leading-snug line-clamp-2 hover:text-[#1D1D1F] transition-colors">{product.name}</h4>
+                        <h4 className="text-sm font-semibold text-white leading-snug line-clamp-2 hover:text-white transition-colors">{product.name}</h4>
                       </div>
                       <div className="flex flex-wrap gap-1">
                         {specs.map((spec, i) => (
-                          <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-[#D2D2D7] text-[#86868B]">{spec}</span>
+                          <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-white/10 text-neutral-400">{spec}</span>
                         ))}
                       </div>
-                      <div className="mt-auto pt-3 border-t border-[#D2D2D7] flex items-center justify-between">
+                      <div className="mt-auto pt-3 border-t border-white/[0.06] flex items-center justify-between">
                         <div>
-                          <span className="text-lg font-bold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                          {product.originalPrice && <span className="text-xs text-[#86868B] line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
-                          {savings > 10 && <span className="text-[10px] text-[#86868B] font-medium ml-2">Save ${savings}</span>}
+                          <span className="text-lg font-bold text-white">${product.price.toLocaleString()}</span>
+                          {product.originalPrice && <span className="text-xs text-neutral-400 line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
+                          {savings > 10 && <span className="text-[10px] text-neutral-400 font-medium ml-2">Save ${savings}</span>}
                         </div>
                         <button onClick={() => handleAdd(product)}
                           disabled={!product.inStock}
-                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-black text-white hover:bg-[#1D1D1F] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
+                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
                           Add to Cart
                         </button>
                       </div>
@@ -307,7 +344,7 @@ function LaptopsSection({ setSelectedProduct }) {
         ))}
 
         <motion.div variants={fadeUp} className="text-center mt-8">
-          <a href="/laptops" className="text-xs text-[#86868B] hover:text-[#1D1D1F] transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
+          <a href="/laptops" className="text-xs text-neutral-400 hover:text-white transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
             Browse All Laptops <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -336,7 +373,7 @@ function FeaturedDeals({ setSelectedProduct }) {
   return (
     <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
       <div className="ambient-container" aria-hidden="true">
-        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(0,113,227,0.04), transparent)' }} />
+        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04), transparent)' }} />
         <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.03), transparent)' }} />
       </div>
       {notify && (
@@ -344,8 +381,8 @@ function FeaturedDeals({ setSelectedProduct }) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#D2D2D7]"
-          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-white/10"
+          style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(12px)' }}
         >
           {notify}
         </motion.div>
@@ -353,11 +390,11 @@ function FeaturedDeals({ setSelectedProduct }) {
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Deals</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Deals</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Featured Deals</h2>
-          <p className="text-sm text-[#A1A1A6] mt-3 max-w-lg font-light">Best-value products handpicked for you.</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Featured Deals</h2>
+          <p className="text-sm text-neutral-500 mt-3 max-w-lg font-light">Best-value products handpicked for you.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -367,37 +404,37 @@ function FeaturedDeals({ setSelectedProduct }) {
             return (
               <div key={product.id}>
                 <div className="glass-card h-full flex flex-col group overflow-hidden">
-                  <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F5F5F7] overflow-hidden cursor-pointer"
+                  <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-white/[0.02] overflow-hidden cursor-pointer"
                     style={{ aspectRatio: getAspectRatio(product) }}>
                     {product.image ? (
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     ) : (
-                      <Package size={48} className="text-[#A1A1A6]" />
+                      <Package size={48} className="text-neutral-500" />
                     )}
                     {product.badge && (
-                      <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#F5F5F7] text-[#86868B] border border-[#D2D2D7]">{product.badge}</span>
+                      <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full bg-white/5 text-neutral-400 border border-white/10">{product.badge}</span>
                     )}
                     {savings > 10 && (
-                      <span className="absolute top-3 right-3 px-2 py-1 text-[9px] font-semibold rounded-full bg-[#E8E8ED] text-[#1D1D1F]">-${savings}</span>
+                      <span className="absolute top-3 right-3 px-2 py-1 text-[9px] font-semibold rounded-full bg-white/10 text-white">-${savings}</span>
                     )}
                   </div>
                   <div className="p-4 flex flex-col gap-2 flex-1">
                     <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                      <h3 className="text-sm font-semibold text-[#1D1D1F]/80 leading-snug group-hover:text-[#1D1D1F] transition-colors">{product.name}</h3>
+                      <h3 className="text-sm font-semibold text-white/80 leading-snug group-hover:text-white transition-colors">{product.name}</h3>
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {specs.slice(0, 2).map((spec, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-[#D2D2D7] text-[#86868B]">{spec}</span>
+                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-full border border-white/[0.06] text-neutral-400">{spec}</span>
                       ))}
                     </div>
-                    <div className="mt-auto pt-3 border-t border-[#D2D2D7] flex items-center justify-between">
+                    <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
                       <div>
-                        <span className="text-lg font-bold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-[#A1A1A6] line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
+                        <span className="text-lg font-bold text-white">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-neutral-500 line-through ml-2">${product.originalPrice.toLocaleString()}</span>}
                       </div>
                       <button onClick={() => handleAdd(product)}
                         disabled={!product.inStock}
-                        className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-black text-white hover:bg-[#1D1D1F] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                        className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                         Add to Cart
                       </button>
                     </div>
@@ -437,17 +474,17 @@ function PhonesSection({ setSelectedProduct }) {
   return (
     <section className="relative z-10 px-6 py-24 md:py-28 overflow-hidden">
       <div className="ambient-container" aria-hidden="true">
-        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(0,113,227,0.04), transparent)' }} />
-        <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(0,113,227,0.04), transparent)' }} />
+        <div className="ambient-orb ambient-orb--primary" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04), transparent)' }} />
+        <div className="ambient-orb ambient-orb--secondary" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04), transparent)' }} />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Mobiles</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Mobiles</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Smartphones</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Smartphones</h2>
         </motion.div>
 
         <motion.div
@@ -460,8 +497,8 @@ function PhonesSection({ setSelectedProduct }) {
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 rounded-full text-[10px] font-semibold tracking-[0.15em] uppercase transition-all duration-300 ${
                 activeTab === tab
-                  ? 'bg-black text-white shadow-lg'
-                  : 'border border-[#D2D2D7] text-[#86868B] hover:text-[#1D1D1F] hover:border-[#D2D2D7]'
+                  ? 'bg-white text-[#0A0A0A] shadow-lg'
+                  : 'border border-white/10 text-neutral-400 hover:text-white hover:border-white/20'
               }`}
             >
               {tab}
@@ -475,41 +512,41 @@ function PhonesSection({ setSelectedProduct }) {
           {filtered.map(product => (
             <motion.div key={product.id} variants={fadeUp}>
               <div className="glass-card h-full flex flex-col group p-5">
-                <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-[#F5F5F7] rounded-xl border border-[#D2D2D7] overflow-hidden cursor-pointer"
+                <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-white/[0.02] rounded-xl border border-white/[0.04] overflow-hidden cursor-pointer"
                   style={{ aspectRatio: getAspectRatio(product) }}>
                   {product.image ? (
                     <img src={product.image} alt={product.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   ) : (
-                    <Smartphone size={48} className="text-[#A1A1A6]" />
+                    <Smartphone size={48} className="text-neutral-500" />
                   )}
                   {product.badge && (
-                    <span className="absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full bg-[#F5F5F7] text-[#86868B] font-medium border border-[#D2D2D7]">
+                    <span className="absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full bg-white/5 text-neutral-400 font-medium border border-white/10">
                       {product.badge}
                     </span>
                   )}
                 </div>
                 <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                  <h3 className="text-sm font-medium text-[#1D1D1F]/80 leading-snug mb-2 hover:text-[#1D1D1F] transition-colors">{product.name}</h3>
+                  <h3 className="text-sm font-medium text-white/80 leading-snug mb-2 hover:text-white transition-colors">{product.name}</h3>
                 </div>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {getKeySpecs(product).map((spec, i) => (
-                    <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-[#D2D2D7] text-[#86868B]">{spec}</span>
+                    <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-neutral-400">{spec}</span>
                   ))}
                 </div>
                 <div className="flex items-center gap-1.5 mb-3">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
+                    <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-neutral-500 fill-neutral-500' : 'text-white/10'} />
                   ))}
-                  <span className="text-[10px] text-[#A1A1A6] ml-1">{product.rating}</span>
+                  <span className="text-[10px] text-neutral-500 ml-1">{product.rating}</span>
                 </div>
-                  <div className="mt-auto pt-3 border-t border-[#D2D2D7] flex items-center justify-between">
+                  <div className="mt-auto pt-3 border-t border-white/[0.04] flex items-center justify-between">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-semibold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                      {product.originalPrice && <span className="text-xs text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>}
-                      {getSavings(product) > 10 && <span className="text-[9px] text-[#86868B] font-medium">Save $${getSavings(product)}</span>}
+                      <span className="text-lg font-semibold text-white">${product.price.toLocaleString()}</span>
+                      {product.originalPrice && <span className="text-xs text-neutral-500 line-through">${product.originalPrice.toLocaleString()}</span>}
+                      {getSavings(product) > 10 && <span className="text-[9px] text-neutral-400 font-medium">Save $${getSavings(product)}</span>}
                     </div>
-                    <div onClick={() => setSelectedProduct(product)} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#86868B] hover:text-[#1D1D1F] transition-colors cursor-pointer">
+                    <div onClick={() => setSelectedProduct(product)} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-400 hover:text-white transition-colors cursor-pointer">
                       View
                     </div>
                   </div>
@@ -518,7 +555,7 @@ function PhonesSection({ setSelectedProduct }) {
                     const msg = `Hi Core Tech Systems, I'd like to inquire about:\n\nProduct: ${product.name}\nStorage: ${product.storage}\nDisplay: ${product.display}\nPrice: $${product.price.toLocaleString()}`;
                     window.open(`https://wa.me/263780579633?text=${encodeURIComponent(msg)}`, '_blank');
                   }}
-                  className="w-full mt-3 py-2.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full border border-[#D2D2D7] text-[#1D1D1F]/50 hover:text-[#1D1D1F] hover:border-[#D2D2D7] hover:bg-[#F5F5F7] transition-all duration-500"
+                  className="w-full mt-3 py-2.5 text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 hover:bg-white/5 transition-all duration-500"
                 >
                   Inquire on WhatsApp
                 </button>
@@ -529,8 +566,8 @@ function PhonesSection({ setSelectedProduct }) {
 
         {filtered.length === 0 && (
           <div className="text-center py-16">
-            <Smartphone size={40} className="text-[#A1A1A6] mx-auto mb-3" />
-            <p className="text-[#86868B] text-sm">No phones in this category yet.</p>
+            <Smartphone size={40} className="text-neutral-500 mx-auto mb-3" />
+            <p className="text-neutral-400 text-sm">No phones in this category yet.</p>
           </div>
         )}
       </div>
@@ -548,26 +585,26 @@ function GamingShowcase({ setSelectedProduct }) {
     <section className="relative z-10 px-6 py-24 md:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-[#0A0A0A] pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[#F5F5F7] blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-[#F5F5F7] blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#F5F5F7] blur-[100px]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/[0.02] blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-white/[0.02] blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-white/[0.02] blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Gaming</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Gaming</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Gaming Zone</h2>
-          <p className="text-sm text-[#A1A1A6] mt-3 max-w-lg font-light">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Gaming Zone</h2>
+          <p className="text-sm text-neutral-500 mt-3 max-w-lg font-light">
             Consoles, desktops, monitors, and gear for every level of play.
           </p>
         </motion.div>
 
         <div className="space-y-12">
           <div>
-            <h3 className="text-xl font-bold text-[#1D1D1F]/70 mb-5 flex items-center gap-3">
+            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-neutral-400 animate-pulse" />
               Top Gaming Picks
             </h3>
@@ -576,22 +613,22 @@ function GamingShowcase({ setSelectedProduct }) {
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
                   <div onClick={() => setSelectedProduct(product)}
-                    className="block h-full rounded-2xl border border-[#D2D2D7] bg-white p-6 group hover:border-[#D2D2D7] transition-all duration-500 cursor-pointer">
+                    className="block h-full rounded-2xl border border-white/10 bg-[#0A0A0A] p-6 group hover:border-white/20 transition-all duration-500 cursor-pointer">
                     <div className="flex items-start gap-5">
-                      <div className="w-36 h-36 rounded-xl bg-[#F5F5F7] flex items-center justify-center overflow-hidden border border-[#D2D2D7]">
+                      <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
                         {product.image ? (
                           <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (
-                          <Gamepad2 size={40} className="text-[#86868B]" />
+                          <Gamepad2 size={40} className="text-neutral-400" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-[#86868B]">{product.badge || 'GAMING'}</span>
-                        <h4 className="text-base font-semibold text-[#1D1D1F]/80 mt-1 group-hover:text-[#1D1D1F] transition-colors">{product.name}</h4>
-                        <p className="text-xs text-[#86868B] mt-2 line-clamp-2">{product.description}</p>
+                        <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-neutral-400">{product.badge || 'GAMING'}</span>
+                        <h4 className="text-base font-semibold text-white/80 mt-1 group-hover:text-white transition-colors">{product.name}</h4>
+                        <p className="text-xs text-neutral-400 mt-2 line-clamp-2">{product.description}</p>
                         <div className="flex items-baseline gap-2 mt-3">
-                          <span className="text-xl font-bold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                          {product.originalPrice && <span className="text-xs text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>}
+                          <span className="text-xl font-bold text-white">${product.price.toLocaleString()}</span>
+                          {product.originalPrice && <span className="text-xs text-neutral-500 line-through">${product.originalPrice.toLocaleString()}</span>}
                         </div>
                       </div>
                     </div>
@@ -602,7 +639,7 @@ function GamingShowcase({ setSelectedProduct }) {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-[#1D1D1F]/70 mb-5 flex items-center gap-3">
+            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-neutral-400 animate-pulse" />
               Best Sellers
             </h3>
@@ -610,21 +647,21 @@ function GamingShowcase({ setSelectedProduct }) {
               {consoles.map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-[#D2D2D7] transition-all duration-500 cursor-pointer">
-                    <div className="w-28 h-28 rounded-xl bg-[#F5F5F7] flex items-center justify-center overflow-hidden border border-[#D2D2D7] flex-shrink-0">
+                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-5 h-full flex items-start gap-4 group hover:border-white/20 transition-all duration-500 cursor-pointer">
+                    <div className="w-28 h-28 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
                         <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       ) : (
-                        <Gamepad size={36} className="text-[#86868B]" />
+                        <Gamepad size={36} className="text-neutral-400" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-[#86868B]">{product.badge || 'CONSOLE'}</span>
-                      <h4 className="text-sm font-semibold text-[#1D1D1F]/80 mt-1 group-hover:text-[#1D1D1F] transition-colors">{product.name}</h4>
-                      <p className="text-xs text-[#86868B] mt-1 line-clamp-1">{product.display}</p>
+                      <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-neutral-400">{product.badge || 'CONSOLE'}</span>
+                      <h4 className="text-sm font-semibold text-white/80 mt-1 group-hover:text-white transition-colors">{product.name}</h4>
+                      <p className="text-xs text-neutral-400 mt-1 line-clamp-1">{product.display}</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-lg font-bold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                        <span className={`text-[10px] ${product.inStock ? 'text-[#86868B]' : 'text-[#A1A1A6]'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
+                        <span className="text-lg font-bold text-white">${product.price.toLocaleString()}</span>
+                        <span className={`text-[10px] ${product.inStock ? 'text-neutral-400' : 'text-neutral-500'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
                       </div>
                     </div>
                   </div>
@@ -634,7 +671,7 @@ function GamingShowcase({ setSelectedProduct }) {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-[#1D1D1F]/70 mb-5 flex items-center gap-3">
+            <h3 className="text-xl font-bold text-white/70 mb-5 flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-neutral-400 animate-pulse" />
               Gaming Gear
             </h3>
@@ -642,24 +679,24 @@ function GamingShowcase({ setSelectedProduct }) {
               {gear.slice(0, 2).map((product, i) => (
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
-                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-[#D2D2D7] transition-all duration-500 cursor-pointer">
-                    <div className="w-20 h-20 rounded-xl bg-[#F5F5F7] flex items-center justify-center overflow-hidden border border-[#D2D2D7] flex-shrink-0">
+                  <div onClick={() => setSelectedProduct(product)} className="glass-card p-4 h-full flex items-center gap-4 group hover:border-white/20 transition-all duration-500 cursor-pointer">
+                    <div className="w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04] flex-shrink-0">
                       {product.image ? (
                         <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       ) : (
-                        <Monitor size={24} className="text-[#86868B]" />
+                        <Monitor size={24} className="text-neutral-400" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-[#1D1D1F]/80 group-hover:text-[#1D1D1F] transition-colors">{product.name}</h4>
+                      <h4 className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">{product.name}</h4>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {getKeySpecs(product).slice(0, 2).map((spec, i) => (
-                          <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-[#D2D2D7] text-[#86868B]">{spec}</span>
+                          <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-white/[0.06] text-neutral-400">{spec}</span>
                         ))}
                       </div>
                       <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-sm font-semibold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-[10px] text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>}
+                        <span className="text-sm font-semibold text-white">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-[10px] text-neutral-500 line-through">${product.originalPrice.toLocaleString()}</span>}
                       </div>
                     </div>
                   </div>
@@ -693,11 +730,11 @@ function PCShowcase({ setSelectedProduct }) {
 
   const getPerformanceColor = (label) => {
     switch (label) {
-      case 'Entry Level': return 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]';
-      case 'Mid Range': return 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]';
-      case 'High Performance': return 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]';
-      case 'Custom Build': return 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]';
-      default: return 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]';
+      case 'Entry Level': return 'bg-white/5 text-neutral-400 border-white/10';
+      case 'Mid Range': return 'bg-white/5 text-neutral-400 border-white/10';
+      case 'High Performance': return 'bg-white/5 text-neutral-400 border-white/10';
+      case 'Custom Build': return 'bg-white/5 text-neutral-400 border-white/10';
+      default: return 'bg-white/5 text-neutral-400 border-white/10';
     }
   };
 
@@ -706,11 +743,11 @@ function PCShowcase({ setSelectedProduct }) {
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#86868B]">Desktops</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400">Desktops</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Performance PCs</h2>
-          <p className="text-sm text-[#86868B] mt-3 max-w-lg font-light">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Performance PCs</h2>
+          <p className="text-sm text-neutral-400 mt-3 max-w-lg font-light">
             From office-ready to high-performance workstations — built for what you do.
           </p>
         </motion.div>
@@ -725,21 +762,21 @@ function PCShowcase({ setSelectedProduct }) {
                 variants={scaleIn} transition={{ delay: i * 0.1 }}>
                 <div className={`h-full rounded-2xl p-6 relative overflow-hidden group transition-all duration-500 hover:shadow-xl ${
                   isCustom
-                    ? 'bg-white border-2 border-[#0071E3] hover:border-[#0071E3]'
-                    : 'glass-card hover:border-[#D2D2D7]'
+                    ? 'bg-[#161616] border border-white/10 hover:border-white/20'
+                    : 'glass-card hover:border-white/20'
                 }`}>
-                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-[#0071E3]/[0.02] to-transparent" />
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/[0.02] to-transparent" />
 
                   <div className="flex items-start justify-between mb-4 relative z-10">
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                        isCustom ? 'bg-[#F5F5F7] border border-[#D2D2D7]' : 'bg-[#F5F5F7] border border-[#D2D2D7]'
+                        isCustom ? 'bg-white/5 border border-white/10' : 'bg-white/5 border border-white/10'
                       }`}>
-                        {isCustom ? <Wrench size={18} className="text-[#86868B]" /> : <Monitor size={18} className="text-[#86868B]" />}
+                        {isCustom ? <Wrench size={18} className="text-neutral-400" /> : <Monitor size={18} className="text-neutral-400" />}
                       </div>
                       <div>
-                        <h3 className="text-base font-semibold text-[#1D1D1F]">{product.name}</h3>
-                        {product.badge && <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-[#86868B]">{product.badge}</span>}
+                        <h3 className="text-base font-semibold text-white">{product.name}</h3>
+                        {product.badge && <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-neutral-400">{product.badge}</span>}
                       </div>
                     </div>
                     <span className={`text-[9px] font-semibold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full border ${colorClass}`}>
@@ -750,31 +787,31 @@ function PCShowcase({ setSelectedProduct }) {
                   {!isCustom && getKeySpecs(product).length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4 relative z-10">
                       {getKeySpecs(product).map((spec, i) => (
-                        <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-[#D2D2D7] text-[#86868B]">{spec}</span>
+                        <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/10 text-neutral-400">{spec}</span>
                       ))}
                     </div>
                   )}
 
                   {isCustom ? (
                     <div className="relative z-10">
-                      <p className="text-sm text-[#86868B] font-light leading-relaxed mb-4">
+                      <p className="text-sm text-neutral-400 font-light leading-relaxed mb-4">
                         We design and assemble the perfect PC for your needs and budget. From $200 build fee + parts.
                       </p>
                       <a href="https://wa.me/263780579633?text=Hi%20Tech%20Store%2C%20I%27d%20like%20to%20discuss%20a%20custom%20PC%20build."
                         target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.15em] uppercase px-5 py-3 rounded-full bg-[#F5F5F7] text-[#86868B] border border-[#D2D2D7] hover:bg-[#E8E8ED] transition-all duration-500">
+                        className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.15em] uppercase px-5 py-3 rounded-full bg-white/5 text-neutral-400 border border-white/10 hover:bg-white/10 transition-all duration-500">
                         Start Your Build <ArrowRight size={14} />
                       </a>
                     </div>
                   ) : (
-                    <div className="relative z-10 mt-auto pt-4 border-t border-[#D2D2D7] flex items-center justify-between">
+                    <div className="relative z-10 mt-auto pt-4 border-t border-white/[0.06] flex items-center justify-between">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-[#1D1D1F]">${product.price.toLocaleString()}</span>
-                        {product.originalPrice && <span className="text-xs text-[#86868B] line-through">${product.originalPrice.toLocaleString()}</span>}
-                        {getSavings(product) > 10 && <span className="text-[10px] text-[#86868B] font-medium">Save $${getSavings(product)}</span>}
+                        <span className="text-xl font-bold text-white">${product.price.toLocaleString()}</span>
+                        {product.originalPrice && <span className="text-xs text-neutral-400 line-through">${product.originalPrice.toLocaleString()}</span>}
+                        {getSavings(product) > 10 && <span className="text-[10px] text-neutral-400 font-medium">Save $${getSavings(product)}</span>}
                       </div>
                       <button onClick={() => setSelectedProduct(product)}
-                        className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#86868B] hover:text-[#1D1D1F] transition-colors flex items-center gap-1">
+                        className="text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-400 hover:text-white transition-colors flex items-center gap-1">
                         View Details <ChevronRight size={12} />
                       </button>
                     </div>
@@ -786,7 +823,7 @@ function PCShowcase({ setSelectedProduct }) {
         </div>
 
         <motion.div variants={fadeUp} className="text-center mt-10">
-          <a href="/pcs" className="text-xs text-[#86868B] hover:text-[#1D1D1F] transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
+          <a href="/pcs" className="text-xs text-neutral-400 hover:text-white transition-colors font-semibold tracking-[0.15em] uppercase inline-flex items-center gap-2">
             View All PCs <ArrowRight size={14} />
           </a>
         </motion.div>
@@ -806,11 +843,11 @@ function WhyChooseUs() {
     <section className="relative z-10 px-6 py-24 md:py-28">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14 text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Why Choose Us</span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Why Choose Us</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Why Core Tech Systems</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Why Core Tech Systems</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -820,11 +857,11 @@ function WhyChooseUs() {
               <motion.div key={f.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={scaleIn} transition={{ delay: i * 0.1 }}>
                 <div className="glass-card p-7 h-full text-center md:text-left">
-                  <div className="w-11 h-11 rounded-xl bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center mb-4 mx-auto md:mx-0">
-                    <Icon size={20} className="text-[#86868B]" />
+                  <div className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-4 mx-auto md:mx-0">
+                    <Icon size={20} className="text-neutral-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-[#1D1D1F]/90 mb-2">{f.title}</h3>
-                  <p className="text-sm text-[#86868B] font-light leading-relaxed">{f.desc}</p>
+                  <h3 className="text-lg font-semibold text-white/90 mb-2">{f.title}</h3>
+                  <p className="text-sm text-neutral-400 font-light leading-relaxed">{f.desc}</p>
                 </div>
               </motion.div>
             );
@@ -872,8 +909,8 @@ function ProductShowcase({
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-[#D2D2D7]"
-          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)' }}
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium border border-white/10"
+          style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(12px)' }}
         >
           {notify}
         </motion.div>
@@ -884,12 +921,12 @@ function ProductShowcase({
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={fadeUp}
           className="mb-14"
         >
-            <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Collection</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Collection</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">All Premium Devices</h2>
-          <p className="text-sm text-[#A1A1A6] mt-3 max-w-lg font-light">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">All Premium Devices</h2>
+          <p className="text-sm text-neutral-500 mt-3 max-w-lg font-light">
             Carefully selected devices, each chosen for exceptional build quality and performance.
           </p>
         </motion.div>
@@ -900,16 +937,16 @@ function ProductShowcase({
         >
           <div className="glass-input max-w-md">
             <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A1A1A6]" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" size={16} />
               <input
                 type="text"
                 placeholder="Search devices, processors, storage..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 bg-transparent text-[#1D1D1F] text-sm placeholder:text-[#A1A1A6] focus:outline-none"
+                className="w-full pl-11 pr-10 py-3.5 bg-transparent text-white text-sm placeholder:text-neutral-500 focus:outline-none"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#A1A1A6] hover:text-[#1D1D1F]/60 transition-colors">
+                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-neutral-500 hover:text-white/60 transition-colors">
                   <X size={14} />
                 </button>
               )}
@@ -919,28 +956,28 @@ function ProductShowcase({
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Filters sidebar */}
-          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-white/95 p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
+          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-[#0A0A0A]/95 p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
             <div className="sticky top-24">
               <div className="glass-card p-6">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#D2D2D7]">
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.04]">
                   <div className="flex items-center gap-2">
-                    <SlidersHorizontal size={13} className="text-[#A1A1A6]" />
-                    <h3 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#1D1D1F]/50">Filters</h3>
+                    <SlidersHorizontal size={13} className="text-neutral-500" />
+                    <h3 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/50">Filters</h3>
                   </div>
-                  {activeFilterCount > 0 && <span className="text-[10px] font-bold text-[#86868B]">{activeFilterCount}</span>}
+                  {activeFilterCount > 0 && <span className="text-[10px] font-bold text-neutral-400">{activeFilterCount}</span>}
                 </div>
                 <div className="space-y-1">
                   {Object.entries(filterOptions).map(([filterName, values]) => {
                     const isOpen = expandedFilter === filterName;
                     const selectedInCategory = selectedFilters[filterName]?.length || 0;
                     return (
-                      <div key={filterName} className="border-b border-[#D2D2D7] last:border-b-0">
+                      <div key={filterName} className="border-b border-white/[0.04] last:border-b-0">
                         <button onClick={() => setExpandedFilter(isOpen ? null : filterName)}
-                          className="w-full flex items-center justify-between py-3 text-[10px] font-semibold tracking-[0.15em] uppercase text-[#A1A1A6] hover:text-[#1D1D1F]/60 transition-colors">
+                          className="w-full flex items-center justify-between py-3 text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-500 hover:text-white/60 transition-colors">
                           <span>{filterName}</span>
                           <div className="flex items-center gap-2">
-                            {selectedInCategory > 0 && <span className="text-[10px] font-bold text-[#86868B]">{selectedInCategory}</span>}
-                            <ChevronDown size={12} className={`text-[#A1A1A6] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                            {selectedInCategory > 0 && <span className="text-[10px] font-bold text-neutral-400">{selectedInCategory}</span>}
+                            <ChevronDown size={12} className={`text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                           </div>
                         </button>
                         {isOpen && (
@@ -950,9 +987,9 @@ function ProductShowcase({
                               return (
                                 <label key={value} className="flex items-center gap-3 cursor-pointer group py-0.5">
                                   <input type="checkbox" checked={isChecked} onChange={() => toggleFilter(filterName, value)}
-                                    className="appearance-none w-4 h-4 rounded-md border border-[#D2D2D7] bg-transparent checked:bg-white checked:border-white transition-all duration-300"
+                                    className="appearance-none w-4 h-4 rounded-md border border-white/20 bg-transparent checked:bg-white checked:border-white transition-all duration-300"
                                     style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }} />
-                                  <span className={`text-xs transition-colors ${isChecked ? 'text-[#86868B]' : 'text-[#A1A1A6] group-hover:text-[#1D1D1F]/50'}`}>{value}</span>
+                                  <span className={`text-xs transition-colors ${isChecked ? 'text-neutral-400' : 'text-neutral-500 group-hover:text-white/50'}`}>{value}</span>
                                 </label>
                               );
                             })}
@@ -965,7 +1002,7 @@ function ProductShowcase({
               </div>
               {mobileFiltersOpen && (
                 <button onClick={() => setMobileFiltersOpen(false)}
-                  className="w-full mt-4 py-3 bg-[#E8E8ED] text-[#1D1D1F] text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-[#D2D2D7] hover:bg-[#D2D2D7] transition-all duration-500">
+                  className="w-full mt-4 py-3 bg-white/10 text-white text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 hover:bg-white/20 transition-all duration-500">
                   Close Filters
                 </button>
               )}
@@ -974,8 +1011,8 @@ function ProductShowcase({
 
           {!mobileFiltersOpen && (
             <button onClick={() => setMobileFiltersOpen(true)}
-              className="lg:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-5 py-3 glass-pill text-[#1D1D1F] text-[10px] font-semibold tracking-[0.15em] uppercase shadow-xl">
-              <SlidersHorizontal size={13} /> Filters{activeFilterCount > 0 && <span className="text-[#86868B]">({activeFilterCount})</span>}
+              className="lg:hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-5 py-3 glass-pill text-white text-[10px] font-semibold tracking-[0.15em] uppercase shadow-xl">
+              <SlidersHorizontal size={13} /> Filters{activeFilterCount > 0 && <span className="text-neutral-400">({activeFilterCount})</span>}
             </button>
           )}
 
@@ -988,11 +1025,11 @@ function ProductShowcase({
                 transition={{ duration: 0.3, ease }}
                 className="mb-6 overflow-hidden"
               >
-                <div className="flex items-center justify-between rounded-xl border border-[#D2D2D7] px-5 py-3 bg-white">
-                  <span className="text-xs text-[#86868B]">
-                    <span className="text-[#1D1D1F] font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
+                <div className="flex items-center justify-between rounded-xl border border-white/[0.06] px-5 py-3 bg-[#0A0A0A]">
+                  <span className="text-xs text-neutral-400">
+                    <span className="text-white font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
                   </span>
-                  <button onClick={clearAllFilters} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#86868B] hover:text-[#1D1D1F] transition-all duration-300">
+                  <button onClick={clearAllFilters} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-neutral-400 hover:text-neutral-400 transition-all duration-300">
                     Clear All
                   </button>
                 </div>
@@ -1006,17 +1043,17 @@ function ProductShowcase({
                   <motion.div key={product.id} variants={fadeUp}>
                     <div className="product-card h-full flex flex-col group relative">
                       <button onClick={() => toggleWishlist(product.id)}
-                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/90 backdrop-blur-sm border border-[#D2D2D7]/30 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-[#D2D2D7]">
-                        <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-[#86868B] fill-neutral-400' : 'text-[#86868B]'}`} />
+                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#0A0A0A]/70 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-white/10">
+                        <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-neutral-400 fill-neutral-400' : 'text-neutral-400'}`} />
                       </button>
 
-                      <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-[#F5F5F7] to-transparent border-b border-[#D2D2D7] overflow-hidden cursor-pointer"
+                      <div onClick={() => setSelectedProduct(product)} className="relative flex items-center justify-center bg-gradient-to-b from-white/[0.03] to-transparent border-b border-white/[0.03] overflow-hidden cursor-pointer"
                         style={{ aspectRatio: getAspectRatio(product) }}>
                         {product.image ? (
                           <img src={product.image} alt={product.name}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
                         ) : (
-                          <div className="w-24 h-32 rounded-xl border border-[#D2D2D7] flex items-center justify-center text-[#A1A1A6] text-xs bg-[#F5F5F7]">
+                          <div className="w-24 h-32 rounded-xl border border-white/10 flex items-center justify-center text-neutral-500 text-xs bg-white/[0.02]">
                             {product.name.split(' ').slice(0, 2).join(' ')}
                           </div>
                         )}
@@ -1027,45 +1064,45 @@ function ProductShowcase({
 
                       <div className="flex-1 flex flex-col p-5 space-y-2.5">
                         <div>
-                          <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">{product.category}</span>
+                          <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-neutral-500">{product.category}</span>
                           <div onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                            <h3 className="text-sm font-medium text-[#1D1D1F]/80 mt-1 leading-snug group-hover:text-[#1D1D1F] transition-colors duration-500">{product.name}</h3>
+                            <h3 className="text-sm font-medium text-white/80 mt-1 leading-snug group-hover:text-white transition-colors duration-500">{product.name}</h3>
                           </div>
                         </div>
 
                         <div className="flex flex-wrap gap-1.5">
                           {getKeySpecs(product).slice(0, 3).map((spec, i) => (
-                            <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-[#D2D2D7] text-[#86868B] font-light">{spec}</span>
+                            <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-neutral-400 font-light">{spec}</span>
                           ))}
                         </div>
 
                         <div className="flex items-center gap-1.5">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
+                            <Star key={i} size={10} className={i < Math.floor(product.rating) ? 'text-neutral-500 fill-neutral-500' : 'text-white/10'} />
                           ))}
-                          <span className="text-[10px] text-[#A1A1A6] ml-1">{product.rating}</span>
+                          <span className="text-[10px] text-neutral-500 ml-1">{product.rating}</span>
                         </div>
 
-                        <div className="flex items-baseline justify-between pt-2.5 border-t border-[#D2D2D7]">
+                        <div className="flex items-baseline justify-between pt-2.5 border-t border-white/[0.04]">
                           <div className="flex items-baseline gap-3">
-                            <span className="text-lg font-semibold text-[#1D1D1F] tracking-tight">${product.price.toLocaleString()}</span>
-                            {product.originalPrice && <span className="text-xs text-[#A1A1A6] line-through">${product.originalPrice.toLocaleString()}</span>}
-                            {getSavings(product) > 10 && <span className="text-[9px] text-[#86868B] font-medium">Save $${getSavings(product)}</span>}
+                            <span className="text-lg font-semibold text-white tracking-tight">${product.price.toLocaleString()}</span>
+                            {product.originalPrice && <span className="text-xs text-neutral-500 line-through">${product.originalPrice.toLocaleString()}</span>}
+                            {getSavings(product) > 10 && <span className="text-[9px] text-neutral-400 font-medium">Save $${getSavings(product)}</span>}
                           </div>
                           <div className="flex items-center gap-1.5">
                             <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-neutral-400' : 'bg-neutral-500'}`} />
-                            <span className={`text-[10px] ${product.inStock ? 'text-[#86868B]' : 'text-[#A1A1A6]'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
+                            <span className={`text-[10px] ${product.inStock ? 'text-neutral-400' : 'text-neutral-500'}`}>{product.inStock ? 'In Stock' : 'Low Stock'}</span>
                           </div>
                         </div>
 
                         <div className="flex gap-2 pt-1">
                           <button onClick={() => handleAdd(product)}
                             disabled={!product.inStock}
-                            className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-black text-white hover:bg-[#1D1D1F] shadow-lg transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                            className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 shadow-lg transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                             Add to Cart
                           </button>
                           <button onClick={() => handleWhatsApp(product)}
-                            className="px-4 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-[#D2D2D7] text-[#1D1D1F]/50 hover:text-[#1D1D1F] hover:border-[#D2D2D7] transition-all duration-500">
+                            className="px-4 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/20 transition-all duration-500">
                             Inquire
                           </button>
                         </div>
@@ -1075,9 +1112,9 @@ function ProductShowcase({
                 ))
               ) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="col-span-full">
-                  <div className="text-center py-20 rounded-2xl border border-[#D2D2D7] bg-white">
-                    <p className="text-[#86868B] text-sm mb-1">No products match your filters.</p>
-                    <p className="text-[#A1A1A6] text-xs mb-4">Try adjusting your search or filter criteria.</p>
+                  <div className="text-center py-20 rounded-2xl border border-white/[0.04] bg-[#0A0A0A]">
+                    <p className="text-neutral-400 text-sm mb-1">No products match your filters.</p>
+                    <p className="text-neutral-500 text-xs mb-4">Try adjusting your search or filter criteria.</p>
                     <button onClick={clearAllFilters} className="btn-premium btn-premium--ghost text-[10px]">Clear all filters</button>
                   </div>
                 </motion.div>
@@ -1086,11 +1123,11 @@ function ProductShowcase({
 
             <motion.div
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              className="mt-10 pt-6 border-t border-[#D2D2D7] text-center"
+              className="mt-10 pt-6 border-t border-white/[0.04] text-center"
             >
-              <p className="text-xs text-[#A1A1A6] tracking-wider">
-                Showing <span className="text-[#1D1D1F] font-medium">{filteredProducts.length}</span> of{' '}
-                <span className="text-[#1D1D1F] font-medium">{products.length}</span> devices
+              <p className="text-xs text-neutral-500 tracking-wider">
+                Showing <span className="text-white font-medium">{filteredProducts.length}</span> of{' '}
+                <span className="text-white font-medium">{products.length}</span> devices
               </p>
             </motion.div>
           </div>
@@ -1115,11 +1152,11 @@ function RepairServices() {
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Services</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Services</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Repair & Upgrade Center</h2>
-          <p className="text-sm text-[#A1A1A6] mt-3 max-w-lg font-light">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Repair & Upgrade Center</h2>
+          <p className="text-sm text-neutral-500 mt-3 max-w-lg font-light">
             Professional repairs, upgrades, and maintenance for all your devices.
           </p>
         </motion.div>
@@ -1130,22 +1167,22 @@ function RepairServices() {
             return (
               <motion.div key={svc.title} initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={scaleIn} transition={{ delay: i * 0.07 }}>
-                <div className="glass-card p-6 h-full flex flex-col group hover:border-[#D2D2D7]">
+                <div className="glass-card p-6 h-full flex flex-col group hover:border-white/20">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                      <Icon size={18} className="text-[#86868B]" />
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                      <Icon size={18} className="text-neutral-400" />
                     </div>
                     {svc.badge && (
-                      <span className="text-[9px] px-2.5 py-1 rounded-full bg-[#F5F5F7] text-[#86868B] font-medium border border-[#D2D2D7]">
+                      <span className="text-[9px] px-2.5 py-1 rounded-full bg-white/5 text-neutral-400 font-medium border border-white/10">
                         {svc.badge}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm font-semibold text-[#1D1D1F]/85 mb-1.5">{svc.title}</h3>
-                  <p className="text-xs text-[#86868B] font-light flex-1">{svc.desc}</p>
-                  <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#D2D2D7]">
-                    <Clock3 size={11} className="text-[#1D1D1F]/25" />
-                    <span className="text-[10px] text-[#A1A1A6]">{svc.time}</span>
+                  <h3 className="text-sm font-semibold text-white/85 mb-1.5">{svc.title}</h3>
+                  <p className="text-xs text-neutral-400 font-light flex-1">{svc.desc}</p>
+                  <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-white/[0.04]">
+                    <Clock3 size={11} className="text-white/25" />
+                    <span className="text-[10px] text-neutral-500">{svc.time}</span>
                   </div>
                 </div>
               </motion.div>
@@ -1184,9 +1221,9 @@ function TrustStats() {
                 <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.12 }}
                   className="text-center">
-                  <Icon size={22} className="text-[#86868B] mx-auto mb-3" />
-                  <p className="text-2xl md:text-3xl font-bold text-[#1D1D1F] tracking-tight">{stat.value}</p>
-                  <p className="text-xs text-[#86868B] mt-1">{stat.label}</p>
+                  <Icon size={22} className="text-neutral-400 mx-auto mb-3" />
+                  <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">{stat.value}</p>
+                  <p className="text-xs text-neutral-400 mt-1">{stat.label}</p>
                 </motion.div>
               );
             })}
@@ -1209,10 +1246,10 @@ function Testimonials() {
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Testimonials</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Testimonials</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">What Our Customers Say</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">What Our Customers Say</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -1222,15 +1259,15 @@ function Testimonials() {
               <div className="glass-card p-7 h-full flex flex-col">
                 <div className="flex gap-0.5 mb-4">
                   {[...Array(5)].map((_, s) => (
-                    <Star key={s} size={13} className={s < review.rating ? 'text-amber-400 fill-amber-400' : 'text-[#E5E5E5]'} />
+                    <Star key={s} size={13} className={s < review.rating ? 'text-neutral-500 fill-neutral-500' : 'text-white/10'} />
                   ))}
                 </div>
-                <p className="text-sm text-[#86868B] font-light leading-relaxed flex-1 mb-5">
+                <p className="text-sm text-neutral-400 font-light leading-relaxed flex-1 mb-5">
                   &ldquo;{review.text}&rdquo;
                 </p>
-                <div className="pt-4 border-t border-[#D2D2D7]">
-                  <p className="text-sm font-medium text-[#1D1D1F]/80">{review.name}</p>
-                  <p className="text-[11px] text-[#A1A1A6]">{review.role}</p>
+                <div className="pt-4 border-t border-white/[0.04]">
+                  <p className="text-sm font-medium text-white/80">{review.name}</p>
+                  <p className="text-[11px] text-neutral-500">{review.role}</p>
                 </div>
               </div>
             </motion.div>
@@ -1256,10 +1293,10 @@ function FAQ() {
       <div className="max-w-3xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">FAQ</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">FAQ</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-[#1D1D1F]">Frequently Asked Questions</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-white">Frequently Asked Questions</h2>
         </motion.div>
 
         <div className="space-y-2">
@@ -1267,9 +1304,9 @@ function FAQ() {
             <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
               className="glass-card overflow-hidden">
               <button onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-6 py-4 text-left text-sm font-medium text-[#1D1D1F]/70 hover:text-[#1D1D1F] transition-colors flex items-center justify-between gap-2">
+                className="w-full px-6 py-4 text-left text-sm font-medium text-white/70 hover:text-white transition-colors flex items-center justify-between gap-2">
                 {faq.q}
-                <ChevronDown size={14} className={`text-[#A1A1A6] shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
+                <ChevronDown size={14} className={`text-neutral-500 shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {open === i && (
@@ -1280,7 +1317,7 @@ function FAQ() {
                     transition={{ duration: 0.3, ease }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-4 text-sm text-[#86868B] font-light leading-relaxed border-t border-[#D2D2D7] pt-3">
+                    <div className="px-6 pb-4 text-sm text-neutral-400 font-light leading-relaxed border-t border-white/[0.04] pt-3">
                       {faq.a}
                     </div>
                   </motion.div>
@@ -1304,22 +1341,22 @@ function NewsletterSection() {
           className="glass-card text-center relative overflow-hidden p-8 md:p-12">
           <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
           <div className="relative z-10 max-w-xl mx-auto">
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#86868B] mb-4 block">Stay Connected</span>
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tighter text-[#1D1D1F] mb-3">Stay Ahead of the Curve</h3>
-            <p className="text-sm text-[#86868B] font-light mb-8 max-w-md mx-auto">
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400 mb-4 block">Stay Connected</span>
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tighter text-white mb-3">Stay Ahead of the Curve</h3>
+            <p className="text-sm text-neutral-400 font-light mb-8 max-w-md mx-auto">
               New arrivals, exclusive offers, and limited editions — straight to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
               <div className="glass-input flex-1 w-full">
                 <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-transparent text-[#1D1D1F] text-sm placeholder:text-[#A1A1A6] focus:outline-none" />
+                  className="w-full px-4 py-3 bg-transparent text-white text-sm placeholder:text-neutral-500 focus:outline-none" />
               </div>
               <button onClick={() => { if (email) setEmail(''); }}
                 className="btn-premium btn-premium--primary text-[10px] whitespace-nowrap w-full sm:w-auto justify-center">
                 Subscribe <ArrowRight size={12} />
               </button>
             </div>
-            <p className="text-[10px] text-[#A1A1A6] mt-4">No spam. Unsubscribe at any time.</p>
+            <p className="text-[10px] text-neutral-500 mt-4">No spam. Unsubscribe at any time.</p>
           </div>
         </motion.div>
       </div>
@@ -1335,14 +1372,14 @@ function InfoSection() {
   ];
 
   return (
-    <section className="relative z-10 px-6 py-24 border-t border-[#D2D2D7]">
+    <section className="relative z-10 px-6 py-24 border-t border-white/[0.04]">
       <div className="max-w-6xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-14">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#0071E3] to-[#0071E3]/50" />
-            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">Showroom</span>
+            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-white/20 to-white/10" />
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">Showroom</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#1D1D1F]">Visit Us</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">Visit Us</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1352,23 +1389,23 @@ function InfoSection() {
               <motion.div key={item.title} variants={fadeUp} transition={{ delay: i * 0.1 }}
                 className="glass-card p-6 md:p-7">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-9 h-9 rounded-xl bg-[#F5F5F7] border border-[#D2D2D7] flex items-center justify-center">
-                    <Icon size={16} className="text-[#86868B]" />
+                  <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    <Icon size={16} className="text-neutral-400" />
                   </div>
-                  <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#A1A1A6]">{item.title}</span>
+                  <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-500">{item.title}</span>
                 </div>
                 {item.lines.map((line, j) => (
-                  <p key={j} className={`${j === 0 ? 'text-sm text-[#1D1D1F]/70 font-medium' : 'text-sm text-[#86868B] leading-relaxed mt-1'}`}>{line}</p>
+                  <p key={j} className={`${j === 0 ? 'text-sm text-white/70 font-medium' : 'text-sm text-neutral-400 leading-relaxed mt-1'}`}>{line}</p>
                 ))}
-                <p className="text-sm font-medium text-[#86868B] mt-4">{item.accent}</p>
+                <p className="text-sm font-medium text-neutral-400 mt-4">{item.accent}</p>
               </motion.div>
             );
           })}
         </div>
 
         <motion.div variants={fadeUp} className="mt-6 glass-card p-8 text-center">
-          <h3 className="text-lg font-bold tracking-tight text-[#1D1D1F]/80">Stay Updated</h3>
-          <p className="text-sm text-[#A1A1A6] max-w-lg mx-auto mt-2 leading-relaxed font-light">
+          <h3 className="text-lg font-bold tracking-tight text-white/80">Stay Updated</h3>
+          <p className="text-sm text-neutral-500 max-w-lg mx-auto mt-2 leading-relaxed font-light">
             Join our WhatsApp channel for daily stock updates and exclusive product arrivals.
           </p>
           <a href="https://whatsapp.com/channel/0029Vb6hJE6F1YlVNfnyBk21" target="_blank" rel="noopener noreferrer"
@@ -1449,7 +1486,7 @@ export default function CoreTechSystems() {
 
     return (
     <>
-    <div ref={mainRef} className="min-h-screen bg-white relative overflow-x-hidden">
+    <div ref={mainRef} className="min-h-screen bg-[#0A0A0A] relative overflow-x-hidden">
       <div className="noise-overlay" />
 
       <div className="relative z-10">
@@ -1494,7 +1531,7 @@ export default function CoreTechSystems() {
 
         <button
           onClick={scrollToProducts}
-          className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-black text-white shadow-lg flex items-center justify-center hover:bg-white/90 transition-all duration-500 active:scale-95"
+          className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-white text-[#0A0A0A] shadow-lg flex items-center justify-center hover:bg-white/90 transition-all duration-500 active:scale-95"
           style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
         >
           <ShoppingBag size={18} />

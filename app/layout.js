@@ -1,23 +1,17 @@
-import { Syne, DM_Sans } from "next/font/google";
+import "@fontsource/inter/100.css";
+import "@fontsource/inter/200.css";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "@fontsource/inter/900.css";
 import "./globals.css";
 import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import { CartProvider } from "@/app/context/CartContext";
-
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-syne",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
 
 export const metadata = {
   title: "Core Tech Systems — Premium Technology, Curated for You",
@@ -36,9 +30,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`h-full antialiased ${syne.variable} ${dmSans.variable}`}>
+    <html lang="en" className="h-full antialiased">
       <head>
-        <meta name="theme-color" content="#FFFFFF" />
+        <meta name="theme-color" content="#0A0A0A" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://coretechsystems.vercel.app" />
         <script
@@ -68,7 +62,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-[#1D1D1F] overflow-x-hidden font-body">
+      <body className="min-h-full flex flex-col bg-[#0A0A0A] text-white overflow-x-hidden font-sans noise-overlay">
         <CartProvider>
           <Nav />
           <main className="flex-1">{children}</main>
