@@ -70,66 +70,29 @@ function getPriceTier(price) {
   return { label: 'Premium', color: 'bg-[#F5F5F7] text-[#86868B] border-[#D2D2D7]' };
 }
 
-function lcg(seed) {
-  return ((seed * 1664525 + 1013904223) & 0x7fffffff) / 0x80000000;
-}
-
-function Particles({ count = 20 }) {
-  const particles = useMemo(() =>
-    Array.from({ length: count }, (_, i) => {
-      const s = i + 1;
-      return {
-        id: i, x: lcg(s * 3 + 1) * 100, y: lcg(s * 7 + 2) * 100,
-        size: lcg(s * 11 + 3) * 2 + 1.5,
-        duration: lcg(s * 13 + 4) * 14 + 20,
-        delay: lcg(s * 17 + 5) * 12,
-      };
-    }), [count]);
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            width: p.size, height: p.size,
-            left: `${p.x}%`, top: `${p.y}%`,
-            background: p.id % 3 === 0 ? 'rgba(255,255,255,0.15)' : p.id % 3 === 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
-          }}
-          animate={{ y: [0, -50, 0], opacity: [0.1, 0.35, 0.1] }}
-          transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function Hero({ onShop, onRepairs }) {
   return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden bg-[#0A0A0A]">
+    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden hero-gradient">
+      <div className="hero-orb" style={{ top: '10%', left: '50%', transform: 'translateX(-50%)' }} />
       <div className="hero-glow absolute inset-0 pointer-events-none" />
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
-        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
-        backgroundRepeat: 'repeat', backgroundSize: '256px 256px',
-      }} />
 
       <div className="max-w-5xl mx-auto w-full text-center relative">
         <motion.div
           initial="hidden" animate="visible" variants={fadeUpHero}
           className="mb-6"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-[11px] font-medium uppercase tracking-widest text-neutral-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0071E3]/5 text-[#0071E3] text-[11px] font-semibold uppercase tracking-widest border border-[#0071E3]/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0071E3] animate-pulse" />
             Harare&apos;s Premium Tech Store
           </span>
         </motion.div>
 
         <motion.h1
           initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6 text-white"
+          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6"
         >
-          Next-Level Tech<br />Starts Here.
+          Next-Level Tech{' '}
+          <span className="gradient-text">Starts Here.</span>
         </motion.h1>
 
         <motion.p
@@ -165,11 +128,11 @@ function Hero({ onShop, onRepairs }) {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
-                <Icon size={14} className="text-neutral-400 shrink-0" />
+              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/60 backdrop-blur-sm border border-[#D2D2D7]">
+                <Icon size={14} className="text-[#86868B] shrink-0" />
                 <div className="text-left">
-                  <p className="text-[11px] font-medium text-white/80 leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-neutral-500 leading-tight">{item.sub}</p>
+                  <p className="text-[11px] font-medium text-[#1D1D1F]/80 leading-tight">{item.label}</p>
+                  <p className="text-[10px] text-[#A1A1A6] leading-tight">{item.sub}</p>
                 </div>
               </div>
             );

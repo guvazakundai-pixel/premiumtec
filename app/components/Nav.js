@@ -126,7 +126,7 @@ export default function Nav() {
                     <Link
                       href={item.href}
                       className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
-                        scrolled ? 'text-[#86868B] hover:text-black' : 'text-white/70 hover:text-white'
+                        scrolled ? 'text-[#86868B] hover:text-black' : 'text-[#6E6E73] hover:text-black'
                       }`}
                     >
                       {item.label}
@@ -166,7 +166,7 @@ export default function Nav() {
                   key={item.href}
                   href={item.href}
                   className={`text-sm font-medium transition-colors duration-200 ${
-                    scrolled ? 'text-[#86868B] hover:text-black' : 'text-white/70 hover:text-white'
+                    scrolled ? 'text-[#86868B] hover:text-black' : 'text-[#6E6E73] hover:text-black'
                   }`}
                 >
                   {item.label}
@@ -178,14 +178,14 @@ export default function Nav() {
               className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                 scrolled
                   ? 'bg-black text-white hover:bg-[#1D1D1F]'
-                  : 'bg-white text-black hover:bg-white/90'
+                  : 'bg-[#0071E3] text-white hover:bg-[#0077ED]'
               }`}
             >
               <ShoppingBag size={15} />
               Cart
               {totalItems > 0 && (
                 <span className={`w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                  scrolled ? 'bg-white text-black' : 'bg-black text-white'
+                  scrolled ? 'bg-white text-black' : 'bg-white text-[#0071E3]'
                 }`}>
                   {totalItems}
                 </span>
@@ -194,11 +194,11 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
-            <Link href="/cart" className={`relative p-2 transition-colors ${scrolled ? 'text-black' : 'text-white'}`}>
+            <Link href="/cart" className={`relative p-2 transition-colors ${scrolled ? 'text-black' : 'text-[#6E6E73]'}`}>
               <ShoppingBag size={19} />
               {totalItems > 0 && (
                 <span className={`absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center ${
-                  scrolled ? 'bg-black text-white' : 'bg-white text-black'
+                  scrolled ? 'bg-black text-white' : 'bg-[#0071E3] text-white'
                 }`}>
                   {totalItems}
                 </span>
@@ -206,7 +206,7 @@ export default function Nav() {
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`p-2 transition-colors ${scrolled ? 'text-black' : 'text-white'}`}
+              className={`p-2 transition-colors ${scrolled ? 'text-black' : 'text-[#6E6E73]'}`}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
