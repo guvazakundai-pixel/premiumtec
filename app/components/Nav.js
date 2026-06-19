@@ -124,13 +124,13 @@ export default function Nav() {
                     onMouseEnter={() => setOpenDropdown(item.label)}
                     onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    <button
-                      onClick={() => setOpenDropdown(isOpen ? null : item.label)}
+                    <Link
+                      href={item.href}
                       className={`flex items-center gap-1 text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-white' : 'text-white'}`}
                     >
                       {item.label}
                       <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-                    </button>
+                    </Link>
                     <AnimatePresence>
                       {isOpen && (
                         <motion.div
