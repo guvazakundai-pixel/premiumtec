@@ -29,17 +29,17 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1D1D1F]">
+    <footer className="bg-[#1C1E24]">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
             <Link href="/" className="flex items-center mb-5">
               <Image
-                src="/images/coretechsystems-logo.png"
+                src="/logo.png"
                 alt="Core Tech Systems"
-                width={240}
-                height={114}
+                width={640}
+                height={427}
                 className="h-8 w-auto object-contain brightness-0 invert"
               />
             </Link>

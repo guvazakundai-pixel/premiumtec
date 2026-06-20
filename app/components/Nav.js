@@ -106,8 +106,8 @@ export default function Nav() {
             <Image
               src="/logo.png"
               alt="Core Tech Systems"
-              width={320}
-              height={152}
+              width={640}
+              height={427}
               className="h-10 w-auto object-contain"
               priority
               quality={100}
@@ -138,7 +138,7 @@ export default function Nav() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 8, scale: 0.96 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 rounded-xl bg-[#161616] shadow-xl border border-white/10"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 rounded-xl bg-[#1C1E24] shadow-xl border border-white/10"
                         >
                           {item.dropdown.map((sub) => {
                             const SubIcon = sub.icon;
@@ -172,12 +172,12 @@ export default function Nav() {
             })}
             <Link
               href="/cart"
-              className="relative bg-white text-[#0A0A0A] px-4 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition-colors flex items-center gap-2"
+              className="relative bg-[#00D2FF] text-[#121316] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#00E5FF] transition-colors flex items-center gap-2"
             >
               <ShoppingBag size={15} />
               Cart
               {totalItems > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-[#0A0A0A] text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="w-5 h-5 rounded-full bg-[#121316] text-white text-[10px] font-bold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
@@ -188,7 +188,7 @@ export default function Nav() {
             <Link href="/cart" className={`relative p-2 transition-colors text-white`}>
               <ShoppingBag size={19} />
               {totalItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-white text-[#0A0A0A] text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#00D2FF] text-[#121316] text-[9px] font-bold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}

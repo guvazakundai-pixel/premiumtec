@@ -68,12 +68,12 @@ export default function CategoryPage({ category, title, description }) {
     'Printers, chargers, keyboards, and repair services.');
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] pt-24 pb-20">
+    <main className="min-h-screen bg-[#121316] pt-24 pb-20">
       {notify && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-[#161616] border border-white/10 shadow-lg"
+          className="fixed top-20 right-4 z-50 px-4 py-3 rounded-xl text-sm font-medium text-white bg-[#1C1E24] border border-white/10 shadow-lg"
         >
           {notify}
         </motion.div>
@@ -173,7 +173,7 @@ export default function CategoryPage({ category, title, description }) {
                   <div className="flex gap-2 pt-1">
                     <button onClick={() => handleAdd(product)}
                       disabled={!product.inStock}
-                      className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                      className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#00D2FF] text-[#121316] hover:bg-[#00E5FF] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                       Add to Cart
                     </button>
                     <button onClick={() => setSelectedProduct(product)}

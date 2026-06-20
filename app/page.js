@@ -14,6 +14,11 @@ import {
 import { products as allProducts, getBrand, getSubcategory, getUsageType, getAspectRatio, categories } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
 import ProductModal from '@/app/components/ProductModal';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -105,76 +110,225 @@ function Particles({ count = 20 }) {
   );
 }
 
-function Hero({ onShop, onRepairs }) {
+function Hero({ onShop, onRepairs, setSelectedProduct }) {
+  const [activeCategory, setActiveCategory] = useState('Laptops');
+
+  const featuredCategories = useMemo(() => [
+    { id: 'Laptops', label: 'Laptops', icon: Laptop },
+    { id: 'Smartphones', label: 'Smartphones', icon: Smartphone },
+    { id: 'Gaming Consoles', label: 'Consoles', icon: Gamepad2 },
+    { id: 'Gaming PCs', label: 'Gaming PCs', icon: Monitor },
+    { id: 'Accessories', label: 'Accessories', icon: Package },
+  ], []);
+
+  const categoryFilter = useMemo(() => ({
+    'Laptops': p => p.category === 'Laptops',
+    'Smartphones': p => p.category === 'Phones',
+    'Gaming Consoles': p => {
+      const n = p.name.toLowerCase();
+      return p.category === 'Gaming' && (n.includes('playstation') || n.includes('xbox'));
+    },
+    'Gaming PCs': p => {
+      const n = p.name.toLowerCase();
+      return (p.category === 'PCs' || p.category === 'Gaming') &&
+        !n.includes('playstation') && !n.includes('xbox') &&
+        !n.includes('monitor') && !n.includes('sceptre') &&
+        !n.includes('controller') && !n.includes('disk') &&
+        !n.includes('ps4') && !n.includes('ps5');
+    },
+    'Accessories': p => p.category === 'Accessories',
+  }), []);
+
+  const filteredProducts = useMemo(() =>
+    products.filter(categoryFilter[activeCategory]).slice(0, 10),
+    [activeCategory, categoryFilter]
+  );
+
   return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden bg-[#0A0A0A]">
+    <section className="relative z-10 min-h-screen flex items-center px-6 pt-28 pb-16 overflow-hidden bg-[#121316]">
       <div className="hero-glow absolute inset-0 pointer-events-none" />
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
         backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
         backgroundRepeat: 'repeat', backgroundSize: '256px 256px',
       }} />
+      <Particles count={20} />
 
-      <div className="max-w-5xl mx-auto w-full text-center relative">
-        <motion.div
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="mb-6"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-[11px] font-medium uppercase tracking-widest text-neutral-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse" />
-            Harare&apos;s Premium Tech Store
-          </span>
-        </motion.div>
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
 
-        <motion.h1
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0] mb-6 text-white"
-        >
-          Next-Level Tech<br />Starts Here.
-        </motion.h1>
+          {/* Left column — text content */}
+          <div className="text-center lg:text-left">
+            <motion.div initial="hidden" animate="visible" variants={fadeUpHero} className="mb-6">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-[11px] font-medium uppercase tracking-widest text-neutral-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 animate-pulse" />
+                Harare&apos;s Premium Tech Store
+              </span>
+            </motion.div>
 
-        <motion.p
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="text-base md:text-lg text-neutral-400 max-w-xl mx-auto leading-relaxed mb-10"
-        >
-          High-performance laptops, gaming setups, repairs, and premium accessories — curated for those who demand the best.
-        </motion.p>
+            <motion.h1
+              initial="hidden" animate="visible" variants={fadeUpHero}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.0] mb-6 text-white"
+            >
+              Next-Level Tech<br />Starts Here.
+            </motion.h1>
 
-        <motion.div
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <button onClick={onShop} className="btn-primary text-sm px-8 py-3.5">
-            Browse Devices
-            <ArrowRight size={16} />
-          </button>
-          <button onClick={onRepairs} className="btn-outline text-sm px-8 py-3.5 text-white border-white/20 hover:border-white hover:text-white">
-            Book Repairs
-            <Wrench size={16} />
-          </button>
-        </motion.div>
+            <motion.p
+              initial="hidden" animate="visible" variants={fadeUpHero}
+              className="text-sm md:text-base text-neutral-400 max-w-xl leading-relaxed mb-8 mx-auto lg:mx-0"
+            >
+              High-performance laptops, gaming setups, repairs, and premium accessories — curated for those who demand the best.
+            </motion.p>
 
-        <motion.div
-          initial="hidden" animate="visible" variants={fadeUpHero}
-          className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto"
-        >
-          {[
-            { icon: Shield, label: 'Official Warranty', sub: '100% Authentic' },
-            { icon: Truck, label: 'Fast Delivery', sub: 'Same-day in Harare' },
-            { icon: HeadphonesIcon, label: 'Premium Support', sub: 'Expert assistance' },
-            { icon: CreditCard, label: 'Secure Payments', sub: 'EcoCash, Visa & more' },
-          ].map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/10">
-                <Icon size={14} className="text-neutral-400 shrink-0" />
-                <div className="text-left">
-                  <p className="text-[11px] font-medium text-white/80 leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-neutral-500 leading-tight">{item.sub}</p>
+            <motion.div
+              initial="hidden" animate="visible" variants={fadeUpHero}
+              className="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-3"
+            >
+              <button onClick={onShop} className="btn-primary text-sm px-7 py-3">
+                Browse Devices
+                <ArrowRight size={16} />
+              </button>
+              <button onClick={onRepairs} className="btn-outline text-sm px-7 py-3 text-white border-white/20 hover:border-white hover:text-white">
+                Book Repairs
+                <Wrench size={16} />
+              </button>
+            </motion.div>
+
+            <motion.div
+              initial="hidden" animate="visible" variants={fadeUpHero}
+              className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-2.5 max-w-xl mx-auto lg:mx-0"
+            >
+              {[
+                { icon: Shield, label: 'Official Warranty', sub: '100% Authentic' },
+                { icon: Truck, label: 'Fast Delivery', sub: 'Same-day in Harare' },
+                { icon: HeadphonesIcon, label: 'Premium Support', sub: 'Expert assistance' },
+                { icon: CreditCard, label: 'Secure Payments', sub: 'EcoCash, Visa & more' },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div key={i} className="flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/10">
+                    <Icon size={14} className="text-neutral-400 shrink-0" />
+                    <div className="text-left">
+                      <p className="text-[11px] font-medium text-white/80 leading-tight">{item.label}</p>
+                      <p className="text-[10px] text-neutral-500 leading-tight">{item.sub}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+          </div>
+
+          {/* Right column — category tabs + carousel */}
+          <div className="w-full">
+            <motion.div
+              initial="hidden" animate="visible" variants={fadeUpHero}
+              className="flex flex-wrap gap-2 mb-5"
+            >
+              {featuredCategories.map(cat => {
+                const Icon = cat.icon;
+                const isActive = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[10px] font-semibold tracking-[0.15em] uppercase transition-all duration-300 ${
+                      isActive
+                        ? 'bg-[#00D2FF] text-[#121316] shadow-lg'
+                        : 'border border-white/10 text-neutral-400 hover:text-white hover:border-white/20'
+                    }`}
+                  >
+                    <Icon size={12} />
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </motion.div>
+
+            <motion.div
+              initial="hidden" animate="visible" variants={fadeUpHero}
+              className="relative -mx-6 sm:mx-0"
+            >
+              {filteredProducts.length > 0 ? (
+                <Swiper
+                  modules={[Autoplay, Navigation, Pagination]}
+                  spaceBetween={20}
+                  slidesPerView={1}
+                  navigation
+                  pagination={{ clickable: true }}
+                  autoplay={{ delay: 5000, disableOnInteraction: false }}
+                  speed={600}
+                  grabCursor
+                  className="!pb-12 hero-carousel"
+                >
+                  {filteredProducts.map(product => {
+                    const specs = getKeySpecs(product);
+                    const savings = getSavings(product);
+                    return (
+                      <SwiperSlide key={product.id}>
+                        <div className="glass-card overflow-hidden group">
+                          <div
+                            className="relative bg-white/[0.02] flex items-center justify-center overflow-hidden cursor-pointer"
+                            style={{ aspectRatio: getAspectRatio(product) }}
+                            onClick={() => setSelectedProduct(product)}
+                          >
+                            {product.image ? (
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-contain p-4 sm:p-6 transition-all duration-700 group-hover:scale-110"
+                              />
+                            ) : (
+                              <Package size={48} className="text-neutral-500" />
+                            )}
+                            {product.badge && (
+                              <span className="absolute top-3 left-3 badge-premium">{product.badge}</span>
+                            )}
+                          </div>
+                          <div className="p-4 sm:p-5">
+                            <h3
+                              className="text-sm font-semibold text-white leading-snug line-clamp-2 cursor-pointer hover:text-white transition-colors"
+                              onClick={() => setSelectedProduct(product)}
+                            >
+                              {product.name}
+                            </h3>
+                            <div className="flex flex-wrap gap-1.5 mt-2.5">
+                              {specs.slice(0, 3).map((spec, i) => (
+                                <span key={i} className="text-[10px] px-2.5 py-1 rounded-full border border-white/[0.06] text-neutral-400">
+                                  {spec}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                              <div>
+                                <span className="text-xl font-bold text-white">${product.price.toLocaleString()}</span>
+                                {product.originalPrice && product.originalPrice > product.price && (
+                                  <span className="text-xs text-neutral-500 line-through ml-2">${product.originalPrice.toLocaleString()}</span>
+                                )}
+                                {savings > 10 && (
+                                  <span className="text-[10px] text-neutral-400 font-medium ml-2">Save ${savings}</span>
+                                )}
+                              </div>
+                              <button
+                                onClick={() => setSelectedProduct(product)}
+                                className="text-[10px] font-semibold tracking-[0.15em] uppercase px-5 py-2.5 rounded-full bg-[#00D2FF] text-[#121316] hover:bg-[#00E5FF] transition-all duration-500 shadow-lg"
+                              >
+                                View Product
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              ) : (
+                <div className="glass-card p-8 text-center">
+                  <p className="text-sm text-neutral-500">No products in this category yet.</p>
                 </div>
-              </div>
-            );
-          })}
-        </motion.div>
+              )}
+            </motion.div>
+          </div>
+
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -204,7 +358,7 @@ function CategoryGateway() {
   ];
 
   return (
-    <section className="px-6 py-20 md:py-28 bg-[#0A0A0A]">
+    <section className="px-6 py-20 md:py-28 bg-[#121316]">
       <div className="max-w-7xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp} className="mb-12">
           <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-3">Categories</p>
@@ -331,7 +485,7 @@ function LaptopsSection({ setSelectedProduct }) {
                         </div>
                         <button onClick={() => handleAdd(product)}
                           disabled={!product.inStock}
-                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
+                          className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#00D2FF] text-[#121316] hover:bg-[#00E5FF] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed shrink-0">
                           Add to Cart
                         </button>
                       </div>
@@ -434,7 +588,7 @@ function FeaturedDeals({ setSelectedProduct }) {
                       </div>
                       <button onClick={() => handleAdd(product)}
                         disabled={!product.inStock}
-                        className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                         className="text-[9px] font-semibold tracking-[0.15em] uppercase px-3 py-2 rounded-full bg-[#00D2FF] text-[#121316] hover:bg-[#00E5FF] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                         Add to Cart
                       </button>
                     </div>
@@ -497,7 +651,7 @@ function PhonesSection({ setSelectedProduct }) {
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 rounded-full text-[10px] font-semibold tracking-[0.15em] uppercase transition-all duration-300 ${
                 activeTab === tab
-                  ? 'bg-white text-[#0A0A0A] shadow-lg'
+                   ? 'bg-[#00D2FF] text-[#121316] shadow-lg'
                   : 'border border-white/10 text-neutral-400 hover:text-white hover:border-white/20'
               }`}
             >
@@ -583,7 +737,7 @@ function GamingShowcase({ setSelectedProduct }) {
 
   return (
     <section className="relative z-10 px-6 py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-[#0A0A0A] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-[#121316] pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/[0.02] blur-[120px]" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-white/[0.02] blur-[120px]" />
@@ -613,7 +767,7 @@ function GamingShowcase({ setSelectedProduct }) {
                 <motion.div key={product.id} initial="hidden" whileInView="visible" viewport={{ once: true }}
                   variants={scaleIn} transition={{ delay: i * 0.1 }}>
                   <div onClick={() => setSelectedProduct(product)}
-                    className="block h-full rounded-2xl border border-white/10 bg-[#0A0A0A] p-6 group hover:border-white/20 transition-all duration-500 cursor-pointer">
+                    className="block h-full rounded-2xl border border-white/10 bg-[#121316] p-6 group hover:border-white/20 transition-all duration-500 cursor-pointer">
                     <div className="flex items-start gap-5">
                       <div className="w-36 h-36 rounded-xl bg-white/[0.03] flex items-center justify-center overflow-hidden border border-white/[0.04]">
                         {product.image ? (
@@ -762,7 +916,7 @@ function PCShowcase({ setSelectedProduct }) {
                 variants={scaleIn} transition={{ delay: i * 0.1 }}>
                 <div className={`h-full rounded-2xl p-6 relative overflow-hidden group transition-all duration-500 hover:shadow-xl ${
                   isCustom
-                    ? 'bg-[#161616] border border-white/10 hover:border-white/20'
+                    ? 'bg-[#1C1E24] border border-white/10 hover:border-white/20'
                     : 'glass-card hover:border-white/20'
                 }`}>
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/[0.02] to-transparent" />
@@ -956,7 +1110,7 @@ function ProductShowcase({
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Filters sidebar */}
-          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-[#0A0A0A]/95 p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
+          <div className={`lg:col-span-1 ${mobileFiltersOpen ? 'block fixed inset-0 z-40 bg-[#121316]/95 p-6 pt-24 overflow-y-auto' : 'hidden lg:block'}`}>
             <div className="sticky top-24">
               <div className="glass-card p-6">
                 <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.04]">
@@ -1025,7 +1179,7 @@ function ProductShowcase({
                 transition={{ duration: 0.3, ease }}
                 className="mb-6 overflow-hidden"
               >
-                <div className="flex items-center justify-between rounded-xl border border-white/[0.06] px-5 py-3 bg-[#0A0A0A]">
+                <div className="flex items-center justify-between rounded-xl border border-white/[0.06] px-5 py-3 bg-[#1C1E24]">
                   <span className="text-xs text-neutral-400">
                     <span className="text-white font-medium">{activeFilterCount}</span> filter{activeFilterCount !== 1 ? 's' : ''} active
                   </span>
@@ -1043,7 +1197,7 @@ function ProductShowcase({
                   <motion.div key={product.id} variants={fadeUp}>
                     <div className="product-card h-full flex flex-col group relative">
                       <button onClick={() => toggleWishlist(product.id)}
-                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#0A0A0A]/70 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-white/10">
+                        className="absolute top-3 right-3 z-10 p-2 rounded-full bg-[#121316]/70 backdrop-blur-sm border border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:border-white/10">
                         <Heart size={14} className={`transition-colors duration-300 ${wishlist.has(product.id) ? 'text-neutral-400 fill-neutral-400' : 'text-neutral-400'}`} />
                       </button>
 
@@ -1098,7 +1252,7 @@ function ProductShowcase({
                         <div className="flex gap-2 pt-1">
                           <button onClick={() => handleAdd(product)}
                             disabled={!product.inStock}
-                            className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 shadow-lg transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
+                            className="flex-1 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase rounded-full bg-[#00D2FF] text-[#121316] hover:bg-[#00E5FF] shadow-lg transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed">
                             Add to Cart
                           </button>
                           <button onClick={() => handleWhatsApp(product)}
@@ -1112,7 +1266,7 @@ function ProductShowcase({
                 ))
               ) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="col-span-full">
-                  <div className="text-center py-20 rounded-2xl border border-white/[0.04] bg-[#0A0A0A]">
+                  <div className="text-center py-20 rounded-2xl border border-white/[0.04] bg-[#1C1E24]">
                     <p className="text-neutral-400 text-sm mb-1">No products match your filters.</p>
                     <p className="text-neutral-500 text-xs mb-4">Try adjusting your search or filter criteria.</p>
                     <button onClick={clearAllFilters} className="btn-premium btn-premium--ghost text-[10px]">Clear all filters</button>
@@ -1486,12 +1640,12 @@ export default function CoreTechSystems() {
 
     return (
     <>
-    <div ref={mainRef} className="min-h-screen bg-[#0A0A0A] relative overflow-x-hidden">
+    <div ref={mainRef} className="min-h-screen bg-[#121316] relative overflow-x-hidden">
       <div className="noise-overlay" />
 
       <div className="relative z-10">
         <motion.div style={{ filter: `blur(${springBlur}px)` }}>
-          <Hero onShop={scrollToProducts} onRepairs={scrollToRepairs} />
+          <Hero onShop={scrollToProducts} onRepairs={scrollToRepairs} setSelectedProduct={setSelectedProduct} />
         </motion.div>
 
         <CategoryGateway />
@@ -1531,7 +1685,7 @@ export default function CoreTechSystems() {
 
         <button
           onClick={scrollToProducts}
-          className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-white text-[#0A0A0A] shadow-lg flex items-center justify-center hover:bg-white/90 transition-all duration-500 active:scale-95"
+          className="fixed bottom-6 left-6 z-40 md:hidden w-12 h-12 rounded-full bg-[#00D2FF] text-[#121316] shadow-lg flex items-center justify-center hover:bg-[#00E5FF] transition-all duration-500 active:scale-95"
           style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
         >
           <ShoppingBag size={18} />

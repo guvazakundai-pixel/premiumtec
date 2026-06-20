@@ -57,7 +57,7 @@ const pills = [
 
 export default function ShopPage() {
   return (
-    <main className="min-h-screen bg-[#0A0A0A] pt-24 pb-20">
+    <main className="min-h-screen bg-[#121316] pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         {/* Breadcrumb */}
         <motion.nav
@@ -116,7 +116,7 @@ export default function ShopPage() {
               >
                 <Link
                   href={cat.href}
-                  className="group relative flex items-center gap-4 p-5 rounded-2xl border-l-[4px] bg-[#161616] border border-white/10 hover:border-white/20 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group relative flex items-center gap-4 p-5 rounded-2xl border-l-[4px] bg-[#1C1E24] border border-white/10 hover:border-white/20 hover:-translate-y-0.5 transition-all duration-300"
                   style={{
                     borderLeftColor: cat.color,
                   }}

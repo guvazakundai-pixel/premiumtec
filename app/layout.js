@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
       <head>
-        <meta name="theme-color" content="#0A0A0A" />
+        <meta name="theme-color" content="#121316" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://coretechsystems.vercel.app" />
         <script
@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0A0A0A] text-white overflow-x-hidden font-sans noise-overlay">
+      <body className="min-h-full flex flex-col bg-[#121316] text-white overflow-x-hidden font-sans noise-overlay">
         <CartProvider>
           <Nav />
           <main className="flex-1">{children}</main>

@@ -31,7 +31,7 @@ export default function ProductDetail({ params }) {
   }, [params]);
 
   if (slug && !product) notFound();
-  if (!product) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><div className="text-neutral-400">Loading...</div></div>;
+  if (!product) return <div className="min-h-screen bg-[#121316] flex items-center justify-center"><div className="text-neutral-400">Loading...</div></div>;
 
   const handleAdd = () => {
     addItem(product);
@@ -79,7 +79,7 @@ export default function ProductDetail({ params }) {
     : Monitor;
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] pt-24 pb-20">
+    <main className="min-h-screen bg-[#121316] pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6">
         <Link href={`/${product.category.toLowerCase()}`}
           className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-white transition-colors mb-8">
@@ -175,7 +175,7 @@ export default function ProductDetail({ params }) {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button onClick={handleAdd} disabled={!product.inStock}
-                className="flex-1 py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-full bg-white text-[#0A0A0A] hover:bg-white/90 transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                className="flex-1 py-4 text-xs font-semibold tracking-[0.15em] uppercase rounded-full bg-[#00D2FF] text-[#121316] hover:bg-[#00E5FF] transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 <ShoppingBag size={16} /> {added ? 'Added!' : 'Add to Cart'}
               </button>
               <button onClick={handleWhatsApp}
