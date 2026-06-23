@@ -19,7 +19,7 @@ import { products } from './products/data';
 const ease = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 1, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 };
 
@@ -118,36 +118,27 @@ function Hero() {
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-16 sm:py-20">
                 <div className="max-w-2xl">
-                  <motion.span
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease, delay: 0.1 }}
-                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-5 text-white"
-                    style={{ backgroundColor: `${slide.accent}cc` }}
+                  <span
+                    className="animate-hero-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-5 text-white"
+                    style={{ backgroundColor: `${slide.accent}cc`, animationDelay: '0.1s' }}
                   >
                     {slide.subtitle}
-                  </motion.span>
-                  <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease, delay: 0.2 }}
-                    className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-4 font-sans"
+                  </span>
+                  <h1
+                    className="animate-hero-in text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-4 font-sans"
+                    style={{ animationDelay: '0.2s' }}
                   >
                     {slide.title}
-                  </motion.h1>
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease, delay: 0.3 }}
-                    className="text-base sm:text-lg text-white/80 leading-relaxed max-w-md mb-8"
+                  </h1>
+                  <p
+                    className="animate-hero-in text-base sm:text-lg text-white/80 leading-relaxed max-w-md mb-8"
+                    style={{ animationDelay: '0.3s' }}
                   >
                     {slide.desc}
-                  </motion.p>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease, delay: 0.4 }}
-                    className="flex flex-col sm:flex-row gap-3"
+                  </p>
+                  <div
+                    className="animate-hero-in flex flex-col sm:flex-row gap-3"
+                    style={{ animationDelay: '0.4s' }}
                   >
                     <Link
                       href={slide.href}
@@ -162,7 +153,7 @@ function Hero() {
                     >
                       Learn More
                     </Link>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -227,7 +218,7 @@ function ShopByCategory() {
   return (
     <section className="py-16 sm:py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}>
+        <motion.div initial={{ opacity: 1, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}>
           <p className="text-xs font-semibold uppercase tracking-widest text-[#0071E3] text-center mb-2">Shop by Category</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#1D1D1F] mb-10 font-sans">
             Explore our collection
@@ -239,7 +230,7 @@ function ShopByCategory() {
             return (
               <motion.div
                 key={cat.name}
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 1, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, ease, delay: i * 0.06 }}
@@ -289,7 +280,7 @@ function FeaturedSection() {
           {featuredItems.map((product, i) => (
             <motion.div
               key={product.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.5, ease, delay: i * 0.08 }}
@@ -427,7 +418,7 @@ function InfoSection() {
             return (
               <motion.div
                 key={info.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 1, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, ease, delay: i * 0.05 }}
@@ -506,9 +497,9 @@ function Testimonials() {
           <h2 className="section-title mb-14">What our customers say</h2>
         </motion.div>
         <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, y: 20 }}
+            <motion.div
+              key={current}
+              initial={{ opacity: 1, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease }}
@@ -559,10 +550,10 @@ function FAQ() {
           <h2 className="section-title text-center mb-14">Frequently asked questions</h2>
         </motion.div>
         {faqs.map((faq, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            <motion.div
+              key={i}
+              initial={{ opacity: 1, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.04 }}
             className="accordion-item"
@@ -617,7 +608,7 @@ function Contact() {
             </motion.div>
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 1, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, ease }}

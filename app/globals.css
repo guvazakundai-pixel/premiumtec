@@ -384,6 +384,14 @@ body {
 .ambient-orb-2 { animation: drift-slower 30s ease-in-out infinite; }
 
 /* Swiper overrides for dark premium theme */
+@keyframes hero-in {
+  from { transform: translateY(24px); }
+  to { transform: translateY(0); }
+}
+.animate-hero-in {
+  animation: hero-in 0.5s var(--ease-premium) both;
+}
+
 .hero-carousel .swiper-button-next,
 .hero-carousel .swiper-button-prev {
   color: #fff;
