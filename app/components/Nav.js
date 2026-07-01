@@ -97,7 +97,7 @@ export default function Nav() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 h-28 transition-all duration-300 ${
           scrolled ? 'nav-scrolled' : 'nav-base'
         }`}
       >
@@ -108,7 +108,7 @@ export default function Nav() {
               alt="Core Tech Systems"
               width={640}
               height={427}
-              className="h-16 w-auto object-contain"
+              className="w-32 md:w-44 h-auto object-contain"
               priority
               quality={100}
             />
