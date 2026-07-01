@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 const footerLinks = {
   Shop: [
@@ -28,6 +29,9 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) return null;
+
   return (
     <footer className="bg-[#1E293B]">
       <div className="max-w-7xl mx-auto px-6 py-16">

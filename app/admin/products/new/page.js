@@ -14,7 +14,7 @@ export default function NewProduct() {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    name: '', category: 'Laptops', processor: '', storage: '', display: '',
+    name: '', slug: '', category: 'Laptops', processor: '', storage: '', display: '',
     price: '', originalPrice: '', badge: '', inStock: true, rating: '', reviews: '',
     image: '', description: '', features: [''],
   });
@@ -56,6 +56,7 @@ export default function NewProduct() {
 
     const payload = {
       name: form.name.trim(),
+      slug: form.slug.trim() || undefined,
       category: form.category,
       processor: form.processor.trim(),
       storage: form.storage.trim(),
@@ -117,6 +118,12 @@ export default function NewProduct() {
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-[#475569] mb-1">Product Name *</label>
                 <input type="text" value={form.name} onChange={e => updateField('name', e.target.value)}
+                  className="w-full rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#475569] mb-1">Slug (URL)</label>
+                <input type="text" value={form.slug} onChange={e => updateField('slug', e.target.value)}
+                  placeholder="auto-generated from name if blank"
                   className="w-full rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
               </div>
               <div>

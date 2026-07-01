@@ -89,6 +89,8 @@ export default function Nav() {
     setMobileOpen(false);
   }, [pathname]);
 
+  if (pathname?.startsWith('/admin')) return null;
+
   const isActive = (href) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
   return (

@@ -115,11 +115,11 @@ function Hero() {
       >
         {heroSlides.map((slide, i) => (
           <SwiperSlide key={slide.id}>
-            <div className="relative min-h-[85vh] sm:min-h-screen flex items-center">
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${slide.image})` }}
-              />
+            <div className="relative min-h-[70vh] sm:min-h-screen flex items-center overflow-hidden">
+              <div className="absolute inset-0 bg-[#F0F7FF]">
+                <img src={slide.image} alt={slide.title}
+                  className="w-full h-full object-cover md:object-cover max-md:object-contain max-md:max-h-[70vh]" />
+              </div>
               <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/50 to-transparent" />
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-16 sm:py-20">
                 <div className="max-w-2xl">
