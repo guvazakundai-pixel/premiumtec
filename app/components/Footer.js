@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -30,7 +31,13 @@ const footerLinks = {
 
 export default function Footer() {
   const pathname = usePathname();
-  if (pathname?.startsWith('/admin')) return null;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || pathname?.startsWith('/admin')) return null;
 
   return (
     <footer className="bg-[#1E293B]">

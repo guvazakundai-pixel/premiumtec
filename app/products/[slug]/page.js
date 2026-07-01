@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,7 +9,7 @@ import {
   Cpu, HardDrive, Monitor, Package, Shield, Clock,
   Smartphone, Gamepad2, ChevronRight
 } from 'lucide-react';
-import { getProductBySlug, getBrand, getUsageType, getProductsByCategory } from '@/app/products/data';
+import { products as seedProducts, getBrand, getUsageType } from '@/app/products/data';
 import { useCart } from '@/app/context/CartContext';
 import ProductModal from '@/app/components/ProductModal';
 
@@ -17,18 +17,36 @@ const ease = [0.16, 1, 0.3, 1];
 
 export default function ProductDetail({ params }) {
   const [slug, setSlug] = useState(null);
+  const [productList, setProductList] = useState(seedProducts);
   const [product, setProduct] = useState(null);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { addItem } = useCart();
 
-  useState(() => {
+  useEffect(() => {
     params.then(p => {
       setSlug(p.slug);
-      setProduct(getProductBySlug(p.slug));
     });
   }, [params]);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProductList(data);
+        }
+      })
+      .catch(err => console.error('Failed to load dynamic products:', err));
+  }, []);
+
+  useEffect(() => {
+    if (slug) {
+      const match = productList.find(p => p.slug === slug);
+      setProduct(match || null);
+    }
+  }, [slug, productList]);
 
   if (slug && !product) notFound();
   if (!product) return <div className="min-h-screen bg-[#F0F7FF] flex items-center justify-center"><div className="text-[#6B7080]">Loading...</div></div>;
@@ -46,7 +64,9 @@ export default function ProductDetail({ params }) {
 
   const brand = getBrand(product);
   const usageType = getUsageType(product);
-  const relatedProducts = getProductsByCategory(product.category).filter(p => p.id !== product.id).slice(0, 4);
+  const relatedProducts = productList
+    .filter(p => p.category.toLowerCase() === product.category.toLowerCase() && p.id !== product.id)
+    .slice(0, 4);
 
   const allImages = product.images && product.images.length > 0
     ? product.images

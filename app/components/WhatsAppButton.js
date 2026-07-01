@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { MessageCircle, X } from 'lucide-react';
 
@@ -9,8 +9,13 @@ const WHATSAPP_NUMBER = '263780579633';
 export default function WhatsAppButton() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  if (pathname?.startsWith('/admin')) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || pathname?.startsWith('/admin')) return null;
 
   const handleChat = (msg) => {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');

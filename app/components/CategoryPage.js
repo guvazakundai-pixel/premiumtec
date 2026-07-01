@@ -33,6 +33,18 @@ export default function CategoryPage({ category, title, description }) {
   const [showFilters, setShowFilters] = useState(false);
   const [notify, setNotify] = useState(null);
   const { addItem } = useCart();
+  const [allProductsList, setAllProductsList] = useState(allProducts);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAllProductsList(data);
+        }
+      })
+      .catch(err => console.error('Failed to fetch dynamic products:', err));
+  }, []);
 
   useEffect(() => {
     window.__openProductModal = setSelectedProduct;
@@ -40,7 +52,7 @@ export default function CategoryPage({ category, title, description }) {
   }, []);
 
   const products = useMemo(() => {
-    return allProducts
+    return allProductsList
       .filter(p => p.category.toLowerCase() === category.toLowerCase())
       .filter(p => {
         const q = search.toLowerCase();

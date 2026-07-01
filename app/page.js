@@ -31,7 +31,7 @@ const heroSlides = [
     desc: 'From ultrabooks to workstations — discover the finest laptops engineered for performance, crafted for excellence.',
     cta: 'Explore Laptops',
     href: '/laptops',
-    image: 'https://i.ibb.co/RGnfRYgv/Whats-App-Image-2026-07-01-at-10-51-28.jpg',
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1920&q=80',
     accent: '#0071E3',
   },
   {
@@ -41,7 +41,7 @@ const heroSlides = [
     desc: 'From office-ready to high-performance workstations — custom builds and premium desktops for every need.',
     cta: 'Explore PCs',
     href: '/pcs',
-    image: 'https://i.ibb.co/NdhxPxgV/Whats-App-Image-2026-07-01-at-10-52-13.jpg',
+    image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1920&q=80',
     accent: '#7C3AED',
   },
   {
@@ -51,7 +51,7 @@ const heroSlides = [
     desc: 'Consoles, gaming desktops, monitors, and gear — everything you need for the ultimate gaming setup.',
     cta: 'Explore Gaming',
     href: '/gaming',
-    image: 'https://i.ibb.co/Z6P3pMrm/Whats-App-Image-2026-07-01-at-10-51-40.jpg',
+    image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=1920&q=80',
     accent: '#E11D48',
   },
   {
@@ -61,7 +61,7 @@ const heroSlides = [
     desc: 'Latest flagships from Apple, Samsung, and more. Cutting-edge cameras, blazing processors, stunning displays.',
     cta: 'View Phones',
     href: '/phones',
-    image: 'https://i.ibb.co/W4rJg9KS/Whats-App-Image-2026-07-01-at-10-50-50.jpg',
+    image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1920&q=80',
     accent: '#10B981',
   },
   {
@@ -71,7 +71,7 @@ const heroSlides = [
     desc: 'Enterprise networking equipment — switches, routers, access points, and infrastructure for reliable connectivity.',
     cta: 'Shop Networking',
     href: '/accessories',
-    image: 'https://i.ibb.co/gFmRVrRH/Whats-App-Image-2026-07-01-at-10-50-35.jpg',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80',
     accent: '#FF6B35',
   },
   {
@@ -81,7 +81,7 @@ const heroSlides = [
     desc: 'Enterprise-grade interactive panels and displays for boardrooms, classrooms, and command centers.',
     cta: 'View Displays',
     href: '/displays',
-    image: 'https://i.ibb.co/Z6P3pMrm/Whats-App-Image-2026-07-01-at-10-51-40.jpg',
+    image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1920&q=80',
     accent: '#2563EB',
   },
 ];
@@ -116,27 +116,27 @@ function Hero() {
         {heroSlides.map((slide, i) => (
           <SwiperSlide key={slide.id}>
             <div className="relative min-h-[70vh] sm:min-h-screen flex items-center overflow-hidden">
-              <div className="absolute inset-0 bg-[#F0F7FF]">
+              <div className="absolute inset-0 bg-[#121316]">
                 <img src={slide.image} alt={slide.title}
-                  className="w-full h-full object-cover md:object-cover max-md:object-contain max-md:max-h-[70vh]" />
+                  className="w-full h-full object-cover brightness-[0.75]" />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-16 sm:py-20">
                 <div className="max-w-2xl">
                   <span
                     className="animate-hero-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-5"
-                    style={{ color: slide.accent, backgroundColor: `${slide.accent}15`, animationDelay: '0.1s' }}
+                    style={{ color: '#FFFFFF', backgroundColor: `${slide.accent}40`, animationDelay: '0.1s' }}
                   >
                     {slide.subtitle}
                   </span>
                   <h1
-                    className="animate-hero-in text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] mb-4 font-sans"
+                    className="animate-hero-in text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-4 font-sans"
                     style={{ animationDelay: '0.2s' }}
                   >
                     {slide.title}
                   </h1>
                   <p
-                    className="animate-hero-in text-base sm:text-lg text-[#6B7080] leading-relaxed max-w-md mb-8"
+                    className="animate-hero-in text-base sm:text-lg text-white/85 leading-relaxed max-w-md mb-8"
                     style={{ animationDelay: '0.3s' }}
                   >
                     {slide.desc}
@@ -154,7 +154,7 @@ function Hero() {
                     </Link>
                     <Link
                       href={slide.href}
-                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium border border-[#D2D2D7] text-[#1D1D1F] hover:border-[#0071E3] hover:text-[#0071E3] transition-all duration-300 bg-white/60 backdrop-blur-sm"
+                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium border border-white/30 text-white hover:border-white hover:bg-white/10 transition-all duration-300 bg-white/10 backdrop-blur-sm"
                     >
                       Learn More
                     </Link>
@@ -286,14 +286,12 @@ function ShopByCategory() {
   );
 }
 
-const featuredItems = [
-  products.find((p) => p.slug === 'hp-spectre'),
-  products.find((p) => p.slug === 'iphone-16-pro-max'),
-  products.find((p) => p.slug === 'playstation-5'),
-  products.find((p) => p.slug === 'hp-colour-laserjet-pro-mfp-4303fdw'),
-].filter(Boolean);
+function FeaturedSection({ products = [] }) {
+  const featuredSlugs = ['hp-spectre', 'iphone-17-pro-max', 'playstation-5-slim-disc', 'interactive-flat-panel-86'];
+  const featuredItems = featuredSlugs.map(slug => products.find(p => p.slug === slug)).filter(Boolean);
 
-function FeaturedSection() {
+  if (featuredItems.length === 0) return null;
+
   return (
     <section className="py-16 sm:py-20 section-accent">
       <div className="max-w-7xl mx-auto px-6">
@@ -710,12 +708,25 @@ function FinalCTA() {
 }
 
 export default function HomePage() {
+  const [productList, setProductList] = useState(products);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProductList(data);
+        }
+      })
+      .catch(err => console.error('Failed to load dynamic products:', err));
+  }, []);
+
   return (
     <>
       <Hero />
       <TrustBar />
       <ShopByCategory />
-      <FeaturedSection />
+      <FeaturedSection products={productList} />
       <InfoSection />
       <Testimonials />
       <FAQ />

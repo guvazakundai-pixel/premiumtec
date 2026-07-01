@@ -85,11 +85,17 @@ export default function Nav() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  if (pathname?.startsWith('/admin')) return null;
+  if (!mounted || pathname?.startsWith('/admin')) return null;
 
   const isActive = (href) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
