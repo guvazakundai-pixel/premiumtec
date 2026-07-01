@@ -118,7 +118,6 @@ export default function Nav() {
             {navItems.map((item) => {
               if (item.dropdown) {
                 const isOpen = openDropdown === item.label;
-                const textColor = scrolled ? 'text-neutral-400 hover:text-white' : 'text-white/70 hover:text-white';
                 return (
                   <div key={item.label} className="relative"
                     onMouseEnter={() => setOpenDropdown(item.label)}
@@ -126,7 +125,9 @@ export default function Nav() {
                   >
                     <Link
                       href={item.href}
-                      className={`flex items-center gap-1 text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-white' : 'text-white'}`}
+                      className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
+                        scrolled ? 'text-[#6B7080] hover:text-[#1D1D1F]' : 'text-[#6B7080] hover:text-[#1D1D1F]'
+                      }`}
                     >
                       {item.label}
                       <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -138,7 +139,7 @@ export default function Nav() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 8, scale: 0.96 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 rounded-xl bg-[#1C1E24] shadow-xl border border-white/10"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-2 rounded-xl bg-white shadow-xl border border-[#E2E8F0]"
                         >
                           {item.dropdown.map((sub) => {
                             const SubIcon = sub.icon;
@@ -147,9 +148,9 @@ export default function Nav() {
                                 key={sub.label}
                                 href={sub.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+                                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#6B7080] hover:text-[#1D1D1F] hover:bg-[#F8FAFC] transition-all duration-200"
                               >
-                                <SubIcon size={14} className="text-neutral-500 shrink-0" />
+                                <SubIcon size={14} className="text-[#9CA3AF] shrink-0" />
                                 {sub.label}
                               </Link>
                             );
@@ -164,7 +165,9 @@ export default function Nav() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-medium transition-opacity duration-200 opacity-70 hover:opacity-100 ${scrolled ? 'text-white' : 'text-white'}`}
+                  className={`text-sm font-medium transition-colors duration-200 ${
+                    scrolled ? 'text-[#6B7080] hover:text-[#1D1D1F]' : 'text-[#6B7080] hover:text-[#1D1D1F]'
+                  }`}
                 >
                   {item.label}
                 </Link>
@@ -172,12 +175,12 @@ export default function Nav() {
             })}
             <Link
               href="/cart"
-              className="relative bg-[#00D2FF] text-[#121316] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#00E5FF] transition-colors flex items-center gap-2"
+              className="relative bg-[#0071E3] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#1D4ED8] transition-colors flex items-center gap-2"
             >
               <ShoppingBag size={15} />
               Cart
               {totalItems > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-[#121316] text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="w-5 h-5 rounded-full bg-white text-[#0071E3] text-[10px] font-bold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
@@ -185,17 +188,17 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
-            <Link href="/cart" className={`relative p-2 transition-colors text-white`}>
+            <Link href="/cart" className={`relative p-2 transition-colors text-[#1D1D1F]`}>
               <ShoppingBag size={19} />
               {totalItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#00D2FF] text-[#121316] text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#0071E3] text-white text-[9px] font-bold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`p-2 transition-colors text-white`}
+              className={`p-2 transition-colors text-[#1D1D1F]`}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -211,11 +214,11 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center"
+            className="fixed inset-0 z-40 bg-white flex flex-col items-center justify-center"
           >
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-5 right-6 text-white/70 hover:text-white transition-colors"
+              className="absolute top-5 right-6 text-[#6B7080] hover:text-[#1D1D1F] transition-colors"
               aria-label="Close menu"
             >
               <X size={24} />
@@ -231,7 +234,7 @@ export default function Nav() {
                   <Link
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-2xl font-medium text-white/80 hover:text-white transition-colors"
+                    className="text-2xl font-medium text-[#6B7080] hover:text-[#1D1D1F] transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -241,7 +244,7 @@ export default function Nav() {
                 <Link
                   href="/cart"
                   onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-medium text-white/80 hover:text-white transition-colors"
+                  className="text-2xl font-medium text-[#6B7080] hover:text-[#1D1D1F] transition-colors"
                 >
                   Cart {totalItems > 0 && `(${totalItems})`}
                 </Link>

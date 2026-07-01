@@ -17,42 +17,41 @@ export default function WhatsAppButton() {
     <>
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-72">
-          <div className="rounded-2xl overflow-hidden border border-white/[0.06] shadow-2xl"
-            style={{ background: 'rgba(10,10,10,0.96)', backdropFilter: 'blur(60px)' }}>
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.04]">
+          <div className="rounded-2xl overflow-hidden border border-[#E2E8F0] shadow-2xl bg-white">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#E2E8F0]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  <MessageCircle size={16} className="text-white" />
+                <div className="w-8 h-8 rounded-full bg-[#25D366]/10 flex items-center justify-center">
+                  <MessageCircle size={16} className="text-[#25D366]" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white">WhatsApp</p>
-                  <p className="text-[10px] text-white/40">Typically replies within 1 hour</p>
+                  <p className="text-sm font-medium text-[#1D1D1F]">WhatsApp</p>
+                  <p className="text-[10px] text-[#94A3B8]">Typically replies within 1 hour</p>
                 </div>
               </div>
-              <button onClick={() => setOpen(false)} className="p-1 text-white/30 hover:text-white transition-colors">
+              <button onClick={() => setOpen(false)} className="p-1 text-[#94A3B8] hover:text-[#1D1D1F] transition-colors">
                 <X size={16} />
               </button>
             </div>
             <div className="p-4 space-y-2">
               <button onClick={() => handleChat("Hi Core Tech Systems, I'd like to inquire about your latest laptops.")}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
+                className="w-full text-left text-xs text-[#6B7080] hover:text-[#1D1D1F] hover:bg-[#F8FAFC] py-2.5 px-3 transition-colors rounded-xl">
                 💻 Inquire about laptops
               </button>
               <button onClick={() => handleChat("Hi Core Tech Systems, I'd like to inquire about gaming setups.")}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
+                className="w-full text-left text-xs text-[#6B7080] hover:text-[#1D1D1F] hover:bg-[#F8FAFC] py-2.5 px-3 transition-colors rounded-xl">
                 🎮 Gaming setups
               </button>
               <button onClick={() => handleChat("Hi Core Tech Systems, I need a repair/service for my device.")}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
+                className="w-full text-left text-xs text-[#6B7080] hover:text-[#1D1D1F] hover:bg-[#F8FAFC] py-2.5 px-3 transition-colors rounded-xl">
                 🔧 Repairs & service
               </button>
               <button onClick={() => handleChat("Hi Core Tech Systems, I have a general question.")}
-                className="w-full text-left text-xs text-white/70 hover:text-white py-2.5 px-3 transition-colors rounded-xl hover:bg-white/[0.04]">
+                className="w-full text-left text-xs text-[#6B7080] hover:text-[#1D1D1F] hover:bg-[#F8FAFC] py-2.5 px-3 transition-colors rounded-xl">
                 ❓ General inquiry
               </button>
             </div>
             <div className="px-4 pb-4">
-              <p className="text-[10px] text-white/20 text-center border-t border-white/[0.04] pt-3">
+              <p className="text-[10px] text-[#94A3B8] text-center border-t border-[#E2E8F0] pt-3">
                 Mon — Sat: 08:30 – 17:00
               </p>
             </div>

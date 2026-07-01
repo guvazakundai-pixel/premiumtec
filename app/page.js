@@ -19,13 +19,8 @@ import { products } from './products/data';
 const ease = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
-  hidden: { opacity: 1, y: 24 },
+  hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.7, ease } },
 };
 
 const heroSlides = [
@@ -97,7 +92,7 @@ function Hero() {
   }, [activeIndex]);
 
   return (
-    <section className="relative pt-16 overflow-hidden">
+    <section className="relative pt-28 overflow-hidden bg-white">
       <Swiper
         modules={[Autoplay, Navigation, Pagination]}
         navigation={{ prevEl: '.swiper-prev', nextEl: '.swiper-next' }}
@@ -115,23 +110,23 @@ function Hero() {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${slide.image})` }}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/50 to-transparent" />
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-16 sm:py-20">
                 <div className="max-w-2xl">
                   <span
-                    className="animate-hero-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-5 text-white"
-                    style={{ backgroundColor: `${slide.accent}cc`, animationDelay: '0.1s' }}
+                    className="animate-hero-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-5"
+                    style={{ color: slide.accent, backgroundColor: `${slide.accent}15`, animationDelay: '0.1s' }}
                   >
                     {slide.subtitle}
                   </span>
                   <h1
-                    className="animate-hero-in text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-4 font-sans"
+                    className="animate-hero-in text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] mb-4 font-sans"
                     style={{ animationDelay: '0.2s' }}
                   >
                     {slide.title}
                   </h1>
                   <p
-                    className="animate-hero-in text-base sm:text-lg text-white/80 leading-relaxed max-w-md mb-8"
+                    className="animate-hero-in text-base sm:text-lg text-[#6B7080] leading-relaxed max-w-md mb-8"
                     style={{ animationDelay: '0.3s' }}
                   >
                     {slide.desc}
@@ -149,7 +144,7 @@ function Hero() {
                     </Link>
                     <Link
                       href={slide.href}
-                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium border border-white/30 text-white hover:bg-white/10 transition-all duration-300"
+                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium border border-[#D2D2D7] text-[#1D1D1F] hover:border-[#0071E3] hover:text-[#0071E3] transition-all duration-300 bg-white/60 backdrop-blur-sm"
                     >
                       Learn More
                     </Link>
@@ -161,15 +156,15 @@ function Hero() {
         ))}
       </Swiper>
 
-      <div className="absolute bottom-0 left-0 right-0 z-20 h-1 bg-white/20">
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-1 bg-[#E2E8F0]">
         <div ref={progressRef} className="h-full" style={{ width: '100%', backgroundColor: heroSlides[activeIndex]?.accent || '#0071E3' }} />
       </div>
 
-      <button className="swiper-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/40 transition-all duration-200 shadow-sm hidden md:flex">
-        <ChevronDown size={18} className="rotate-90 text-white" />
+      <button className="swiper-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm border border-[#E2E8F0] flex items-center justify-center hover:bg-white transition-all duration-200 shadow-sm hidden md:flex">
+        <ChevronDown size={18} className="rotate-90 text-[#6B7080]" />
       </button>
-      <button className="swiper-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/40 transition-all duration-200 shadow-sm hidden md:flex">
-        <ChevronDown size={18} className="-rotate-90 text-white" />
+      <button className="swiper-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm border border-[#E2E8F0] flex items-center justify-center hover:bg-white transition-all duration-200 shadow-sm hidden md:flex">
+        <ChevronDown size={18} className="-rotate-90 text-[#6B7080]" />
       </button>
 
       <div className="swiper-dots absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2" />
@@ -183,19 +178,19 @@ function TrustBar() {
     'Samsung', 'Xiaomi', 'Google', 'Nothing', 'Canon',
   ];
   return (
-    <section className="py-12 border-y border-[#D2D2D7]/30 bg-white">
+    <section className="py-12 border-y border-[#E2E8F0] bg-[#F0F7FF]">
       <div className="max-w-7xl mx-auto px-6">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#86868B] text-center mb-8">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#0071E3] text-center mb-8">
           Trusted brands we supply
         </p>
         <div className="overflow-hidden">
           <div className="flex gap-12 animate-ticker">
-            {logos.map((name, i) => (
+            {[...logos, ...logos].map((name, i) => (
               <div key={`${name}-${i}`} className="flex items-center gap-3 shrink-0">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0071E3]/10 to-[#2997FF]/5 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#0071E3]/10 flex items-center justify-center">
                   <span className="text-[10px] font-bold text-[#0071E3]">{name[0]}</span>
                 </div>
-                <span className="text-sm font-medium text-[#86868B] whitespace-nowrap">{name}</span>
+                <span className="text-sm font-medium text-[#6B7080] whitespace-nowrap">{name}</span>
               </div>
             ))}
           </div>
@@ -206,53 +201,76 @@ function TrustBar() {
 }
 
 const shopCategories = [
-  { name: 'Laptops', href: '/laptops', icon: Laptop, count: '50+ models', color: '#0071E3' },
-  { name: 'PCs', href: '/pcs', icon: Monitor, count: 'Custom builds', color: '#7C3AED' },
-  { name: 'Gaming', href: '/gaming', icon: Gamepad2, count: 'Consoles & PCs', color: '#E11D48' },
-  { name: 'Phones', href: '/phones', icon: Smartphone, count: 'Latest flagships', color: '#10B981' },
-  { name: 'Accessories', href: '/accessories', icon: Headphones, count: 'Complete setups', color: '#FF6B35' },
-  { name: 'Displays', href: '/displays', icon: Monitor, count: 'Interactive panels', color: '#2563EB' },
+  {
+    name: 'Laptops', href: '/laptops', count: '50+ models',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&q=80',
+  },
+  {
+    name: 'PCs', href: '/pcs', count: 'Custom builds',
+    image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=800&q=80',
+  },
+  {
+    name: 'Gaming', href: '/gaming', count: 'Consoles & PCs',
+    image: products.find(p => p.slug === 'playstation-5')?.image || 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=800&q=80',
+  },
+  {
+    name: 'Phones', href: '/phones', count: 'Latest flagships',
+    image: products.find(p => p.slug === 'iphone-16-pro-max')?.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80',
+  },
+  {
+    name: 'Accessories', href: '/accessories', count: 'Complete setups',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
+  },
+  {
+    name: 'Displays', href: '/displays', count: 'Interactive panels',
+    image: 'https://images.unsplash.com/photo-1617017936090-5f5c0a5d1e90?w=800&q=80',
+  },
 ];
 
 function ShopByCategory() {
   return (
-    <section className="py-16 sm:py-20 bg-white overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-to-b from-white to-[#F0F7FF] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div initial={{ opacity: 1, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease }}>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
           <p className="text-xs font-semibold uppercase tracking-widest text-[#0071E3] text-center mb-2">Shop by Category</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#1D1D1F] mb-10 font-sans">
             Explore our collection
           </h2>
         </motion.div>
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory -mx-6 px-6">
-          {shopCategories.map((cat, i) => {
-            const Icon = cat.icon;
-            return (
-              <motion.div
-                key={cat.name}
-                initial={{ opacity: 1, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, ease, delay: i * 0.06 }}
-                className="snap-start shrink-0"
+        <Swiper
+          modules={[Navigation, Pagination]}
+          slidesPerView={2}
+          slidesPerGroup={4}
+          grid={{ rows: 2, fill: 'row' }}
+          spaceBetween={16}
+          navigation={{ prevEl: '.cat-prev', nextEl: '.cat-next' }}
+          pagination={{ clickable: true, el: '.cat-dots', bulletClass: 'carousel-dot', bulletActiveClass: 'active' }}
+          breakpoints={{
+            640: { slidesPerView: 2, slidesPerGroup: 4, spaceBetween: 16 },
+            1024: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 20 },
+          }}
+          className="w-full !pb-14"
+        >
+          {shopCategories.map((cat) => (
+            <SwiperSlide key={cat.name} className="!h-auto">
+              <Link
+                href={cat.href}
+                className="group relative block w-full aspect-square rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
               >
-                <Link
-                  href={cat.href}
-                  className="group block w-40 sm:w-44 p-5 rounded-2xl border border-[#D2D2D7] bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
-                    style={{ backgroundColor: `${cat.color}0d` }}
-                  >
-                    <Icon size={22} style={{ color: cat.color }} />
-                  </div>
-                  <h3 className="text-sm font-semibold text-[#1D1D1F] mb-1">{cat.name}</h3>
-                  <p className="text-xs text-[#86868B]">{cat.count}</p>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </div>
+                <div
+                  className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url(${cat.image})` }}
+                />
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
+                <div className="relative z-10 h-full flex flex-col justify-end p-5">
+                  <h3 className="text-lg font-bold text-white mb-1">{cat.name}</h3>
+                  <p className="text-sm text-white/80">{cat.count}</p>
+                </div>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="cat-dots flex items-center justify-center gap-2 -mt-2" />
       </div>
     </section>
   );
@@ -270,9 +288,9 @@ function FeaturedSection() {
     <section className="py-16 sm:py-20 section-accent">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
-          <p className="section-label text-center">Featured Products</p>
-          <h2 className="section-title text-center mb-4">Handpicked for you</h2>
-          <p className="text-[#6E6E73] text-center mx-auto max-w-xl mb-14">
+          <p className="section-label text-center !text-[#93C5FD]">Featured Products</p>
+          <h2 className="section-title text-center mb-4 !text-white">Handpicked for you</h2>
+          <p className="text-[#BFDBFE] text-center mx-auto max-w-xl mb-14">
             Curated selections from each category — premium quality, exceptional value.
           </p>
         </motion.div>
@@ -280,18 +298,19 @@ function FeaturedSection() {
           {featuredItems.map((product, i) => (
             <motion.div
               key={product.id}
-              initial={{ opacity: 1, y: 20 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.5, ease, delay: i * 0.08 }}
             >
-              <Link href={`/products/${product.slug}`} className="group block card overflow-hidden h-full">
-                <div className="relative aspect-[4/3] bg-[#F5F5F7] overflow-hidden">
+              <Link href={`/products/${product.slug}`} className="group block overflow-hidden h-full rounded-2xl relative shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="relative aspect-square overflow-hidden bg-[#1E40AF]">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 product-overlay" />
                   {product.badge && (
                     <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider text-white"
                       style={{
@@ -306,24 +325,24 @@ function FeaturedSection() {
                     </span>
                   )}
                   {product.originalPrice && (
-                    <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-semibold bg-white/90 text-[#E11D48]">
-                      -${(product.originalPrice - product.price)}
+                    <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-semibold bg-black/40 text-white backdrop-blur-sm">
+                      -${((product.originalPrice - product.price) / product.originalPrice * 100).toFixed(0)}%
                     </span>
                   )}
-                </div>
-                <div className="p-4 sm:p-5">
-                  <h3 className="text-sm font-semibold text-[#1D1D1F] mb-1 line-clamp-1">{product.name}</h3>
-                  <p className="text-xs text-[#86868B] mb-3 line-clamp-1">{product.processor} &middot; {product.storage}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold text-[#1D1D1F]">${product.price}</span>
-                      {product.originalPrice && (
-                        <span className="text-xs text-[#86868B] line-through">${product.originalPrice}</span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Star size={12} className="text-[#FF9F0A] fill-[#FF9F0A]" />
-                      <span className="text-xs text-[#86868B]">{product.rating}</span>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+                    <h3 className="text-sm font-semibold text-white mb-1 line-clamp-1">{product.name}</h3>
+                    <p className="text-xs text-white/70 mb-2 line-clamp-1">{product.processor} &middot; {product.storage}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-lg font-bold text-white">${product.price}</span>
+                        {product.originalPrice && (
+                          <span className="text-xs text-white/60 line-through">${product.originalPrice}</span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Star size={12} className="text-[#FF9F0A] fill-[#FF9F0A]" />
+                        <span className="text-xs text-white/80">{product.rating}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -332,7 +351,7 @@ function FeaturedSection() {
           ))}
         </div>
         <motion.div variants={fadeUp} className="text-center mt-10">
-          <Link href="/shop" className="btn-primary">
+          <Link href="/shop" className="btn-white">
             View All Products <ArrowRight size={16} />
           </Link>
         </motion.div>
@@ -403,7 +422,7 @@ function InfoSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-white">
+    <section className="py-16 sm:py-20 bg-[#F0F7FF]">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
           <p className="section-label text-center">Why Shop With Us</p>
@@ -418,7 +437,7 @@ function InfoSection() {
             return (
               <motion.div
                 key={info.title}
-                initial={{ opacity: 1, y: 20 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, ease, delay: i * 0.05 }}
@@ -438,11 +457,11 @@ function InfoSection() {
                       <div className="flex items-center justify-between gap-3">
                         <div>
                           <h3 className="text-base font-semibold text-[#1D1D1F]">{info.title}</h3>
-                          <p className="text-sm text-[#6E6E73]">{info.subtitle}</p>
+                          <p className="text-sm text-[#6B7080]">{info.subtitle}</p>
                         </div>
                         <ChevronDown
                           size={18}
-                          className="text-[#86868B] shrink-0 transition-transform duration-300"
+                          className="text-[#9CA3AF] shrink-0 transition-transform duration-300"
                           style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
                         />
                       </div>
@@ -450,9 +469,9 @@ function InfoSection() {
                         className="overflow-hidden transition-all duration-300"
                         style={{ maxHeight: isOpen ? '400px' : '0' }}
                       >
-                        <ul className="mt-4 space-y-2.5 pt-4 border-t border-[#D2D2D7]/50">
+                        <ul className="mt-4 space-y-2.5 pt-4 border-t border-[#E2E8F0]">
                           {info.details.map((d) => (
-                            <li key={d} className="flex items-start gap-2 text-sm text-[#6E6E73]">
+                            <li key={d} className="flex items-start gap-2 text-sm text-[#6B7080]">
                               <Check size={14} className="text-[#0071E3] mt-0.5 shrink-0" />
                               {d}
                             </li>
@@ -490,7 +509,7 @@ function Testimonials() {
 
   const t = testimonials[current];
   return (
-    <section className="py-16 sm:py-20 section-accent">
+    <section className="py-16 sm:py-20 bg-[#F0F7FF]">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
           <p className="section-label">Testimonials</p>
@@ -499,7 +518,7 @@ function Testimonials() {
         <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 1, y: 20 }}
+              initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease }}
@@ -514,7 +533,7 @@ function Testimonials() {
               ))}
             </div>
             <p className="text-sm font-semibold text-[#1D1D1F]">{t.name}</p>
-            <p className="text-xs text-[#86868B]">{t.role}</p>
+            <p className="text-xs text-[#6B7080]">{t.role}</p>
           </motion.div>
         </AnimatePresence>
         <div className="flex items-center justify-center gap-2 mt-10">
@@ -543,30 +562,32 @@ function FAQ() {
     { q: 'How do I claim warranty?', a: 'Simply WhatsApp us your order number and describe the issue. We will guide you through the process. Most claims are resolved within 48 hours.' },
   ];
   return (
-    <section id="faq" className="py-16 sm:py-20 bg-white">
+    <section id="faq" className="py-16 sm:py-20 bg-[#F0F7FF]">
       <div className="max-w-3xl mx-auto px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
           <p className="section-label text-center">FAQ</p>
           <h2 className="section-title text-center mb-14">Frequently asked questions</h2>
         </motion.div>
-        {faqs.map((faq, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 1, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.04 }}
-            className="accordion-item"
-          >
-            <button onClick={() => setOpen(open === i ? null : i)} className="accordion-trigger">
-              {faq.q}
-              <ChevronDown size={16} className={`text-[#86868B] shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
-            </button>
-            <div className="accordion-content" style={{ maxHeight: open === i ? '200px' : '0' }}>
-              <div className="accordion-panel">{faq.a}</div>
-            </div>
-          </motion.div>
-        ))}
+        <div className="bg-white rounded-2xl shadow-sm border border-[#E2E8F0] px-6">
+          {faqs.map((faq, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.04 }}
+              className="accordion-item"
+            >
+              <button onClick={() => setOpen(open === i ? null : i)} className="accordion-trigger">
+                {faq.q}
+                <ChevronDown size={16} className={`text-[#9CA3AF] shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
+              </button>
+              <div className="accordion-content" style={{ maxHeight: open === i ? '200px' : '0' }}>
+                <div className="accordion-panel">{faq.a}</div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -575,7 +596,7 @@ function FAQ() {
 function Contact() {
   const [message, setMessage] = useState('');
   return (
-    <section id="contact" className="py-16 sm:py-20 section-accent">
+    <section id="contact" className="py-16 sm:py-20 bg-[#F0F7FF]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={{
@@ -585,7 +606,7 @@ function Contact() {
             <motion.h2 variants={fadeUp} className="section-title mb-6">
               We are here to help
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-lg text-[#6E6E73] leading-relaxed mb-10">
+            <motion.p variants={fadeUp} className="text-lg text-[#6B7080] leading-relaxed mb-10">
               Have a question about a product, order, or need advice? Reach out — we typically respond within minutes.
             </motion.p>
             <motion.div variants={fadeUp} className="space-y-5">
@@ -598,17 +619,17 @@ function Contact() {
                 const Icon = c.icon;
                 return (
                   <div key={c.label} className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#0071E3]/5 flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-xl bg-[#0071E3]/10 flex items-center justify-center">
                       <Icon size={16} className="text-[#0071E3]" />
                     </div>
-                    <span className="text-sm text-[#6E6E73]">{c.label}</span>
+                    <span className="text-sm text-[#6B7080]">{c.label}</span>
                   </div>
                 );
               })}
             </motion.div>
           </motion.div>
           <motion.div
-            initial={{ opacity: 1, x: 20 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, ease }}
@@ -619,7 +640,7 @@ function Contact() {
                 <input type="email" placeholder="Email address" className="input-premium w-full" />
               </div>
               <input type="text" placeholder="Phone / WhatsApp" className="input-premium w-full" />
-              <select className="input-premium w-full text-[#86868B]">
+              <select className="input-premium w-full text-[#6B7080]">
                 <option value="">Select subject</option>
                 <option>Product Inquiry</option>
                 <option>Order Support</option>
@@ -647,28 +668,27 @@ function Contact() {
 
 function FinalCTA() {
   return (
-    <section className="py-16 sm:py-24 bg-[#1D1D1F] text-white overflow-hidden relative">
-      <div className="hero-orb" style={{ top: '50%', right: '-10%', transform: 'translateY(-50%)', background: 'radial-gradient(circle, rgba(0,113,227,0.15), transparent 60%)' }} />
+    <section className="py-16 sm:py-24 section-accent text-white overflow-hidden relative">
       <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={{
           hidden: {}, visible: { transition: { staggerChildren: 0.1 } }
         }}>
-          <motion.p variants={fadeUp} className="section-label text-[#2997FF]">Get in Touch</motion.p>
-          <motion.h2 variants={fadeUp} className="section-title text-white mb-6">
+          <motion.p variants={fadeUp} className="section-label !text-[#93C5FD]">Get in Touch</motion.p>
+          <motion.h2 variants={fadeUp} className="section-title !text-white mb-6">
             Ready to find your perfect device?
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-lg text-[#86868B] leading-relaxed mb-10 max-w-xl mx-auto">
+          <motion.p variants={fadeUp} className="text-lg text-[#BFDBFE] leading-relaxed mb-10 max-w-xl mx-auto">
             Browse our full catalog or talk to our team for personalized recommendations.
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/shop" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#0071E3] text-white text-sm font-medium hover:shadow-lg hover:shadow-[#0071E3]/20 transition-all">
+            <Link href="/shop" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-[#0071E3] text-sm font-medium hover:bg-[#F8FAFC] transition-all shadow-lg">
               Browse Shop <ArrowRight size={16} />
             </Link>
             <a
               href="https://wa.me/263780579633"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[#424245] text-[#A1A1A6] text-sm font-medium hover:border-white hover:text-white transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-white/30 text-white text-sm font-medium hover:bg-white/10 transition-all"
             >
               <MessageCircle size={16} /> WhatsApp Us
             </a>

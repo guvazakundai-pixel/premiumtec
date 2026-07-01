@@ -57,36 +57,33 @@ const pills = [
 
 export default function ShopPage() {
   return (
-    <main className="min-h-screen bg-[#121316] pt-24 pb-20">
+    <main className="min-h-screen bg-[#F0F7FF] pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Breadcrumb */}
         <motion.nav
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease }}
-          className="flex items-center gap-2 text-sm text-neutral-400 mb-8"
+          className="flex items-center gap-2 text-sm text-[#6B7080] mb-8"
         >
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
-          <ChevronRight size={14} className="text-white/20" />
-          <span className="text-white font-medium">Shop</span>
+          <Link href="/" className="hover:text-[#0071E3] transition-colors">Home</Link>
+          <ChevronRight size={14} className="text-[#9CA3AF]" />
+          <span className="text-[#1D1D1F] font-medium">Shop</span>
         </motion.nav>
 
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease, delay: 0.05 }}
           className="mb-8"
         >
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-sans mb-3">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1D1D1F] font-sans mb-3">
             Shop All Categories
           </h1>
-          <p className="text-neutral-400 text-base sm:text-lg max-w-xl">
+          <p className="text-[#6B7080] text-base sm:text-lg max-w-xl">
             Choose a category to explore our full range of devices and services.
           </p>
         </motion.div>
 
-        {/* Pills */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,14 +94,13 @@ export default function ShopPage() {
             <Link
               key={pill.label}
               href={pill.href}
-              className="shrink-0 px-4 py-2 rounded-full text-sm font-medium border border-white/10 text-neutral-400 hover:border-white/30 hover:text-white hover:bg-white/5 transition-all duration-200 whitespace-nowrap"
+              className="shrink-0 px-4 py-2 rounded-full text-sm font-medium border border-[#E2E8F0] text-[#6B7080] hover:border-[#0071E3] hover:text-[#0071E3] hover:bg-white transition-all duration-200 whitespace-nowrap bg-white"
             >
               {pill.label}
             </Link>
           ))}
         </motion.div>
 
-        {/* Category cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {categories.map((cat, i) => {
             return (
@@ -116,7 +112,7 @@ export default function ShopPage() {
               >
                 <Link
                   href={cat.href}
-                  className="group relative flex items-center gap-4 p-5 rounded-2xl border-l-[4px] bg-[#1C1E24] border border-white/10 hover:border-white/20 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group relative flex items-center gap-4 p-5 rounded-2xl border-l-[4px] bg-white border border-[#E2E8F0] hover:border-[#0071E3]/30 hover:-translate-y-0.5 transition-all duration-300 shadow-sm hover:shadow-md"
                   style={{
                     borderLeftColor: cat.color,
                   }}
@@ -125,25 +121,25 @@ export default function ShopPage() {
                     <span className="text-2xl sm:text-3xl shrink-0">{cat.emoji}</span>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <h2 className="text-base sm:text-lg font-bold text-white">{cat.name}</h2>
+                        <h2 className="text-base sm:text-lg font-bold text-[#1D1D1F]">{cat.name}</h2>
                         <span
                           className="text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap"
-                          style={{ backgroundColor: `${cat.color}20`, color: cat.color }}
+                          style={{ backgroundColor: `${cat.color}15`, color: cat.color }}
                         >
                           {cat.badge}
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm text-neutral-400 truncate">{cat.desc}</p>
+                      <p className="text-xs sm:text-sm text-[#6B7080] truncate">{cat.desc}</p>
                       <div className="flex gap-1.5 mt-2 flex-wrap">
                         {cat.tags.map((tag) => (
-                          <span key={tag} className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-neutral-500">
+                          <span key={tag} className="text-[10px] px-2 py-0.5 rounded-md bg-[#F1F5F9] text-[#94A3B8]">
                             {tag}
                           </span>
                         ))}
                       </div>
                     </div>
                   </div>
-                  <ArrowRight size={18} className="text-white/20 shrink-0 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white" />
+                  <ArrowRight size={18} className="text-[#94A3B8] shrink-0 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#0071E3]" />
                 </Link>
               </motion.div>
             );
