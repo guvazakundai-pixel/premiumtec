@@ -125,32 +125,33 @@ export default function AdminDashboard() {
       )}
 
       {/* Products Section Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <h2 className="text-lg font-semibold text-[#1E293B]">Product Catalog</h2>
-        <Link href="/admin/products/new"
-          className="bg-[#2563EB] text-white rounded-xl px-4 py-2.5 text-sm font-medium hover:bg-[#1D4ED8] transition-colors flex items-center gap-2 shadow-sm">
-          <Plus size={16} /> Add Product
-        </Link>
-      </div>
-
-      {/* Search */}
-      <div className="relative mb-4 max-w-sm">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]" />
-        <input type="text" placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)}
-          className="w-full rounded-xl border border-[#E2E8F0] bg-white pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
-      </div>
-
-      {/* Products Table */}
-      <div className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden">
-        {loading ? (
-          <div className="p-12 text-center text-[#6B7080] text-sm">Loading products...</div>
-        ) : filteredProducts.length === 0 ? (
-          <div className="p-12 text-center text-[#6B7080] text-sm">
-            <Package size={40} className="mx-auto mb-3 text-[#CBD5E1]" />
-            {search ? 'No products match your search' : 'No products yet. Add your first product!'}
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 sm:flex-none sm:w-48">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]" />
+            <input type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-xl border border-[#E2E8F0] bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
           </div>
-        ) : (
-          <div className="overflow-x-auto">
+          <Link href="/admin/products/new"
+            className="bg-[#2563EB] text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-[#1D4ED8] transition-colors flex items-center gap-2 shadow-sm shrink-0">
+            <Plus size={16} /> Add
+          </Link>
+        </div>
+      </div>
+
+      {/* Loading */}
+      {loading ? (
+        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-12 text-center text-[#6B7080] text-sm">Loading products...</div>
+      ) : filteredProducts.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-12 text-center text-[#6B7080] text-sm">
+          <Package size={40} className="mx-auto mb-3 text-[#CBD5E1]" />
+          {search ? 'No products match your search' : 'No products yet. Add your first product!'}
+        </div>
+      ) : (
+        <>
+          {/* Desktop Table */}
+          <div className="hidden md:block bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#E2E8F0] bg-[#F8FAFC]">
@@ -214,8 +215,50 @@ export default function AdminDashboard() {
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+
+          {/* Mobile Cards */}
+          <div className="md:hidden space-y-3">
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="bg-white rounded-xl border border-[#E2E8F0] p-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-14 h-14 rounded-xl bg-[#F1F5F9] overflow-hidden flex-shrink-0">
+                    {product.image ? (
+                      <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[#94A3B8]"><Package size={20} /></div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-[#1E293B] truncate">{product.name}</div>
+                    <div className="text-[#94A3B8] text-xs truncate mt-0.5">{product.slug}</div>
+                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                      <span className="bg-[#F1F5F9] text-[#475569] rounded-lg px-2 py-0.5 text-xs font-medium">{product.category}</span>
+                      <span className="text-sm font-semibold text-[#1E293B]">${product.price?.toLocaleString()}</span>
+                      <span className={`inline-flex items-center gap-1 text-xs ${product.inStock ? 'text-green-600' : 'text-red-500'}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-500' : 'bg-red-400'}`} />
+                        {product.inStock ? 'In Stock' : 'Low'}
+                      </span>
+                      {product.badge && (
+                        <span className="bg-[#FEF3C7] text-[#D97706] rounded-lg px-2 py-0.5 text-xs font-medium">{product.badge}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <Link href={`/admin/products/${product.id}/edit`}
+                      className="p-2 rounded-lg bg-[#F1F5F9] text-[#6B7080] hover:text-[#2563EB] transition-colors">
+                      <Edit2 size={15} />
+                    </Link>
+                    <button onClick={() => setDeleteConfirm(product.id)}
+                      className="p-2 rounded-lg bg-[#F1F5F9] text-[#6B7080] hover:text-red-500 transition-colors">
+                      <Trash2 size={15} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (

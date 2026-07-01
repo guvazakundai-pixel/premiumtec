@@ -29,6 +29,10 @@ export default function AdminLayout({ children }) {
 
   if (!mounted) return null;
 
+  if (pathname === '/admin/login') {
+    return <div className="min-h-screen bg-[#F0F7FF]">{children}</div>;
+  }
+
   const sidebarContent = (
     <div className="flex flex-col h-full">
       <div className="px-5 py-6 border-b border-[#E2E8F0]">
