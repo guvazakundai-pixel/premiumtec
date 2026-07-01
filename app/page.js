@@ -188,7 +188,7 @@ function TrustBar() {
     'Samsung', 'Xiaomi', 'Google', 'Nothing', 'Canon',
   ];
   return (
-    <section className="py-12 border-y border-[#E2E8F0] bg-[#F0F7FF]">
+    <motion.section initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, ease }} className="py-12 border-y border-[#E2E8F0] bg-[#F0F7FF]">
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#0071E3] text-center mb-8">
           Trusted brands we supply
@@ -206,7 +206,7 @@ function TrustBar() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -261,22 +261,29 @@ function ShopByCategory() {
           }}
           className="w-full !pb-14"
         >
-          {shopCategories.map((cat) => (
+          {shopCategories.map((cat, i) => (
             <SwiperSlide key={cat.name} className="!h-auto">
-              <Link
-                href={cat.href}
-                className="group relative block w-full aspect-square rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.4, ease, delay: i * 0.04 }}
               >
-                <div
-                  className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-                  style={{ backgroundImage: `url(${cat.image})` }}
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
-                <div className="relative z-10 h-full flex flex-col justify-end p-5">
-                  <h3 className="text-lg font-bold text-white mb-1">{cat.name}</h3>
-                  <p className="text-sm text-white/80">{cat.count}</p>
-                </div>
-              </Link>
+                <Link
+                  href={cat.href}
+                  className="group relative block w-full aspect-square rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                >
+                  <div
+                    className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                    style={{ backgroundImage: `url(${cat.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
+                  <div className="relative z-10 h-full flex flex-col justify-end p-5">
+                    <h3 className="text-lg font-bold text-white mb-1">{cat.name}</h3>
+                    <p className="text-sm text-white/80">{cat.count}</p>
+                  </div>
+                </Link>
+              </motion.div>
             </SwiperSlide>
           ))}
         </Swiper>

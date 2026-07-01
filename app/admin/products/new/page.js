@@ -3,7 +3,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Save, Plus, X } from 'lucide-react';
+
+const ease = [0.16, 1, 0.3, 1];
+const container = { hidden: {}, visible: { transition: { staggerChildren: 0.06 } } };
+const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease } } };
 
 const CATEGORIES = ['Laptops', 'PCs', 'Gaming', 'Phones', 'Accessories', 'Displays'];
 
@@ -106,12 +111,12 @@ export default function NewProduct() {
 
         <h1 className="text-2xl font-semibold text-[#1E293B] mb-8">New Product</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <motion.form variants={container} initial="hidden" animate="visible" onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 border border-red-100">{error}</div>
+            <motion.div variants={fadeUp} className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 border border-red-100">{error}</motion.div>
           )}
 
-          <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
+          <motion.div variants={fadeUp} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
             <h2 className="text-sm font-semibold text-[#1E293B] uppercase tracking-wider">Basic Info</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -156,10 +161,10 @@ export default function NewProduct() {
                   className="w-full rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Specs */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
+          <motion.div variants={fadeUp} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
             <h2 className="text-sm font-semibold text-[#1E293B] uppercase tracking-wider">Specifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
@@ -181,18 +186,18 @@ export default function NewProduct() {
                   className="w-full rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Description */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
+          <motion.div variants={fadeUp} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
             <h2 className="text-sm font-semibold text-[#1E293B] uppercase tracking-wider">Description</h2>
             <textarea value={form.description} onChange={e => updateField('description', e.target.value)}
               rows={4}
               className="w-full rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent resize-none" />
-          </div>
+          </motion.div>
 
           {/* Features */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
+          <motion.div variants={fadeUp} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-semibold text-[#1E293B] uppercase tracking-wider">Features</h2>
               <button type="button" onClick={addFeature}
@@ -215,10 +220,9 @@ export default function NewProduct() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Stock & Rating */}
-          <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
+          <motion.div variants={fadeUp} className="bg-white rounded-2xl p-6 border border-[#E2E8F0] space-y-5">
             <h2 className="text-sm font-semibold text-[#1E293B] uppercase tracking-wider">Inventory</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
@@ -240,7 +244,7 @@ export default function NewProduct() {
                   className="w-full rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           <div className="flex items-center gap-4 pt-2">
             <button type="submit" disabled={saving}
@@ -249,7 +253,7 @@ export default function NewProduct() {
             </button>
             <Link href="/admin" className="text-sm text-[#6B7080] hover:text-[#1E293B] transition-colors">Cancel</Link>
           </div>
-        </form>
+        </motion.form>
       </div>
     </main>
   );
