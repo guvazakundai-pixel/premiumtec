@@ -31,7 +31,7 @@ const heroSlides = [
     desc: 'From ultrabooks to workstations — discover the finest laptops engineered for performance, crafted for excellence.',
     cta: 'Explore Laptops',
     href: '/laptops',
-    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1920&q=80',
+    image: '/images/hero-laptops.jpg',
     accent: '#0071E3',
   },
   {
@@ -41,7 +41,7 @@ const heroSlides = [
     desc: 'From office-ready to high-performance workstations — custom builds and premium desktops for every need.',
     cta: 'Explore PCs',
     href: '/pcs',
-    image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1920&q=80',
+    image: '/images/hero-pcs.jpg',
     accent: '#7C3AED',
   },
   {
@@ -51,7 +51,7 @@ const heroSlides = [
     desc: 'Consoles, gaming desktops, monitors, and gear — everything you need for the ultimate gaming setup.',
     cta: 'Explore Gaming',
     href: '/gaming',
-    image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=1920&q=80',
+    image: '/images/hero-gaming.jpg',
     accent: '#E11D48',
   },
   {
@@ -61,7 +61,7 @@ const heroSlides = [
     desc: 'Latest flagships from Apple, Samsung, and more. Cutting-edge cameras, blazing processors, stunning displays.',
     cta: 'View Phones',
     href: '/phones',
-    image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1920&q=80',
+    image: '/images/hero-phones.jpg',
     accent: '#10B981',
   },
   {
@@ -71,7 +71,7 @@ const heroSlides = [
     desc: 'Enterprise networking equipment — switches, routers, access points, and infrastructure for reliable connectivity.',
     cta: 'Shop Networking',
     href: '/accessories',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80',
+    image: '/images/hero-networking.jpg',
     accent: '#FF6B35',
   },
   {
@@ -81,7 +81,7 @@ const heroSlides = [
     desc: 'Enterprise-grade interactive panels and displays for boardrooms, classrooms, and command centers.',
     cta: 'View Displays',
     href: '/displays',
-    image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1920&q=80',
+    image: '/images/hero-displays.jpg',
     accent: '#2563EB',
   },
 ];

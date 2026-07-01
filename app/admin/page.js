@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plus, Edit2, Trash2, Package, Search, AlertCircle, X, DollarSign, ShoppingBag, TrendingUp } from 'lucide-react';
+import { Plus, Edit2, Trash2, Package, Search, AlertCircle, X, DollarSign, TrendingUp } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('All');
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [notification, setNotification] = useState(null);
@@ -46,11 +47,15 @@ export default function AdminDashboard() {
     setTimeout(() => setNotification(null), 3000);
   };
 
-  const filteredProducts = products.filter(p =>
-    p.name?.toLowerCase().includes(search.toLowerCase()) ||
-    p.category?.toLowerCase().includes(search.toLowerCase()) ||
-    p.slug?.toLowerCase().includes(search.toLowerCase())
-  );
+  const categories = ['All', ...new Set(products.map(p => p.category).filter(Boolean))];
+
+  const filteredProducts = products.filter(p => {
+    const matchesSearch = p.name?.toLowerCase().includes(search.toLowerCase()) ||
+      p.category?.toLowerCase().includes(search.toLowerCase()) ||
+      p.slug?.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = categoryFilter === 'All' || p.category === categoryFilter;
+    return matchesSearch && matchesCategory;
+  });
 
   const totalValue = products.reduce((sum, p) => sum + (p.price || 0), 0);
   const inStockCount = products.filter(p => p.inStock).length;
@@ -125,7 +130,7 @@ export default function AdminDashboard() {
       )}
 
       {/* Products Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
         <h2 className="text-lg font-semibold text-[#1E293B]">Product Catalog</h2>
         <div className="flex items-center gap-3">
           <div className="relative flex-1 sm:flex-none sm:w-48">
@@ -138,6 +143,20 @@ export default function AdminDashboard() {
             <Plus size={16} /> Add
           </Link>
         </div>
+      </div>
+
+      {/* Category Filter */}
+      <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1 scrollbar-none">
+        {categories.map(cat => (
+          <button key={cat} onClick={() => setCategoryFilter(cat)}
+            className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+              categoryFilter === cat
+                ? 'bg-[#2563EB] text-white shadow-sm'
+                : 'bg-white text-[#6B7080] border border-[#E2E8F0] hover:border-[#2563EB] hover:text-[#2563EB]'
+            }`}>
+            {cat} {cat !== 'All' && `(${products.filter(p => p.category === cat).length})`}
+          </button>
+        ))}
       </div>
 
       {/* Loading */}
