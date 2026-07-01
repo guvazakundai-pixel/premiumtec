@@ -40,7 +40,7 @@ export default function Footer() {
                 alt="Core Tech Systems"
                 width={640}
                 height={427}
-                className="h-8 w-auto object-contain brightness-0 invert"
+                className="h-12 w-auto object-contain brightness-0 invert"
               />
             </Link>
             <p className="text-sm text-[#86868B] leading-relaxed max-w-sm mb-6">
