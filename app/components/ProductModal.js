@@ -92,7 +92,7 @@ export default function ProductModal({ product, onClose }) {
           >
             {allImages.length > 0 ? (
               <img src={allImages[activeImage]} alt={product.name}
-                className="w-full h-full object-contain p-4" />
+                className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[#86868B]">
                 <Monitor size={48} />

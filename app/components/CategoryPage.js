@@ -116,20 +116,15 @@ export default function CategoryPage({ category, title, description }) {
                   <Heart size={14} className={`transition-colors ${wishlist.has(product.id) ? 'text-[#E11D48] fill-[#E11D48]' : 'text-[#94A3B8]'}`} />
                 </button>
 
-                <div onClick={() => setSelectedProduct(product)} className="h-48 flex items-center justify-center bg-gradient-to-b from-[#F8FAFC] to-white relative overflow-hidden cursor-pointer">
-                  <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                    transition={{ duration: 0.7, ease }}
-                    className="transition-all duration-700 group-hover:scale-110 w-full h-full flex items-center justify-center p-4">
-                    {product.image ? (
-                      <img src={product.image} alt={product.name}
-                        className="w-full h-full object-contain rounded-xl"
-                        style={{ maxWidth: '170px', maxHeight: '150px' }} />
-                    ) : (
-                      <div className="w-24 h-32 rounded-xl border border-[#E2E8F0] flex items-center justify-center text-[#94A3B8] text-xs bg-white">
-                        {product.name.split(' ').slice(0, 2).join(' ')}
-                      </div>
-                    )}
-                  </motion.div>
+                <div onClick={() => setSelectedProduct(product)} className="h-48 relative overflow-hidden cursor-pointer bg-white">
+                  {product.image ? (
+                    <img src={product.image} alt={product.name}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[#94A3B8] text-xs bg-[#F8FAFC]">
+                      {product.name.split(' ').slice(0, 2).join(' ')}
+                    </div>
+                  )}
                   {product.badge && <span className="absolute top-3 left-3 badge-premium text-[9px]">{product.badge}</span>}
                 </div>
 
